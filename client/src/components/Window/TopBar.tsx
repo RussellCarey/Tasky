@@ -12,7 +12,7 @@ const TopBarContainer = styled.div`
   align-items: center;
 `;
 
-const Title = styled.p`
+const Title = styled.h5`
   font-size: ${theme.font.sizes.large};
   font-weight: bold;
 `;

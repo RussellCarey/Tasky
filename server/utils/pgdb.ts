@@ -11,6 +11,7 @@ const prodPool = new Pool({
 const devPool = new Pool({
   host: "localhost",
   user: "postgres",
+  database: "taskapp",
   password: process.env.DEV_DATABASE_PW,
   port: 6543,
   max: 20,
@@ -18,4 +19,4 @@ const devPool = new Pool({
   connectionTimeoutMillis: 2000,
 });
 
-module.exports = isDev() ? devPool : prodPool;
+export default isDev() ? devPool : prodPool;

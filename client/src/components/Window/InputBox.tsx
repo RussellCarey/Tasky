@@ -1,10 +1,11 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useRef, useEffect, useState } from "react";
 import styled from "styled-components";
 import { theme } from "../styles/theme";
 
 import { IPropsInputArea } from "../types/types";
 
 import { checkMatch } from "../../services/textAreaServies";
+import { login, logout, clearWindowText } from "../../services/commandService";
 
 const InputContainer = styled.input`
   width: 100%;
@@ -21,30 +22,70 @@ const InputContainer = styled.input`
 `;
 
 const InputArea: FunctionComponent<IPropsInputArea> = ({ inputText, setInputText, consoleText, setConsoleText }) => {
-  // On re-render, make sure the text is in vie from top to bottom.
+  const inputElement = useRef<HTMLInputElement | null>(null);
+  const [canPress, setCanPress] = useState<Boolean>(true);
 
   const textOnChange = (e: React.ChangeEvent) => {
     const target = e.target as HTMLInputElement;
     setInputText(target.value);
   };
 
+  const resetPress = () => {
+    setInputText("");
+    setCanPress(true);
+  };
+
+  const addConsoleText = (textArray: Array<string>) => {
+    setConsoleText([...consoleText, ...textArray]);
+  };
+
   const onEnterPress = async (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") {
-      // Return an object with a name and a function if command matches AND the arguments left over from the input.
-      const checkForCommand = await checkMatch(inputText);
+    if (e.key === "Enter" && canPress) {
+      try {
+        setCanPress(false);
 
-      const commandFunction = checkForCommand?.command.output(checkForCommand.args)!;
+        // Return an object with a name and a function if command matches AND the arguments left over from the input.
+        const checkForCommand = await checkMatch(inputText);
 
-      await setConsoleText([...consoleText, ...commandFunction]);
-      await setInputText("");
+        switch (checkForCommand.command.name) {
+          case "error":
+            addConsoleText(["Command not recognised.."]);
+            break;
+
+          case "login":
+            addConsoleText(["Attempting login, please wait..."]);
+            const loginAttempt = await login(checkForCommand.args);
+            addConsoleText([...loginAttempt]);
+            break;
+
+          case "logout":
+            addConsoleText(["Attempting login, please wait..."]);
+            const logoutAttempt = await logout(checkForCommand.args);
+            addConsoleText([...logoutAttempt]);
+            break;
+
+          case "clear":
+            setConsoleText("");
+            break;
+        }
+
+        resetPress();
+      } catch (error) {
+        resetPress();
+      }
     }
   };
 
+  useEffect(() => {
+    if (inputElement && inputElement.current) inputElement.current.focus();
+  }, []);
+
   return (
     <InputContainer
+      ref={inputElement}
       type="text"
       value={inputText}
-      placeholder="Enter command.. :)"
+      placeholder="Enter command.."
       onChange={textOnChange}
       onKeyPress={onEnterPress}
     />

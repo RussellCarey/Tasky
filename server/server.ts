@@ -1,0 +1,22 @@
+import express from "express";
+const app = express();
+const cors = require("cors");
+const AuthRoutes = require("./routes/authRoutes");
+const dotenv = require("dotenv");
+dotenv.config();
+
+const whiteList = ["localhost:3000", "http://localhost:3000", "http://127.0.0.1:3000"];
+app.use(
+  cors({
+    origin: whiteList,
+    credentials: true,
+  })
+);
+
+app.use(express.json({ limit: "1mb" }));
+
+app.use("/api/auth", AuthRoutes);
+
+app.listen(process.env.PORT, () => {
+  console.log("Connected to server on port ");
+});

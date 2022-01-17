@@ -3,11 +3,10 @@ export const welcomeText = [
   "We removed buttons, user interface and windows and gave you what you need. Simplicity.",
   "This app will allow you to record your activity and the time spent doing it. Then, after inputting the command it can show you the percentage of time you have spent doing the activities either today, a certain date or a date range.",
   "You can then view the data to see how much time you have spent on the tasks!",
-  "Please type -help for a list of commands to get your started!",
+  "Please type show help for a list of commands to get your started!",
 ];
 
 export const helpScreenText = [
-  "-help",
   "Notes: ",
   "Below the use of “” or '' signifies your own information you wish to enter you do not need to type them into your command.",
   "First, you add a task name using add new task name, then use that name to add a new task using add new task.",

@@ -1,5 +1,3 @@
-import { showHelpText } from "../services/commandService";
-
-const commands = [{ name: "show help", output: (args: Array<string>) => showHelpText(args) }];
+const commands = [{ name: "error" }, { name: "show help" }, { name: "clear" }, { name: "login" }, { name: "logout" }];
 
 export default commands;
