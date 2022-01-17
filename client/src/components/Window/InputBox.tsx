@@ -4,6 +4,7 @@ import { theme } from "../styles/theme";
 
 import { IPropsInputArea } from "../types/types";
 
+import { helpScreenText } from "../../constants/text";
 import { checkMatch } from "../../services/textAreaServies";
 import { login, logout, clearWindowText } from "../../services/commandService";
 
@@ -50,6 +51,10 @@ const InputArea: FunctionComponent<IPropsInputArea> = ({ inputText, setInputText
         switch (checkForCommand.command.name) {
           case "error":
             addConsoleText(["Command not recognised.."]);
+            break;
+
+          case "show help":
+            addConsoleText([...helpScreenText]);
             break;
 
           case "login":
