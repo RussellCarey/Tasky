@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { theme } from "../styles/theme";
 
 import { IPropsInputArea } from "../types/types";
+import { ECommandReturnOptions } from "../../types/commandReturnEnums";
 
 import { helpScreenText } from "../../constants/text";
 import { checkMatch } from "../../services/textAreaServies";
@@ -49,27 +50,27 @@ const InputArea: FunctionComponent<IPropsInputArea> = ({ inputText, setInputText
         const checkForCommand = await checkMatch(inputText);
 
         switch (checkForCommand.command.name) {
-          case "error":
+          case ECommandReturnOptions.error:
             addConsoleText(["Command not recognised.."]);
             break;
 
-          case "show help":
+          case ECommandReturnOptions.showhelp:
             addConsoleText([...helpScreenText]);
             break;
 
-          case "login":
+          case ECommandReturnOptions.login:
             addConsoleText(["Attempting login, please wait..."]);
             const loginAttempt = await login(checkForCommand.args);
             addConsoleText([...loginAttempt]);
             break;
 
-          case "logout":
+          case ECommandReturnOptions.logout:
             addConsoleText(["Attempting login, please wait..."]);
             const logoutAttempt = await logout(checkForCommand.args);
             addConsoleText([...logoutAttempt]);
             break;
 
-          case "clear":
+          case ECommandReturnOptions.clear:
             setConsoleText("");
             break;
         }
