@@ -51,7 +51,7 @@ exports.signUp = catchAsync(async (req: Request, res: Response, next: NextFuncti
 
   // Check for existing username
   const checkUsername = await checkUserExistsUsername(body.username);
-  if (checkUsername.rows.length > 1) throw new AppError("Username has been already taken.", 500);
+  if (checkUsername.rows.length > 1) throw new AppError("Username has already been taken.", 500);
 
   // Encrypt password with bcrypt
   const cryptedPassword = await bcryptPassword(req.body.password);

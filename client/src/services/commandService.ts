@@ -66,7 +66,6 @@ export const logout = async (args: Array<string>) => {
 
     return ["Attempting logout, please wait...", "Logged out of your account. Have a great day"];
   } catch (error: any) {
-    const err = error.response;
     return ["Attempting logout, please wait...", `Failed to logout. Please try again.`];
   }
 };
@@ -76,6 +75,7 @@ export const signup = async (args: Array<string>) => {
     // signup username email password passwordconfirm
     if (args.length > 4) return ["Please only type the information needed to sign up."];
 
+    // Run checks on inputs..
     if (!checkValidUsername(args[0])) return ["Username should contain no numbers, spaces or special characters."];
     if (!checkValidEmail(args[1])) return ["Not a valid email."];
     if (!checkValidPassword(args[2], args[3]))
@@ -96,11 +96,9 @@ export const addNewTaskName = async (args: Array<string>) => {
   try {
     // signup username email password passwordconfirm
     const nameString: string = args.join(" ");
-    console.log(args);
-    console.log(nameString);
 
+    // Add the new task name..
     const newTaskNameRequest = await addNewTaskAttempt(nameString);
-    console.log(newTaskNameRequest);
 
     return ["Attempting to add your new task!", "Task was added!"];
   } catch (error: any) {
@@ -112,13 +110,19 @@ export const addNewTaskName = async (args: Array<string>) => {
 
 export const getAllTaskNames = async () => {
   try {
+    // Get all users saves task names
     const taskNamesList = await getTaskNames();
-    console.log(taskNamesList.data.data.rows);
 
+    // Return the task name along with its ID which the user needs to input.
     const tasksSentences = taskNamesList.data.data.rows.map((task: any, ind: any) => {
       return `[${task.id}] ${task.taskname}`;
     });
 
+    // If the user has no presaved tasks.
+    if (tasksSentences.length === 0)
+      return ["You have no presaved task names, add some using `add new task name (name)`"];
+
+    // Return found tasks
     return ["Retrieved tasks", ...tasksSentences];
   } catch (error: any) {
     return ["Searching for your tasks, please wait..", "Failed to get tasks, please try again."];
@@ -130,6 +134,7 @@ export const addNewTask = async (args: Array<string>) => {
     const taskID = Number(args[1]);
     const taskHours = Number(args[0]);
 
+    // Save users task and the hours spent doing it.
     const newTask = await addNewTaskHours(taskID, taskHours);
     console.log(newTask);
 
