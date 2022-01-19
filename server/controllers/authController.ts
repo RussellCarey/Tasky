@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction, CookieOptions } from "express";
 import AppError from "../utils/AppError";
 import catchAsync from "../utils/catchAsync";
-import { ILoginData } from ".././types/types";
+const { promisify } = require("util");
 
 import {
   checkPasswordsMatch,
@@ -14,16 +14,11 @@ import {
 } from "../services/authServices";
 // exports.createNewSurvey = catchAsync(async (req, res, next) => {
 
-// Create function to sing JWTs
-const signJWT = async (data: ILoginData) => {
-  // data should contain username, email and other things needed on the front end.
-  const token = await jwt.sign(data, process.env.JWT_SECRET!);
-  return token;
-};
-
 // Create a JWT, set a cookie and its options and send it back to the client
-const createAndSendJWT = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-  const token = await signJWT(req.body);
+const createAndSendJWT = async (res: Response, data: any) => {
+  // Sign token with data provided
+  const token = await jwt.sign(data, process.env.JWT_SECRET!);
+
   if (!token) throw new AppError("Failed in signing token", 500);
 
   const cookieOptions: CookieOptions = {
@@ -36,15 +31,15 @@ const createAndSendJWT = catchAsync(async (req: Request, res: Response, next: Ne
   res.cookie("jwt", token, cookieOptions);
 
   res.json({
-    success: "success",
+    status: "success",
     data: token,
   });
-});
+};
 
 // Sign up, get data, check if the username or email exists. if it does not then create a new account and return data, cookie etc back to the client..
 exports.signUp = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   const body = req.body;
-  if (!body) throw new AppError("No req body found", 500);
+  if (!body) throw new AppError("Failed. Error signing up.", 500);
 
   // Check passwords are the same..
   const passwordsMatch = await checkPasswordsMatch(body.password, body.passwordConfirm);
@@ -52,50 +47,64 @@ exports.signUp = catchAsync(async (req: Request, res: Response, next: NextFuncti
 
   // Check for exisiting email
   const checkEmail = await checkUserExistsEmail(body.email);
-  if (checkEmail.rows.length > 1) throw new AppError("Email already taken.", 500);
+  if (checkEmail.rows.length > 1) throw new AppError("This email has already been taken.", 500);
 
   // Check for existing username
   const checkUsername = await checkUserExistsUsername(body.username);
-  if (checkUsername.rows.length > 1) throw new AppError("Username taken", 500);
+  if (checkUsername.rows.length > 1) throw new AppError("Username has been already taken.", 500);
 
   // Encrypt password with bcrypt
   const cryptedPassword = await bcryptPassword(req.body.password);
-  if (!cryptedPassword) throw new AppError("Failed to encrypt password", 500);
+  if (!cryptedPassword) throw new AppError("Failed. Sorry, please try again.", 500);
 
   // Add to the DB
   const addedUser = await addUserToTheDB(body, cryptedPassword);
 
+  const removePassword = { ...body, password: "" };
+
   // Create token
-  await createAndSendJWT(req, res, next);
+  await createAndSendJWT(res, removePassword);
 });
 
 // login, check email exists and check and decrypt pasword to check if we can login, send back JWT cookie and data.
 exports.login = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   const body = req.body;
-  console.log(body.username);
+  console.log(body);
 
   // Check email exists
   const getUser = await checkUserExistsUsername(body.username);
-  if (getUser.rows.length === 0) throw new AppError("No user found", 500);
+  if (getUser.rows.length === 0) throw new AppError("Username or password is incorrect.", 500);
 
   // Use bcrypt to check passwords match
   const checkedPassword = await bcryptComaprePasswords(body.password, getUser.rows[0].password);
-  if (!checkedPassword) throw new AppError("Password incorrect", 500);
+  if (!checkedPassword) throw new AppError("Username or password is incorrect.", 500);
+
+  const removePassword = { ...body, password: "" };
 
   // If so, send back the JWT and data
-  await createAndSendJWT(req, res, next);
+  await createAndSendJWT(res, removePassword);
 });
 
-// // Check is logged in
-exports.checkLoggedIn = (req: Request, res: Response, next: NextFunction) => {
-  // Check headers have the JWT cookie inside of it..
-  const cookie = req.headers.jwt as string;
-  const checkCookie = jwt.decode(cookie);
+exports.checkLoggedIn = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  if (!req.headers.cookie) throw new AppError("Sorry. Something went wrong on our end.", 500);
 
-  if (!checkCookie) throw new AppError("Cannot verify user.", 500);
+  // Removed the jwt= from the cookie and decode the users data..
+  // Get valid string from cookie;
+  const cookie = req.headers.cookie?.slice(4) as string;
+
+  // Verify and decode the token and check for errors
+  const checkCookie = await promisify(jwt.verify)(cookie, process.env.JWT_SECRET!);
+  if (!checkCookie) throw new AppError("User is not logged in.", 500);
+
+  // Get user account data from the DB
+  const checkForUser = await checkUserExistsUsername(checkCookie.username);
+  if (checkForUser.rows.length < 1) throw new AppError("User is not logged in. ", 500);
+
+  // Add user data to the req object to user..
+  req.body.user = checkForUser.rows[0];
 
   next();
-};
+});
 
 // Logout
 exports.logout = (req: Request, res: Response, next: NextFunction) => {

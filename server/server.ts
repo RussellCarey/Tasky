@@ -1,7 +1,11 @@
 import express from "express";
 const app = express();
 const cors = require("cors");
+
 const AuthRoutes = require("./routes/authRoutes");
+const TasksRoutes = require("./routes/taskRoutes");
+const ErrorController = require("./controllers/errorController");
+
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -16,6 +20,9 @@ app.use(
 app.use(express.json({ limit: "1mb" }));
 
 app.use("/api/auth", AuthRoutes);
+app.use("/api/tasks", TasksRoutes);
+
+app.use(ErrorController);
 
 app.listen(process.env.PORT, () => {
   console.log("Connected to server on port ");

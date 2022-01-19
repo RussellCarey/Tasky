@@ -1,4 +1,4 @@
-import { screen, render, waitForElementToBeRemoved, queryByText } from "@testing-library/react";
+import { screen, render, waitForElementToBeRemoved } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import App from "../../../App";
 
@@ -13,7 +13,7 @@ test("Command: show help", async () => {
   userEvent.type(inputBox, "show help");
   userEvent.keyboard("[Enter]");
 
-  const textArea = await screen.findByText(/Notes:/i);
+  const textArea = await screen.findByText(/-- Help/i);
   expect(textArea).toBeInTheDocument();
 });
 

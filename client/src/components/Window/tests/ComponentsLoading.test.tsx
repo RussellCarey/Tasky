@@ -1,6 +1,5 @@
-import React from "react";
 import { render, screen } from "@testing-library/react";
-import App from "./App";
+import App from "../../../App";
 
 test("Check heading renders", () => {
   window.HTMLElement.prototype.scrollTo = function () {};

@@ -1,6 +1,6 @@
 import commands from "../constants/commands";
 
-const checkStartingWords = (text: string, words: number) => {
+export const checkStartingWords = (text: string, words: number) => {
   //   const checkFirstTwo = /^((?:\S+\s+){1}\S+).*/;
   //   const checkFirstThree = /^((?:\S+\s+){2}\S+).*/;
   //   const checkFirstFour = /^((?:\S+\s+){3}\S+).*/;

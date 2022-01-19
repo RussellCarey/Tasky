@@ -34,8 +34,7 @@ export const checkUserExistsUsername = async (username: string) => {
 
 // Add users data to the database..
 export const addUserToTheDB = async (body: any, password: string) => {
-  const addUser = await pool.query("INSERT INTO users (fullname, username, email, password) VALUES ($1, $2, $3, $4)", [
-    body.fullname,
+  const addUser = await pool.query("INSERT INTO users (username, email, password) VALUES ($1, $2, $3)", [
     body.username,
     body.email,
     password,

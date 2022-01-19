@@ -37,5 +37,6 @@ export const TextAreaContainer = styled.div`
 `;
 
 export const Text = styled.p`
-  margin-bottom: ${theme.spacing.small};
+  line-height: ${theme.spacing.large};
+  margin-bottom: ${theme.spacing.xsmall};
 `;

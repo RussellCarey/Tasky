@@ -1,27 +1,12 @@
 import React, { FunctionComponent, useRef, useEffect, useState } from "react";
-import styled from "styled-components";
-import { theme } from "../styles/theme";
+import { InputContainer } from "./styles/InputBox.styles";
 
 import { IPropsInputArea } from "../types/types";
-import { ECommandReturnOptions } from "../../types/commandReturnEnums";
 
-import { helpScreenText } from "../../constants/text";
 import { checkMatch } from "../../services/textAreaServies";
-import { login, logout, clearWindowText } from "../../services/commandService";
-
-const InputContainer = styled.input`
-  width: 100%;
-  height: 70px;
-  padding: ${theme.spacing.medium};
-
-  border: none;
-  outline: none;
-  border-top: 5px solid ${theme.colors.borderColor};
-  border-radius: 0 0 20px 20px;
-  background-color: ${theme.colors.terminalColor};
-
-  font-size: ${theme.spacing.medium};
-`;
+import { ECommandReturnOptions } from "../../types/commandReturnEnums";
+import { login, logout, signup, addNewTaskName, getAllTaskNames, addNewTask } from "../../services/commandService";
+import { aboutText, helpScreenText } from "../../constants/text";
 
 const InputArea: FunctionComponent<IPropsInputArea> = ({ inputText, setInputText, consoleText, setConsoleText }) => {
   const inputElement = useRef<HTMLInputElement | null>(null);
@@ -46,12 +31,16 @@ const InputArea: FunctionComponent<IPropsInputArea> = ({ inputText, setInputText
       try {
         setCanPress(false);
 
-        // Return an object with a name and a function if command matches AND the arguments left over from the input.
+        // Check if matching commands exists in the string and return that, with its arguments..
         const checkForCommand = await checkMatch(inputText);
 
         switch (checkForCommand.command.name) {
           case ECommandReturnOptions.error:
             addConsoleText(["Command not recognised.."]);
+            break;
+
+          case ECommandReturnOptions.about:
+            addConsoleText([...aboutText]);
             break;
 
           case ECommandReturnOptions.showhelp:
@@ -68,6 +57,30 @@ const InputArea: FunctionComponent<IPropsInputArea> = ({ inputText, setInputText
             addConsoleText(["Attempting login, please wait..."]);
             const logoutAttempt = await logout(checkForCommand.args);
             addConsoleText([...logoutAttempt]);
+            break;
+
+          case ECommandReturnOptions.signup:
+            addConsoleText(["Attempting sign up."]);
+            const signupAttempt = await signup(checkForCommand.args);
+            addConsoleText([...signupAttempt]);
+            break;
+
+          case ECommandReturnOptions.addnewtaskname:
+            addConsoleText(["Attempting to add your new task!"]);
+            const addTaskAttempt = await addNewTaskName(checkForCommand.args);
+            addConsoleText([...addTaskAttempt]);
+            break;
+
+          case ECommandReturnOptions.showtasknames:
+            addConsoleText(["Searching for your tasks, please wait.."]);
+            const tasks = await getAllTaskNames();
+            addConsoleText([...tasks]);
+            break;
+
+          case ECommandReturnOptions.addnewtask:
+            addConsoleText(["Attempting to add new task.."]);
+            const newTask = await addNewTask(checkForCommand.args);
+            addConsoleText([...newTask]);
             break;
 
           case ECommandReturnOptions.clear:
