@@ -15,6 +15,7 @@ export const helpScreenText = [
   "Type  'signup (username) (email) (password) (password confirm)  to start the signup process.",
   "Type  'add new task name (name)'  to create a new tasks name eg. Studied math.",
   "Type  'add new task (task number) (hours)'  to use the task name created to save the time doing that task.",
+  "Type  'delete task name (id)'  to delete a task name",
   "Type  'delete task (id)'  to delete a tasks and it data.",
   "Type  'delete tasks (date)'  to delete a tasks and it data from a specific day.",
   "Type  'delete tasks (date from) (date to)'  to delete a tasks and it data from a specific day.",

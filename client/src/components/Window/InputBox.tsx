@@ -5,7 +5,16 @@ import { IPropsInputArea } from "../types/types";
 
 import { checkMatch } from "../../services/textAreaServies";
 import { ECommandReturnOptions } from "../../types/commandReturnEnums";
-import { login, logout, signup, addNewTaskName, getAllTaskNames, addNewTask } from "../../services/commandService";
+import {
+  login,
+  logout,
+  signup,
+  addNewTaskName,
+  getAllTaskNames,
+  addNewTask,
+  deleteTaskNames,
+  deleteTask,
+} from "../../services/commandService";
 import { aboutText, helpScreenText } from "../../constants/text";
 
 const InputArea: FunctionComponent<IPropsInputArea> = ({ inputText, setInputText, consoleText, setConsoleText }) => {
@@ -81,6 +90,19 @@ const InputArea: FunctionComponent<IPropsInputArea> = ({ inputText, setInputText
             addConsoleText(["Attempting to add new task.."]);
             const newTask = await addNewTask(checkForCommand.args);
             addConsoleText([...newTask]);
+            break;
+
+          case ECommandReturnOptions.deletetaskname:
+            addConsoleText(["Attempting to delete task name.."]);
+            const deleteTaskName = await deleteTaskNames(checkForCommand.args);
+            addConsoleText([...deleteTaskName]);
+            break;
+
+          // Delete ONE task instances
+          case ECommandReturnOptions.deletetask:
+            addConsoleText(["Attempting to delete task.."]);
+            const deleteTaskWithHours = await deleteTask(checkForCommand.args);
+            addConsoleText([...deleteTaskWithHours]);
             break;
 
           case ECommandReturnOptions.clear:

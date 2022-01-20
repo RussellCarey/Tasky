@@ -50,7 +50,7 @@ export const signupAttempt = async (args: Array<string>) => {
   return signup;
 };
 
-export const addNewTaskAttempt = async (newTaskName: string) => {
+export const addNewTaskNameAttempt = async (newTaskName: string) => {
   const taskName = await axios.request({
     withCredentials: true,
     method: "POST",
@@ -83,6 +83,24 @@ export const getTaskNames = async () => {
   return taskNames;
 };
 
+export const deleteTaskName = async (id: number) => {
+  const deleteTask = await axios.request({
+    withCredentials: true,
+    method: "DELETE",
+    url: !isDev()
+      ? `${projectURLS.productionWithAPI}/tasks/deleteTaskName`
+      : `${projectURLS.development}/api/tasks/deleteTaskName`,
+    data: {
+      taskID: id,
+    },
+    headers: {
+      jwt: `${Cookies.get("jwt")}`,
+    },
+  });
+
+  return deleteTask;
+};
+
 export const addNewTaskHours = async (hours: number, taskid: number) => {
   const addTaskHours = await axios.request({
     withCredentials: true,
@@ -102,4 +120,24 @@ export const addNewTaskHours = async (hours: number, taskid: number) => {
   console.log(addTaskHours);
 
   return addTaskHours;
+};
+
+export const deleteTaskWithHours = async (taskid: number) => {
+  const deleteTask = await axios.request({
+    withCredentials: true,
+    method: "DELETE",
+    url: !isDev()
+      ? `${projectURLS.productionWithAPI}/tasks/deleteTaskWithHours`
+      : `${projectURLS.development}/api/tasks/deleteTaskWithHours`,
+    data: {
+      taskID: taskid,
+    },
+    headers: {
+      jwt: `${Cookies.get("jwt")}`,
+    },
+  });
+
+  console.log(deleteTask);
+
+  return deleteTask;
 };

@@ -1,5 +1,11 @@
 import { Request, Response, NextFunction, CookieOptions } from "express";
-import { createNewTaskName, findAllTaskNames, addNewTaskWithHours } from "../services/taskServices";
+import {
+  createNewTaskName,
+  findAllTaskNames,
+  addNewTaskWithHours,
+  deleteTaskName,
+  deleteTaskWithHours,
+} from "../services/taskServices";
 import AppError from "../utils/AppError";
 import catchAsync from "../utils/catchAsync";
 
@@ -33,6 +39,19 @@ exports.getAllTaskNames = catchAsync(async (req: Request, res: Response, next: N
   });
 });
 
+exports.deleteTaskName = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  const taskID = req.body.taskID;
+  if (!taskID) return new AppError("Task ID not found, please enter a correct ID", 500);
+
+  const taskNameDelete = await deleteTaskName(taskID);
+  console.log(taskNameDelete);
+
+  res.json({
+    status: "success",
+    data: taskNameDelete,
+  });
+});
+
 exports.addNewTaskHours = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   const userID = req.body.user.id;
 
@@ -44,5 +63,18 @@ exports.addNewTaskHours = catchAsync(async (req: Request, res: Response, next: N
   res.json({
     status: "success",
     data: addTask,
+  });
+});
+
+exports.deleteTaskWithHours = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  const taskID = req.body.taskID;
+  if (!taskID) return new AppError("Task ID not found, please enter a correct ID", 500);
+
+  const deleteTask = await deleteTaskWithHours(taskID);
+  console.log(deleteTask);
+
+  res.json({
+    status: "success",
+    data: deleteTask,
   });
 });

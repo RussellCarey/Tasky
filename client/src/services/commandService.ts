@@ -6,13 +6,15 @@ import {
   logoutAttempt,
   loginAttempt,
   signupAttempt,
-  addNewTaskAttempt,
+  addNewTaskNameAttempt,
   getTaskNames,
   addNewTaskHours,
+  deleteTaskName,
+  deleteTaskWithHours,
 } from "./dbServices";
 import { checkValidEmail, checkValidPassword, checkValidUsername } from "../utils/inputValidation";
 
-//
+// UTILITIES
 export const showCommandNotFound = (args: Array<string>) => {
   const joinedStrings = args.join(" ");
   return [`Did not recognise command ${joinedStrings}.`];
@@ -36,7 +38,7 @@ export const clearWindowText = (args: Array<string>) => {
   return ECommandReturnOptions.clear;
 };
 
-//
+// LOGIN LOGOUT SIGNUP.
 export const login = async (args: Array<string>) => {
   try {
     if (args.length !== 2) return ["Please type login with followed by only the username and password"];
@@ -92,13 +94,14 @@ export const signup = async (args: Array<string>) => {
   }
 };
 
+// TASK NAMES (NOT ACTUAL SAVED TASK WITH HOURS)
 export const addNewTaskName = async (args: Array<string>) => {
   try {
     // signup username email password passwordconfirm
     const nameString: string = args.join(" ");
 
     // Add the new task name..
-    const newTaskNameRequest = await addNewTaskAttempt(nameString);
+    const newTaskNameRequest = await addNewTaskNameAttempt(nameString);
 
     return ["Attempting to add your new task!", "Task was added!"];
   } catch (error: any) {
@@ -129,6 +132,20 @@ export const getAllTaskNames = async () => {
   }
 };
 
+export const deleteTaskNames = async (args: Array<string>) => {
+  try {
+    const id = Number(args[0]);
+
+    const deletedTaskName = await deleteTaskName(id);
+    console.log(deletedTaskName);
+
+    return ["Attempting to delete task name..", "Your task name was deleted. "];
+  } catch (error) {
+    return ["Attempting to delete task name..", "Error deleteing task name, please try again."];
+  }
+};
+
+// USERS SAVED TASK WITH HOURS
 export const addNewTask = async (args: Array<string>) => {
   try {
     const taskID = Number(args[1]);
@@ -143,5 +160,20 @@ export const addNewTask = async (args: Array<string>) => {
     const err = error.response;
     if (!err.data.message) return ["Attempting to add your new task!", `Unknown error, please try again`];
     return ["Attempting to add your new task!", `Adding task failed. ${err.data.message}`];
+  }
+};
+
+export const deleteTask = async (args: Array<string>) => {
+  try {
+    const taskID = Number(args[0]);
+
+    const deleteTaskAndData = await deleteTaskWithHours(taskID);
+    console.log(deleteTaskAndData);
+
+    return ["Attempting to delete task..", "Task was deleted!"];
+  } catch (error: any) {
+    const err = error.response;
+    if (!err.data.message) return ["Attempting to delete task!", `Unknown error, please try again`];
+    return ["Attempting to delete task!", `Adding task failed. ${err.data.message}`];
   }
 };

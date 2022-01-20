@@ -27,3 +27,13 @@ export const addNewTaskWithHours = async (userID: number, taskID: number, hours:
 
   return addedTaskWithHours;
 };
+
+export const deleteTaskName = async (id: number) => {
+  const deleteTask = await pool.query("DELETE from categories WHERE id = $1", [id]);
+  return deleteTask;
+};
+
+export const deleteTaskWithHours = async (id: number) => {
+  const deletedTask = await pool.query("DELETE FROM tasks WHERE id = $1", [id]);
+  return deletedTask;
+};

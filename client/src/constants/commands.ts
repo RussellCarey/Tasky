@@ -9,7 +9,9 @@ const commands = [
   { name: "signup" },
   { name: "add new task name" },
   { name: "show task names" },
+  { name: "delete task name" },
   { name: "add new task" },
+  { name: "delete task" },
 ];
 
 export default commands;

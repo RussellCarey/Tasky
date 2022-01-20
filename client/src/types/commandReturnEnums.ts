@@ -9,4 +9,6 @@ export enum ECommandReturnOptions {
   addnewtaskname = "add new task name",
   addnewtask = "add new task",
   showtasknames = "show task names",
+  deletetaskname = "delete task name",
+  deletetask = "delete task",
 }
