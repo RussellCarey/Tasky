@@ -10,6 +10,7 @@ export const helpScreenText = [
   "-- Help.",
   "-- Below the use of () around a word signifies your own information. You do not need to type them or '' with your command.",
   "-- First, add a task name using add new task name, then use that name to add a new task using add new task.",
+  "-- When entering a date, the format is: YYYY-MM-DD",
   "Type  'login (username) (password)'  to login to your account.",
   "Type  'logout'  to logout from your account.",
   "Type  'signup (username) (email) (password) (password confirm)  to start the signup process.",

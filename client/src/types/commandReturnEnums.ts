@@ -11,4 +11,9 @@ export enum ECommandReturnOptions {
   showtasknames = "show task names",
   deletetaskname = "delete task name",
   deletetask = "delete task",
+  showtasks = "show tasks",
+  showtasksfor = "show tasks for",
+  showtasksfrom = "show tasks from",
+  deletetasksfrom = "delete tasks from",
+  deletetasks = "delete tasks for",
 }

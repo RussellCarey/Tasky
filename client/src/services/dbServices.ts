@@ -141,3 +141,85 @@ export const deleteTaskWithHours = async (taskid: number) => {
 
   return deleteTask;
 };
+
+export const getTasksOnDate = async (date: string | null) => {
+  const tasks = await axios.request({
+    withCredentials: true,
+    method: "POST",
+    url: !isDev()
+      ? `${projectURLS.productionWithAPI}/tasks/getTasksOnDate`
+      : `${projectURLS.development}/api/tasks/getTasksOnDate`,
+    data: {
+      date: date || new Date(Date.now()).toISOString().slice(0, 10),
+    },
+    headers: {
+      jwt: `${Cookies.get("jwt")}`,
+    },
+  });
+
+  console.log(tasks);
+
+  return tasks;
+};
+
+export const getTasksFromDateRange = async (dateFrom: string, dateTo: string) => {
+  const tasks = await axios.request({
+    withCredentials: true,
+    method: "POST",
+    url: !isDev()
+      ? `${projectURLS.productionWithAPI}/tasks/getTasksFromDateRange`
+      : `${projectURLS.development}/api/tasks/getTasksFromDateRange`,
+    data: {
+      dateTo: dateTo,
+      dateFrom: dateFrom,
+    },
+    headers: {
+      jwt: `${Cookies.get("jwt")}`,
+    },
+  });
+
+  console.log(tasks);
+
+  return tasks;
+};
+
+export const deleteTasksDate = async (date: string) => {
+  const taskToDelete = await axios.request({
+    withCredentials: true,
+    method: "DELETE",
+    url: !isDev()
+      ? `${projectURLS.productionWithAPI}/tasks/deleteTasksFromDate`
+      : `${projectURLS.development}/api/tasks/deleteTasksFromDate`,
+    data: {
+      date: date,
+    },
+    headers: {
+      jwt: `${Cookies.get("jwt")}`,
+    },
+  });
+
+  console.log(taskToDelete);
+
+  return taskToDelete;
+};
+
+export const deleteTasksFromDateRange = async (dateFrom: string, dateTo: string) => {
+  const deletedTasksRange = await axios.request({
+    withCredentials: true,
+    method: "DELETE",
+    url: !isDev()
+      ? `${projectURLS.productionWithAPI}/tasks/deleteTasksFromDateRange`
+      : `${projectURLS.development}/api/tasks/deleteTasksFromDateRange`,
+    data: {
+      dateTo: dateTo,
+      dateFrom: dateFrom,
+    },
+    headers: {
+      jwt: `${Cookies.get("jwt")}`,
+    },
+  });
+
+  console.log(deletedTasksRange);
+
+  return deletedTasksRange;
+};

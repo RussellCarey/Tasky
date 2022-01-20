@@ -14,6 +14,11 @@ import {
   addNewTask,
   deleteTaskNames,
   deleteTask,
+  showTasksOnDate,
+  // showTasksForToday,
+  showTasksDateRange,
+  deleteTasksOnDate,
+  deleteTasksFromRange,
 } from "../../services/commandService";
 import { aboutText, helpScreenText } from "../../constants/text";
 
@@ -103,6 +108,36 @@ const InputArea: FunctionComponent<IPropsInputArea> = ({ inputText, setInputText
             addConsoleText(["Attempting to delete task.."]);
             const deleteTaskWithHours = await deleteTask(checkForCommand.args);
             addConsoleText([...deleteTaskWithHours]);
+            break;
+
+          case ECommandReturnOptions.showtasksfrom:
+            addConsoleText(["Attempting to get date range tasks.."]);
+            const datesTasks = await showTasksDateRange(checkForCommand.args);
+            addConsoleText([...datesTasks]);
+            break;
+
+          case ECommandReturnOptions.showtasksfor:
+            addConsoleText(["Attempting to get tasks.."]);
+            const getDaysTasks = await showTasksOnDate(checkForCommand.args);
+            addConsoleText([...getDaysTasks]);
+            break;
+
+          case ECommandReturnOptions.showtasks:
+            addConsoleText(["Attempting to get tasks.."]);
+            const todaysTasks = await showTasksOnDate(checkForCommand.args);
+            addConsoleText([...todaysTasks]);
+            break;
+
+          case ECommandReturnOptions.deletetasksfrom:
+            addConsoleText(["Attempting to get tasks.."]);
+            const deleteRange = await deleteTasksFromRange(checkForCommand.args);
+            addConsoleText([...deleteRange]);
+            break;
+
+          case ECommandReturnOptions.deletetasks:
+            addConsoleText(["Attempting to get tasks.."]);
+            const deleteTasks = await deleteTasksOnDate(checkForCommand.args);
+            addConsoleText([...deleteTasks]);
             break;
 
           case ECommandReturnOptions.clear:

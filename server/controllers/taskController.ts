@@ -5,6 +5,10 @@ import {
   addNewTaskWithHours,
   deleteTaskName,
   deleteTaskWithHours,
+  findTasksByDate,
+  getTasksFromDates,
+  deleteTasksFromDate,
+  deleteTaskFromDateRange,
 } from "../services/taskServices";
 import AppError from "../utils/AppError";
 import catchAsync from "../utils/catchAsync";
@@ -31,7 +35,7 @@ exports.getAllTaskNames = catchAsync(async (req: Request, res: Response, next: N
 
   const taskNames = await findAllTaskNames(userID);
   if (!taskNames) return new AppError("Unknown Error. Please try again.", 500);
-  console.log(taskNames);
+  console.log(taskNames.rows);
 
   res.json({
     status: "success",
@@ -44,7 +48,7 @@ exports.deleteTaskName = catchAsync(async (req: Request, res: Response, next: Ne
   if (!taskID) return new AppError("Task ID not found, please enter a correct ID", 500);
 
   const taskNameDelete = await deleteTaskName(taskID);
-  console.log(taskNameDelete);
+  console.log(taskNameDelete.rows);
 
   res.json({
     status: "success",
@@ -57,7 +61,6 @@ exports.addNewTaskHours = catchAsync(async (req: Request, res: Response, next: N
 
   // userid taskid hours
   const addTask = await addNewTaskWithHours(userID, req.body.taskID, req.body.taskHours);
-
   if (!addTask) return new AppError("Could not add task. Please try again", 500);
 
   res.json({
@@ -71,10 +74,77 @@ exports.deleteTaskWithHours = catchAsync(async (req: Request, res: Response, nex
   if (!taskID) return new AppError("Task ID not found, please enter a correct ID", 500);
 
   const deleteTask = await deleteTaskWithHours(taskID);
-  console.log(deleteTask);
+  console.log(deleteTask.rows);
 
   res.json({
     status: "success",
     data: deleteTask,
+  });
+});
+
+exports.getTasksOnDate = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  const userID = req.body.user.id;
+  if (userID === "" || null) return new AppError("User is not logged in.", 500);
+
+  const dateQuery = req.body.date;
+  if (dateQuery === "" || null) return new AppError("Date was not provided.", 500);
+
+  const foundTasks = await findTasksByDate(dateQuery, userID);
+  console.log(foundTasks.rows);
+
+  res.json({
+    status: "success",
+    data: foundTasks,
+  });
+});
+
+exports.getTasksFromDateRange = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  const userID = req.body.user.id;
+  if (userID === "" || null) return new AppError("User is not logged in.", 500);
+
+  const dateFrom = req.body.dateFrom;
+  const dateTo = req.body.dateTo;
+  if (dateFrom === "" || null) return new AppError("Dates were not provided.", 500);
+  if (dateTo === "" || null) return new AppError("Dates were not provided.", 500);
+
+  const foundTasks = await getTasksFromDates(dateFrom, dateTo, userID);
+
+  res.json({
+    status: "success",
+    data: foundTasks,
+  });
+});
+
+exports.deleteTasksOnDate = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  const userID = req.body.user.id;
+  if (userID === "" || null) return new AppError("User is not logged in.", 500);
+
+  const dateQuery = req.body.date;
+  if (dateQuery === "" || null) return new AppError("Date was not provided.", 500);
+
+  const deletedTasks = await deleteTasksFromDate(dateQuery, userID);
+  console.log(deletedTasks.rows);
+
+  res.json({
+    status: "success",
+    data: deletedTasks,
+  });
+});
+
+exports.deleteTasksFromDateRange = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  const userID = req.body.user.id;
+  if (userID === "" || null) return new AppError("User is not logged in.", 500);
+
+  const dateFrom = req.body.dateFrom;
+  const dateTo = req.body.dateTo;
+  if (dateFrom === "" || null) return new AppError("Dates were not provided.", 500);
+  if (dateTo === "" || null) return new AppError("Dates were not provided.", 500);
+
+  const deletedTasks = await deleteTaskFromDateRange(dateFrom, dateTo, userID);
+  console.log(deletedTasks);
+
+  res.json({
+    status: "success",
+    data: deletedTasks,
   });
 });

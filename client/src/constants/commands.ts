@@ -12,6 +12,11 @@ const commands = [
   { name: "delete task name" },
   { name: "add new task" },
   { name: "delete task" },
+  { name: "show tasks for" },
+  { name: "show tasks from" },
+  { name: "show tasks" },
+  { name: "delete tasks for" },
+  { name: "delete tasks from" },
 ];
 
 export default commands;

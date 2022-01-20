@@ -11,6 +11,10 @@ import {
   addNewTaskHours,
   deleteTaskName,
   deleteTaskWithHours,
+  getTasksOnDate,
+  getTasksFromDateRange,
+  deleteTasksDate,
+  deleteTasksFromDateRange,
 } from "./dbServices";
 import { checkValidEmail, checkValidPassword, checkValidUsername } from "../utils/inputValidation";
 
@@ -175,5 +179,82 @@ export const deleteTask = async (args: Array<string>) => {
     const err = error.response;
     if (!err.data.message) return ["Attempting to delete task!", `Unknown error, please try again`];
     return ["Attempting to delete task!", `Adding task failed. ${err.data.message}`];
+  }
+};
+
+// export const showTasksForToday = async (args: Array<string>) => {
+//   try {
+//     if (args.length > 0) return ["Too many argumentssssss from show tasks today"];
+
+//     const daysTasks = await getTasksOnDate(null);
+//     if (daysTasks.data.data.rows.length === 0) return ["Sorry, you have no tasks saved for this date"];
+
+//     return ["Got todays tasks.."];
+//   } catch (error: any) {
+//     console.log(error.response.message);
+//     return ["Error getting your days tasks, please try again."];
+//   }
+// };
+
+export const showTasksOnDate = async (args: Array<string>) => {
+  try {
+    if (args.length > 1) return ["Too many argumentssssss fro show tasks on date"];
+    const date = args[0];
+
+    const daysTasks = await getTasksOnDate(date);
+    if (daysTasks.data.data.rows.length === 0) return ["Sorry, you have no tasks saved for this date"];
+
+    return ["Got the days tasks.."];
+  } catch (error: any) {
+    console.log(error.response.message);
+    return ["Error getting your days tasks, please try again."];
+  }
+};
+
+export const showTasksDateRange = async (args: Array<string>) => {
+  try {
+    if (args.length > 2) return ["Too many argumentssssss from show task date range"];
+    const dateStart = args[0];
+    const dateEnd = args[1];
+
+    const daysTasks = await getTasksFromDateRange(dateStart, dateEnd);
+    if (daysTasks.data.data.rows.length === 0) return ["Sorry, you have no tasks saved for this date range"];
+
+    return ["Got the dates range tasks.."];
+  } catch (error: any) {
+    console.log(error.response.message);
+    return ["Error getting your tasks, please try again."];
+  }
+};
+
+export const deleteTasksFromRange = async (args: Array<string>) => {
+  console.log("jdsbfjsdubfd");
+  try {
+    if (args.length > 2) return ["Too many argumentssssss from DELETE ASK DAET RANGE"];
+    const dateStart = args[0];
+    const dateEnd = args[1];
+
+    const daysTasks = await deleteTasksFromDateRange(dateStart, dateEnd);
+    if (daysTasks.data.data.rows.length === 0) return ["Deleted Tasks"];
+
+    return ["Error deleteing tasks, please try again."];
+  } catch (error: any) {
+    console.log(error.response.message);
+    return ["Error getting your tasks, please try again."];
+  }
+};
+
+export const deleteTasksOnDate = async (args: Array<string>) => {
+  try {
+    if (args.length > 1) return ["Too many argumentssssss fro DELETE tasks on date!!!"];
+    const date = args[0];
+
+    const daysTasks = await deleteTasksDate(date);
+    if (daysTasks.data.data.rows.length === 0) return ["Deleted tasks."];
+
+    return ["Error deleteing tasks, please try again."];
+  } catch (error: any) {
+    console.log(error.response.message);
+    return ["Error getting your tasks, please try again."];
   }
 };
