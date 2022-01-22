@@ -11,8 +11,10 @@ import {
   addUserToTheDB,
   bcryptPassword,
   bcryptComaprePasswords,
+  authorizeUser,
+  findUserByAuthKey,
 } from "../services/authServices";
-// exports.createNewSurvey = catchAsync(async (req, res, next) => {
+import { sendWelcomeEmail } from "./emailController";
 
 // Create a JWT, set a cookie and its options and send it back to the client
 const createAndSendJWT = async (res: Response, data: any) => {
@@ -60,6 +62,10 @@ exports.signUp = catchAsync(async (req: Request, res: Response, next: NextFuncti
   // Add to the DB
   const addedUser = await addUserToTheDB(body, cryptedPassword);
 
+  const welcomeEmail = await sendWelcomeEmail(body.username, body.email, addedUser);
+  console.log("Returned welcome email");
+  console.log(welcomeEmail);
+
   const removePassword = { ...body, password: "" };
 
   // Create token
@@ -69,11 +75,13 @@ exports.signUp = catchAsync(async (req: Request, res: Response, next: NextFuncti
 // login, check email exists and check and decrypt pasword to check if we can login, send back JWT cookie and data.
 exports.login = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   const body = req.body;
-  console.log(body);
 
   // Check email exists
   const getUser = await checkUserExistsUsername(body.username);
   if (getUser.rows.length === 0) throw new AppError("Username or password is incorrect.", 500);
+
+  const usersConfirmationStatus = getUser.rows[0].active;
+  if (!usersConfirmationStatus) throw new AppError("Not authenticated. Please confirm your email address.", 500);
 
   // Use bcrypt to check passwords match
   const checkedPassword = await bcryptComaprePasswords(body.password, getUser.rows[0].password);
@@ -122,3 +130,21 @@ exports.logout = (req: Request, res: Response, next: NextFunction) => {
     success: "success",
   });
 };
+
+// Authorize user to accss the about from link in their email. They cannot login until they do this..
+exports.authorize = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  // www.website.com/?user=df82f-23f23f-f23f23f-23f23f
+  const uuid = req.body.uuid;
+  if (!uuid) return new AppError("URL does not contain valid ID string", 500);
+
+  const foundUser = await findUserByAuthKey(uuid);
+  if (!foundUser || foundUser.rows.length === 0) return new AppError("Could not find user with the auth key.", 500);
+  if (foundUser.rows[0].active === true) return new AppError("You are already authenticated.", 500);
+
+  const authorize = await authorizeUser(uuid);
+
+  res.json({
+    status: "Success",
+    date: authorize,
+  });
+});

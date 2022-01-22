@@ -13,7 +13,6 @@ export const MainWindow = styled.main`
 `;
 
 export const TerminalWindow = styled.div`
-  background-color: pink;
   width: 85vw;
   height: 80vh;
   position: relative;

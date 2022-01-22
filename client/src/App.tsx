@@ -1,28 +1,22 @@
-import React, { useState, useRef } from "react";
-import { MainWindow, TerminalWindow } from "./components/styles/styled";
-import TopBar from "./components/Window/TopBar";
-import TextArea from "./components/Window/TextArea";
-import InputArea from "./components/Window/InputBox";
+import { useEffect } from "react";
+import ConsolePage from "./pages/console";
+import AuthPage from "./pages/auth";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import { welcomeText } from "./constants/text";
+import useDarkMode from "./hooks/useDarkMode";
 
 function App() {
-  const [consoleText, setConsoleText] = useState<Array<string>>(welcomeText);
-  const [inputText, setInputText] = useState<string>("");
+  const [theme, setDarkMode] = useDarkMode();
 
   return (
-    <MainWindow>
-      <TerminalWindow>
-        <TopBar />
-        <TextArea consoleText={consoleText} />
-        <InputArea
-          inputText={inputText}
-          setInputText={setInputText}
-          consoleText={consoleText}
-          setConsoleText={setConsoleText}
-        />
-      </TerminalWindow>
-    </MainWindow>
+    <>
+      <Router>
+        <Routes>
+          <Route path="/" element={<ConsolePage theme={theme} setDarkMode={setDarkMode} />} />
+          <Route path="/auth/" element={<AuthPage theme={theme} />} />
+        </Routes>
+      </Router>
+    </>
   );
 }
 

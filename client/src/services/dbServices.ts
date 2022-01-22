@@ -223,3 +223,18 @@ export const deleteTasksFromDateRange = async (dateFrom: string, dateTo: string)
 
   return deletedTasksRange;
 };
+
+export const authenticateUser = async (uuid: string) => {
+  const authUser = await axios.request({
+    withCredentials: true,
+    method: "PATCH",
+    url: !isDev() ? `${projectURLS.productionWithAPI}/auth/authorize` : `${projectURLS.development}/api/auth/authorize`,
+    data: {
+      uuid: uuid,
+    },
+  });
+
+  console.log(authUser);
+
+  return authUser;
+};

@@ -80,13 +80,13 @@ const InputArea: FunctionComponent<IPropsInputArea> = ({ inputText, setInputText
             break;
 
           case ECommandReturnOptions.addnewtaskname:
-            addConsoleText(["Attempting to add your new task!"]);
+            addConsoleText(["Attempting to add your new task name!"]);
             const addTaskAttempt = await addNewTaskName(checkForCommand.args);
             addConsoleText([...addTaskAttempt]);
             break;
 
           case ECommandReturnOptions.showtasknames:
-            addConsoleText(["Searching for your tasks, please wait.."]);
+            addConsoleText(["Attempting to find for your task names, please wait.."]);
             const tasks = await getAllTaskNames();
             addConsoleText([...tasks]);
             break;

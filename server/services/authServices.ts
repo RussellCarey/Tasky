@@ -1,5 +1,6 @@
 import pool from "../utils/pgdb";
 import bcrypt from "bcryptjs";
+import { v4 as uuidv4 } from "uuid";
 
 // Check that both passwords the user has provided mathces
 export const checkPasswordsMatch = (passwordOne: string, passwordTwo: string) => {
@@ -34,10 +35,22 @@ export const checkUserExistsUsername = async (username: string) => {
 
 // Add users data to the database..
 export const addUserToTheDB = async (body: any, password: string) => {
-  const addUser = await pool.query("INSERT INTO users (username, email, password) VALUES ($1, $2, $3)", [
-    body.username,
-    body.email,
-    password,
-  ]);
-  return addUser;
+  const currentDate = new Date(Date.now()).getTime();
+  const emailActivateKey = uuidv4();
+
+  const addUser = await pool.query(
+    "INSERT INTO users (username, email, password, created, activekey) VALUES ($1, $2, $3, $4, $5)",
+    [body.username, body.email, password, currentDate, emailActivateKey]
+  );
+  return emailActivateKey;
+};
+
+export const findUserByAuthKey = async (uuid: string) => {
+  const foundUser = await pool.query("SELECT * FROM users WHERE activekey = $1", [uuid]);
+  return foundUser;
+};
+
+export const authorizeUser = async (uuid: string) => {
+  const changeAuth = await pool.query("UPDATE users SET active = true WHERE activekey = $1", [uuid]);
+  return changeAuth;
 };
