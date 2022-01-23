@@ -75,12 +75,12 @@ const calculatePercentages = (itemsArray: Array<ITaskObject>) => {
 };
 
 // LOGIN LOGOUT SIGNUP.
-export const login = async (args: Array<string>) => {
+export const login = async (args: Array<string>, password: string) => {
   try {
     if (args.length !== 2)
       return ["Please type login followed by only the username and password to use this function."];
 
-    const loginRequest = await loginAttempt(args[0], args[1]);
+    const loginRequest = await loginAttempt(args[0], password);
     if (loginRequest.data.status !== "success") return ["Error logging in. Please try again."];
 
     return ["Attempting login, please wait...", "Logged into your account"];
@@ -228,7 +228,7 @@ export const showTasksOnDate = async (args: Array<string>) => {
     const daysTasks = await getTasksOnDate(date);
     console.log(daysTasks);
     if (daysTasks.data.data.rows.length === 0)
-      return ["Attempting to get tasks..", "Sorry, you have no tasks saved for this date."];
+      return [`Attempting to get tasks..", "Sorry, you have no tasks saved for this date.`];
 
     // Convert the data into an object where each task is collected. Data is task name, hours, percetage.
     const percetangesAndCollection = calculatePercentages(daysTasks.data.data.rows);

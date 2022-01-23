@@ -20,7 +20,6 @@ import {
 } from "../../services/commandService";
 import { aboutText, helpScreenText } from "../../constants/text";
 import ThemeContext from "../../context/theme/themeContext";
-
 const InputArea: FunctionComponent<IPropsInputArea> = ({ inputText, setInputText, consoleText, setConsoleText }) => {
   const themeContext = useContext(ThemeContext);
   const {
@@ -34,11 +33,37 @@ const InputArea: FunctionComponent<IPropsInputArea> = ({ inputText, setInputText
     setTextColor,
   } = themeContext;
 
+  const passwordRef = useRef<string>("");
+  const numnum = useRef<number>(0);
   const inputElement = useRef<HTMLInputElement | null>(null);
   const [canPress, setCanPress] = useState<Boolean>(true);
 
+  //! DOES NOT WORK
   const textOnChange = (e: React.ChangeEvent) => {
     const target = e.target as HTMLInputElement;
+
+    // Save typed password but hide it in the input field..
+    const sentenceArray = target.value.split(" ");
+    const wordCount = sentenceArray.length;
+    const firstWord = sentenceArray[0];
+
+    if (wordCount > 2 && firstWord === "login") {
+      const thirdWord = sentenceArray[2];
+      const thirdWordArray = thirdWord.split("");
+      const lastLetter = thirdWordArray[thirdWordArray.length - 1];
+
+      // Add the last letter when typed to the string password.
+      if (lastLetter) passwordRef.current += lastLetter;
+
+      // Build new sentence with hidden PW..
+      const sentence = target.value.split(" ");
+      const hiddenPassword = "*".repeat(thirdWordArray.length);
+      sentence[2] = hiddenPassword;
+      const hiddenPasswordSentence = sentence.join(" ");
+
+      return setInputText(hiddenPasswordSentence);
+    }
+
     setInputText(target.value);
   };
 
@@ -59,6 +84,7 @@ const InputArea: FunctionComponent<IPropsInputArea> = ({ inputText, setInputText
         // Check if matching commands exists in the string and return that, with its arguments..
         const checkForCommand = await checkMatch(inputText);
 
+        // Move / refactor this big switch statement!!!!
         switch (checkForCommand.command.name) {
           case ECommandReturnOptions.error:
             addConsoleText(["Command not recognised.."]);
@@ -74,7 +100,7 @@ const InputArea: FunctionComponent<IPropsInputArea> = ({ inputText, setInputText
 
           case ECommandReturnOptions.login:
             addConsoleText(["Attempting login, please wait..."]);
-            const loginAttempt = await login(checkForCommand.args);
+            const loginAttempt = await login(checkForCommand.args, passwordRef.current);
             addConsoleText([...loginAttempt]);
             break;
 

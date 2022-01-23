@@ -5,9 +5,8 @@ import TextArea from "../components/Console/TextArea";
 import InputArea from "../components/Console/InputBox";
 import { welcomeText } from "../constants/text";
 import ThemeContext from "../context/theme/themeContext";
-interface IConsoleProps {}
 
-const ConsolePage: FunctionComponent<IConsoleProps> = () => {
+const ConsolePage: FunctionComponent = () => {
   const [consoleText, setConsoleText] = useState<Array<string>>(welcomeText);
   const [inputText, setInputText] = useState<string>("");
 
