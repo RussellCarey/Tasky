@@ -1,7 +1,6 @@
 import styled from "styled-components";
-import { theme } from "./theme";
 
-export const MainWindow = styled.main`
+export const MainWindow = styled.div`
   width: 100vw;
   height: 100vh;
 
@@ -9,7 +8,7 @@ export const MainWindow = styled.main`
   justify-content: center;
   align-items: center;
 
-  background-color: ${theme.colors.backgroundColor};
+  background-color: ${(props) => props.theme.backgroundColor};
 `;
 
 export const TerminalWindow = styled.div`
@@ -17,10 +16,10 @@ export const TerminalWindow = styled.div`
   height: 80vh;
   position: relative;
 
-  background-color: ${theme.colors.terminalColor};
-  border: 5px solid ${theme.colors.borderColor};
+  background-color: ${(props) => props.theme.terminalColor};
+  border: 5px solid ${(props) => props.theme.borderColor};
   border-radius: 20px;
-  box-shadow: 30px 30px 0px ${theme.colors.borderColor};
+  box-shadow: 30px 30px 0px ${(props) => props.theme.shadowColor};
 
   display: flex;
   flex-direction: column;

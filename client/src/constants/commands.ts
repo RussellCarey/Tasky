@@ -17,6 +17,13 @@ const commands = [
   { name: "show tasks" },
   { name: "delete tasks for" },
   { name: "delete tasks from" },
+  { name: "set background color" },
+  { name: "set border color" },
+  { name: "set text color" },
+  { name: "set terminal color" },
+  { name: "set shadow color" },
+  { name: "set theme light" },
+  { name: "set theme dark" },
 ];
 
 export default commands;

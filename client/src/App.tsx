@@ -1,22 +1,22 @@
-import { useEffect } from "react";
+import { useContext } from "react";
 import ConsolePage from "./pages/console";
 import AuthPage from "./pages/auth";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import useDarkMode from "./hooks/useDarkMode";
+import ThemeState from "./context/theme/themeState";
 
 function App() {
-  const [theme, setDarkMode] = useDarkMode();
-
   return (
-    <>
-      <Router>
-        <Routes>
-          <Route path="/" element={<ConsolePage theme={theme} setDarkMode={setDarkMode} />} />
-          <Route path="/auth/" element={<AuthPage theme={theme} />} />
-        </Routes>
-      </Router>
-    </>
+    <ThemeState>
+      <>
+        <Router>
+          <Routes>
+            <Route path="/" element={<ConsolePage />} />
+            <Route path="/auth/" element={<AuthPage />} />
+          </Routes>
+        </Router>
+      </>
+    </ThemeState>
   );
 }
 

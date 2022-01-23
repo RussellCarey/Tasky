@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 
+// NOT USED FOR NOW / UNFINISHED / MAY USE LATER
+// NOT USED FOR NOW / UNFINISHED / MAY USE LATER
 export default function useDarkMode() {
   interface IPropsTheme {
     backgroundColor: string;
@@ -29,5 +31,5 @@ export default function useDarkMode() {
     isDarkMode ? setTheme(darkTheme) : setTheme(lightTheme);
   }, [isDarkMode]);
 
-  return [theme, setIsDarkMode];
+  return { theme, setIsDarkMode };
 }

@@ -1,10 +1,12 @@
-import { FunctionComponent, useEffect, useRef } from "react";
+import { FunctionComponent, useEffect, useRef, useContext } from "react";
 import { TextAreaContainer, Text } from "./styles/TextArea.styles";
-
 import { IPropsTextArea } from "../types/types";
+import ThemeContext from "../../context/theme/themeContext";
 
 export const TextArea: FunctionComponent<IPropsTextArea> = ({ consoleText }) => {
   const textDivElement = useRef(null) as React.MutableRefObject<HTMLDivElement | null>;
+  const themeContext = useContext(ThemeContext);
+  const { theme } = themeContext;
 
   useEffect(() => {
     scrollToBottom();
@@ -18,7 +20,7 @@ export const TextArea: FunctionComponent<IPropsTextArea> = ({ consoleText }) => 
   };
 
   return (
-    <TextAreaContainer ref={textDivElement}>
+    <TextAreaContainer ref={textDivElement} theme={theme}>
       {consoleText.length && consoleText.length > 0
         ? consoleText.map((line) => {
             return <Text key={line}>{line}</Text>;

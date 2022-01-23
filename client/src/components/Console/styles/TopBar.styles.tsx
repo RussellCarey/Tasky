@@ -6,7 +6,9 @@ export const TopBarContainer = styled.div`
   height: 80px;
   padding: ${theme.spacing.medium};
 
-  border-bottom: 5px solid ${theme.colors.borderColor};
+  border-bottom: 5px solid ${(props) => props.theme.borderColor};
+
+  color: ${(props) => props.theme.textColor};
 
   display: flex;
   justify-content: space-between;

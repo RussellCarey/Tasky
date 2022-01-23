@@ -13,6 +13,8 @@ export const TextAreaContainer = styled.div`
   overflow-y: scroll;
   overflow-x: hidden;
 
+  color: ${(props) => props.theme.textColor};
+
   /* width */
   &::-webkit-scrollbar {
     width: 40px;
@@ -20,14 +22,14 @@ export const TextAreaContainer = styled.div`
 
   /* Track */
   &::-webkit-scrollbar-track {
-    background: ${theme.colors.borderColor};
+    background: ${(props) => props.theme.borderColor};
   }
 
   /* Handle */
   &::-webkit-scrollbar-thumb {
     background: ${theme.colors.terminalColor};
-    border-left: solid 5px ${theme.colors.borderColor};
-    border-right: solid 5px ${theme.colors.borderColor};
+    border-left: solid 5px ${(props) => props.theme.borderColor};
+    border-right: solid 5px ${(props) => props.theme.borderColor};
   }
 
   /* Handle on hover */

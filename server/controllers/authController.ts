@@ -59,12 +59,11 @@ exports.signUp = catchAsync(async (req: Request, res: Response, next: NextFuncti
   const cryptedPassword = await bcryptPassword(req.body.password);
   if (!cryptedPassword) throw new AppError("Failed. Sorry, please try again.", 500);
 
-  // Add to the DB
+  // Add to the DB - WE use uuid to give user a code. The chance of a repeating code is so small we dont need to check it exists.
   const addedUser = await addUserToTheDB(body, cryptedPassword);
 
+  // Send welcome email to the user.
   const welcomeEmail = await sendWelcomeEmail(body.username, body.email, addedUser);
-  console.log("Returned welcome email");
-  console.log(welcomeEmail);
 
   const removePassword = { ...body, password: "" };
 

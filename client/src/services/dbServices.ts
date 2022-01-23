@@ -157,8 +157,6 @@ export const getTasksOnDate = async (date: string | null) => {
     },
   });
 
-  console.log(tasks);
-
   return tasks;
 };
 
@@ -178,8 +176,6 @@ export const getTasksFromDateRange = async (dateFrom: string, dateTo: string) =>
     },
   });
 
-  console.log(tasks);
-
   return tasks;
 };
 
@@ -197,8 +193,6 @@ export const deleteTasksDate = async (date: string) => {
       jwt: `${Cookies.get("jwt")}`,
     },
   });
-
-  console.log(taskToDelete);
 
   return taskToDelete;
 };
@@ -219,8 +213,6 @@ export const deleteTasksFromDateRange = async (dateFrom: string, dateTo: string)
     },
   });
 
-  console.log(deletedTasksRange);
-
   return deletedTasksRange;
 };
 
@@ -233,8 +225,6 @@ export const authenticateUser = async (uuid: string) => {
       uuid: uuid,
     },
   });
-
-  console.log(authUser);
 
   return authUser;
 };

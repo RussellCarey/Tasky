@@ -8,9 +8,10 @@ export const InputContainer = styled.input`
 
   border: none;
   outline: none;
-  border-top: 5px solid ${theme.colors.borderColor};
+  border-top: 5px solid ${(props) => props.theme.borderColor};
   border-radius: 0 0 20px 20px;
-  background-color: ${theme.colors.terminalColor};
-
+  background-color: ${(props) => props.theme.terminalColor};
   font-size: ${theme.spacing.medium};
+
+  color: ${(props) => props.theme.textColor};
 `;

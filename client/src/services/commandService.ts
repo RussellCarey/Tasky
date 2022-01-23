@@ -42,6 +42,38 @@ export const clearWindowText = (args: Array<string>) => {
   return ECommandReturnOptions.clear;
 };
 
+interface ITaskObject {
+  hours: number;
+  id: number;
+  taskname: string;
+  userid: string;
+}
+
+const calculatePercentages = (itemsArray: Array<ITaskObject>) => {
+  const totalHours = itemsArray.map((tasks) => +tasks.hours).reduce((pre, curr) => pre + curr);
+  const tasksAndHours: any = {};
+
+  itemsArray.forEach((tasks) => {
+    const obj = tasksAndHours[tasks.taskname];
+
+    if (!obj)
+      return (tasksAndHours[tasks.taskname] = {
+        taskname: tasks.taskname,
+        hours: +tasks.hours,
+        percentage: (tasks.hours / totalHours) * 100,
+      });
+
+    if (obj)
+      return (tasksAndHours[tasks.taskname] = {
+        ...obj,
+        hours: (obj.hours += +tasks.hours),
+        percentage: (+obj.hours / totalHours) * 100,
+      });
+  });
+
+  return tasksAndHours;
+};
+
 // LOGIN LOGOUT SIGNUP.
 export const login = async (args: Array<string>) => {
   try {
@@ -189,13 +221,35 @@ export const deleteTask = async (args: Array<string>) => {
 
 export const showTasksOnDate = async (args: Array<string>) => {
   try {
-    if (args.length > 1) return ["Too many argumentssssss fro show tasks on date"];
+    if (args.length > 1) return ["Too many argumentssssss fro show tasks on date."];
     const date = args[0];
 
+    // Get single days tasks..
     const daysTasks = await getTasksOnDate(date);
-    if (daysTasks.data.data.rows.length === 0) return ["Sorry, you have no tasks saved for this date"];
+    console.log(daysTasks);
+    if (daysTasks.data.data.rows.length === 0)
+      return ["Attempting to get tasks..", "Sorry, you have no tasks saved for this date."];
 
-    return ["Got the days tasks.."];
+    // Convert the data into an object where each task is collected. Data is task name, hours, percetage.
+    const percetangesAndCollection = calculatePercentages(daysTasks.data.data.rows);
+    console.log(percetangesAndCollection);
+
+    // Convert above object into an array. Return string with data to return to console.
+    const stringArrayResults: Array<string> = Object.entries(percetangesAndCollection).map((data: any) => {
+      console.log(data);
+      return `${data[1].taskname} for ${data[1].hours} hours. [${data[1].percentage}%]`;
+    });
+
+    // Push date into the start of the array.
+    const dateString = args[0]
+      ? `${args[0]}'s tasks, time and time percentages..`
+      : "Todays tasks, time and time percentages.";
+    stringArrayResults.unshift(dateString);
+
+    // Push starting sentence.
+    stringArrayResults.unshift("Attempting to get tasks..");
+
+    return stringArrayResults;
   } catch (error: any) {
     console.log(error.response.message);
     return ["Error getting your days tasks, please try again."];
@@ -204,14 +258,30 @@ export const showTasksOnDate = async (args: Array<string>) => {
 
 export const showTasksDateRange = async (args: Array<string>) => {
   try {
-    if (args.length > 2) return ["Too many argumentssssss from show task date range"];
+    if (args.length > 2) return ["Too many argumentssssss from show task date range."];
     const dateStart = args[0];
     const dateEnd = args[1];
 
     const daysTasks = await getTasksFromDateRange(dateStart, dateEnd);
-    if (daysTasks.data.data.rows.length === 0) return ["Sorry, you have no tasks saved for this date range"];
+    if (daysTasks.data.data.rows.length === 0) return ["Sorry, you have no tasks saved for this date range."];
 
-    return ["Got the dates range tasks.."];
+    // Convert the data into an object where each task is collected. Data is task name, hours, percetage.
+    const percetangesAndCollection = calculatePercentages(daysTasks.data.data.rows);
+    console.log(percetangesAndCollection);
+
+    // Convert above object into an array. Return string with data to return to console.
+    const stringArrayResults: Array<string> = Object.entries(percetangesAndCollection).map((data: any) => {
+      console.log(data);
+      return `${data[1].taskname} for ${data[1].hours} hours. [${data[1].percentage}%]`;
+    });
+
+    // Push date into the start of the array.
+    const dateString = args[0]
+      ? `${args[0]} to ${args[1]} tasks, time and time percentages..`
+      : "Time and time percentages.";
+    stringArrayResults.unshift(dateString);
+
+    return stringArrayResults;
   } catch (error: any) {
     console.log(error.response.message);
     return ["Error getting your tasks, please try again."];
