@@ -49,8 +49,7 @@ jobs:
 
       - run: |
 
-          pm2 start tasky_client
-          pm2 start tasky_server
+
           pm2 save
           sudo service nginx restart
           pm2 resurrect
