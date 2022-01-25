@@ -16,7 +16,7 @@ import {
 } from "../services/authServices";
 import { sendWelcomeEmail } from "./emailController";
 
-// Create a JWT, set a cookie and its options and send it back to the client...
+// Create a JWT, set a cookie and its options and send it back to the client......
 const createAndSendJWT = async (res: Response, data: any) => {
   // Sign token with data provided
   const token = await jwt.sign(data, process.env.JWT_SECRET!);
