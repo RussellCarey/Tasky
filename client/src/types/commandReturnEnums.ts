@@ -15,7 +15,7 @@ export enum ECommandReturnOptions {
   showTasksFor = "show tasks for",
   showTasksFrom = "show tasks from",
   deleteTasksFrom = "delete tasks from",
-  deleteTasks = "delete tasks for",
+  deleteTasksFor = "delete tasks for",
   setBackgroundColor = "set background color",
   setBorderColor = "set border color",
   setShadowColor = "set shadow color",

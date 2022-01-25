@@ -20,6 +20,7 @@ import {
 } from "../../services/commandService";
 import { aboutText, helpScreenText } from "../../constants/text";
 import ThemeContext from "../../context/theme/themeContext";
+import { hideLoginPassword } from "./utils/hideLoginPassword";
 const InputArea: FunctionComponent<IPropsInputArea> = ({ inputText, setInputText, consoleText, setConsoleText }) => {
   const themeContext = useContext(ThemeContext);
   const {
@@ -34,7 +35,6 @@ const InputArea: FunctionComponent<IPropsInputArea> = ({ inputText, setInputText
   } = themeContext;
 
   const passwordRef = useRef<string>("");
-  const numnum = useRef<number>(0);
   const inputElement = useRef<HTMLInputElement | null>(null);
   const [canPress, setCanPress] = useState<Boolean>(true);
 
@@ -42,29 +42,9 @@ const InputArea: FunctionComponent<IPropsInputArea> = ({ inputText, setInputText
   const textOnChange = (e: React.ChangeEvent) => {
     const target = e.target as HTMLInputElement;
 
-    // Save typed password but hide it in the input field..
-    const sentenceArray = target.value.split(" ");
-    const wordCount = sentenceArray.length;
-    const firstWord = sentenceArray[0];
+    const stringText = hideLoginPassword(target.value, passwordRef);
 
-    if (wordCount > 2 && firstWord === "login") {
-      const thirdWord = sentenceArray[2];
-      const thirdWordArray = thirdWord.split("");
-      const lastLetter = thirdWordArray[thirdWordArray.length - 1];
-
-      // Add the last letter when typed to the string password.
-      if (lastLetter) passwordRef.current += lastLetter;
-
-      // Build new sentence with hidden PW..
-      const sentence = target.value.split(" ");
-      const hiddenPassword = "*".repeat(thirdWordArray.length);
-      sentence[2] = hiddenPassword;
-      const hiddenPasswordSentence = sentence.join(" ");
-
-      return setInputText(hiddenPasswordSentence);
-    }
-
-    setInputText(target.value);
+    setInputText(stringText);
   };
 
   const resetPress = () => {
@@ -141,7 +121,7 @@ const InputArea: FunctionComponent<IPropsInputArea> = ({ inputText, setInputText
             break;
 
           // Delete ONE task instances
-          case ECommandReturnOptions.deleteTasks:
+          case ECommandReturnOptions.deleteTask:
             addConsoleText(["Attempting to delete task.."]);
             const deleteTaskWithHours = await deleteTask(checkForCommand.args);
             addConsoleText([...deleteTaskWithHours]);
@@ -171,7 +151,7 @@ const InputArea: FunctionComponent<IPropsInputArea> = ({ inputText, setInputText
             addConsoleText([...deleteRange]);
             break;
 
-          case ECommandReturnOptions.deleteTasks:
+          case ECommandReturnOptions.deleteTasksFor:
             addConsoleText(["Attempting to get tasks.."]);
             const deleteTasks = await deleteTasksOnDate(checkForCommand.args);
             addConsoleText([...deleteTasks]);

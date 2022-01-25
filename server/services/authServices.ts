@@ -38,6 +38,8 @@ export const addUserToTheDB = async (body: any, password: string) => {
   const currentDate = new Date(Date.now()).getTime();
   const emailActivateKey = uuidv4();
 
+  // Check the UUID is not there..
+
   const addUser = await pool.query(
     "INSERT INTO users (username, email, password, created, activekey) VALUES ($1, $2, $3, $4, $5)",
     [body.username, body.email, password, currentDate, emailActivateKey]

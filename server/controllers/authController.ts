@@ -65,10 +65,10 @@ exports.signUp = catchAsync(async (req: Request, res: Response, next: NextFuncti
   // Send welcome email to the user.
   const welcomeEmail = await sendWelcomeEmail(body.username, body.email, addedUser);
 
-  const removePassword = { ...body, password: "" };
-
   // Create token
-  await createAndSendJWT(res, removePassword);
+  res.json({
+    status: "success",
+  });
 });
 
 // login, check email exists and check and decrypt pasword to check if we can login, send back JWT cookie and data.

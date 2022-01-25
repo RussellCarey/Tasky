@@ -1,0 +1,57 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - run: npm i
+        working-directory: server
+
+      - run: npm run build
+        working-directory: client
+        env:
+          CI: false
+
+      - run: pm2 delete tasky_client
+      - run: pm2 delete tasky_server
+
+      - run: pm2 start npm --name "tasky_client" -- run serve
+        working-directory: client
+
+      - run: npm i
+        working-directory: server
+
+      - run: pm2 start npm --name "tasky_server" -- run start-prod
+        working-directory: server
+
+      - run: |
+          cd server
+          touch .env
+          echo NODE_ENV='${{ secrets.NODE_ENV }}' >> .env
+          echo JWT_SECRET='${{ secrets.JWT_SECRET }}' >> .env
+          echo PROD_DATABASE_URL='${{ secrets.PROD_DATABASE_URL }}' >> .env
+          echo PORT='${{ secrets.PORT }}' >> .env
+          echo SENDGRID_API='${{ secrets.SENDGRID_API }}' >> .env
+          echo ADMIN_EMAIL='${{ secrets.ADMIN_EMAIL }}' >> .env
+          cat .env
+
+      - run: |
+          pm2 stop tasky_client
+          pm2 start tasky_client
+          pm2 stop tasky_server
+          pm2 start tasky_server
+          pm2 save
+          sudo service nginx restart
+          pm2 resurrect

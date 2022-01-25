@@ -42,6 +42,12 @@ export const clearWindowText = (args: Array<string>) => {
   return ECommandReturnOptions.clear;
 };
 
+const errorMessage = (error: any) => {
+  const err = error.response;
+  if (err.data.message) return [`Error. ${err.data.message}`];
+  return ["Unknown Error, please try again."];
+};
+
 interface ITaskObject {
   hours: number;
   id: number;
@@ -58,6 +64,7 @@ const calculatePercentages = (itemsArray: Array<ITaskObject>) => {
 
     if (!obj)
       return (tasksAndHours[tasks.taskname] = {
+        id: tasks.id,
         taskname: tasks.taskname,
         hours: +tasks.hours,
         percentage: (tasks.hours / totalHours) * 100,
@@ -85,9 +92,7 @@ export const login = async (args: Array<string>, password: string) => {
 
     return ["Attempting login, please wait...", "Logged into your account"];
   } catch (error: any) {
-    const err = error.response;
-    if (!err.data.message) return ["Attempting login, please wait...", `Unknown error, please try again`];
-    return ["Attempting login, please wait...", `Failed. ${err.data.message}`];
+    return errorMessage(error);
   }
 };
 
@@ -122,13 +127,10 @@ export const signup = async (args: Array<string>) => {
       return ["Check passwords match and ensure password is greater than 8 charactrers long."];
 
     const signupRequest = await signupAttempt(args);
-    console.log(signupRequest);
 
     return ["Attempting sign up, please wait...", "Welcome, you are all signed up. Please login to continue!"];
   } catch (error: any) {
-    const err = error.response;
-    if (!err.data.message) return ["Attempting login, please wait...", `Login error. Please try again`];
-    return ["Attempting signup, please wait...", `Sign up failed. ${err.data.message}`];
+    return errorMessage(error);
   }
 };
 
@@ -143,9 +145,7 @@ export const addNewTaskName = async (args: Array<string>) => {
 
     return ["Attempting to add your new task name!", "Task name was added!"];
   } catch (error: any) {
-    const err = error.response;
-    if (!err.data.message) return ["Attempting to add your new task name!", `Unknown error, please try again`];
-    return ["Attempting to add your new task name!", `Adding task failed. ${err.data.message}`];
+    return errorMessage(error);
   }
 };
 
@@ -169,7 +169,7 @@ export const getAllTaskNames = async () => {
     // Return found tasks
     return ["Attempting to find for your task names, please wait..", "Retrieved tasks:", ...tasksSentences];
   } catch (error: any) {
-    return ["Searching for your tasks, please wait..", "Failed to get tasks, please try again."];
+    return errorMessage(error);
   }
 };
 
@@ -181,8 +181,8 @@ export const deleteTaskNames = async (args: Array<string>) => {
     console.log(deletedTaskName);
 
     return ["Attempting to delete task name..", "Your task name was deleted. "];
-  } catch (error) {
-    return ["Attempting to delete task name..", "Error deleteing task name, please try again."];
+  } catch (error: any) {
+    return errorMessage(error);
   }
 };
 
@@ -198,9 +198,7 @@ export const addNewTask = async (args: Array<string>) => {
 
     return ["Attempting to add new task..", "Task was added!"];
   } catch (error: any) {
-    const err = error.response;
-    if (!err.data.message) return ["Attempting to add your new task!", `Unknown error, please try again`];
-    return ["Attempting to add your new task!", `Adding task failed. ${err.data.message}`];
+    return errorMessage(error);
   }
 };
 
@@ -213,9 +211,7 @@ export const deleteTask = async (args: Array<string>) => {
 
     return ["Attempting to delete task..", "Task was deleted!"];
   } catch (error: any) {
-    const err = error.response;
-    if (!err.data.message) return ["Attempting to delete task!", `Unknown error, please try again`];
-    return ["Attempting to delete task!", `Adding task failed. ${err.data.message}`];
+    return errorMessage(error);
   }
 };
 
@@ -228,7 +224,7 @@ export const showTasksOnDate = async (args: Array<string>) => {
     const daysTasks = await getTasksOnDate(date);
     console.log(daysTasks);
     if (daysTasks.data.data.rows.length === 0)
-      return [`Attempting to get tasks..", "Sorry, you have no tasks saved for this date.`];
+      return ["Attempting to get tasks..", "Sorry, you have no tasks saved for this date."];
 
     // Convert the data into an object where each task is collected. Data is task name, hours, percetage.
     const percetangesAndCollection = calculatePercentages(daysTasks.data.data.rows);
@@ -237,7 +233,7 @@ export const showTasksOnDate = async (args: Array<string>) => {
     // Convert above object into an array. Return string with data to return to console.
     const stringArrayResults: Array<string> = Object.entries(percetangesAndCollection).map((data: any) => {
       console.log(data);
-      return `${data[1].taskname} for ${data[1].hours} hours. [${data[1].percentage}%]`;
+      return `[${data[1].id}] ${data[1].taskname} for ${data[1].hours} hours. [${data[1].percentage}%]`;
     });
 
     // Push date into the start of the array.
@@ -251,8 +247,7 @@ export const showTasksOnDate = async (args: Array<string>) => {
 
     return stringArrayResults;
   } catch (error: any) {
-    console.log(error.response.message);
-    return ["Error getting your days tasks, please try again."];
+    return errorMessage(error);
   }
 };
 
@@ -283,8 +278,7 @@ export const showTasksDateRange = async (args: Array<string>) => {
 
     return stringArrayResults;
   } catch (error: any) {
-    console.log(error.response.message);
-    return ["Error getting your tasks, please try again."];
+    return errorMessage(error);
   }
 };
 
@@ -300,8 +294,7 @@ export const deleteTasksFromRange = async (args: Array<string>) => {
 
     return ["Error deleteing tasks, please try again."];
   } catch (error: any) {
-    console.log(error.response.message);
-    return ["Error getting your tasks, please try again."];
+    return errorMessage(error);
   }
 };
 
@@ -315,7 +308,6 @@ export const deleteTasksOnDate = async (args: Array<string>) => {
 
     return ["Error deleteing tasks, please try again."];
   } catch (error: any) {
-    console.log(error.response.message);
-    return ["Error getting your tasks, please try again."];
+    return errorMessage(error);
   }
 };
