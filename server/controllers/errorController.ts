@@ -15,7 +15,7 @@ const sendProductionError = (err: IError, res: Response) => {
   res.status(err.statusCode).json({
     code: err.statusCode,
     status: err.status,
-    message: "Something went wrong on our end! Please try again",
+    message: err.message || "Something went wrong on our end! Please try again",
   });
 };
 
