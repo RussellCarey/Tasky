@@ -3,6 +3,7 @@ dotenv.config();
 
 import express from "express";
 import helmet from "helmet";
+import isDev from "./utils/isDev";
 const app = express();
 const cors = require("cors");
 
@@ -10,10 +11,17 @@ const AuthRoutes = require("./routes/authRoutes");
 const TasksRoutes = require("./routes/taskRoutes");
 const ErrorController = require("./controllers/errorController");
 
-const whiteList = ["localhost:3000", "http://localhost:3000", "http://127.0.0.1:3000"];
+const whiteListDev = ["localhost:3000", "http://localhost:3000", "http://127.0.0.1:3000"];
+const whiteListProd = [
+  "https://tasky.russell-carey.com",
+  "https://tasky.russell-carey.com/taskyapi",
+  "https://www.tasky.russell-carey.com",
+  "localhost:3002",
+];
+
 app.use(
   cors({
-    origin: whiteList,
+    origin: isDev() ? whiteListDev : whiteListProd,
     credentials: true,
   })
 );
