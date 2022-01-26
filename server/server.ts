@@ -36,5 +36,5 @@ app.use(!isDev() ? "/taskyapi/tasks" : "/api/tasks", TasksRoutes);
 app.use(ErrorController);
 
 app.listen(process.env.PORT, () => {
-  console.log("Connected to server on port ");
+  console.log(`Connected to server on port ${process.env.PORT}`);
 });

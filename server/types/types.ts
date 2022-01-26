@@ -6,4 +6,5 @@ export interface ILoginData {
 export interface IError extends Error {
   status: string;
   statusCode: number;
+  isOperational: boolean;
 }
