@@ -32,7 +32,7 @@ app.use(express.json({ limit: "1mb" }));
 app.use(!isDev() ? "/taskyapi/auth" : "/api/auth", AuthRoutes);
 app.use(!isDev() ? "/taskyapi/tasks" : "/api/tasks", TasksRoutes);
 
-// Error handler for all requests etc.
+// Error handler for all requests etc...
 app.use(ErrorController);
 
 app.listen(process.env.PORT, () => {
