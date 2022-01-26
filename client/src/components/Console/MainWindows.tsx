@@ -9,10 +9,6 @@ export const MainWindow = styled.div`
   align-items: center;
 
   background-color: ${(props) => props.theme.backgroundColor};
-
-  @media (max-width: 500px) {
-    height: -webkit-fill-available;
-  }
 `;
 
 export const TerminalWindow = styled.div`
