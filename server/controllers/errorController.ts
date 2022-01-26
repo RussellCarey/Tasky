@@ -22,7 +22,7 @@ const sendProductionError = (err: IError, res: Response) => {
 module.exports = (err: IError, req: Request, res: Response, next: NextFunction) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || "error";
-  console.log("This error is from the error controller. BEEP BEEP BOOP BOOP");
+  console.log("This error is from the error controller. BEEP BEEP BOOP BOOdsfdfdsP");
   console.log(err);
   console.log(err.stack);
 
