@@ -25,4 +25,16 @@ export const TerminalWindow = styled.div`
   flex-direction: column;
 
   overflow: wrap;
+
+  @media (max-width: 900px) {
+    width: 95vw;
+    height: 95vh;
+    box-shadow: 10px 10px 0px ${(props) => props.theme.shadowColor};
+  }
+
+  @media (max-width: 500px) {
+    width: 99vw;
+    height: 99vh;
+    box-shadow: 0px 0px 0px ${(props) => props.theme.shadowColor};
+  }
 `;

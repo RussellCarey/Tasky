@@ -41,4 +41,8 @@ export const TextAreaContainer = styled.div`
 export const Text = styled.p`
   line-height: ${theme.spacing.large};
   margin-bottom: ${theme.spacing.xsmall};
+
+  @media (max-width: 500) {
+    font-size: ${theme.font.sizes.small};
+  }
 `;

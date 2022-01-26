@@ -41,9 +41,8 @@ const InputArea: FunctionComponent<IPropsInputArea> = ({ inputText, setInputText
   //! DOES NOT WORK
   const textOnChange = (e: React.ChangeEvent) => {
     const target = e.target as HTMLInputElement;
-
-    const stringText = hideLoginPassword(target.value, passwordRef);
-
+    const targetText = target.value.toLowerCase();
+    const stringText = hideLoginPassword(targetText, passwordRef);
     setInputText(stringText);
   };
 
