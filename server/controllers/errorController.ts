@@ -10,7 +10,7 @@ const sendErrorDev = (err: IError, res: Response) => {
   });
 };
 
-// Improve this further..
+// Improve this further....
 const sendProductionError = (err: IError, res: Response) => {
   res.status(err.statusCode).json({
     code: err.statusCode,
