@@ -16,10 +16,11 @@ export const theme = {
     sizes: {
       small: "0.8rem",
       medium: "1rem",
-      large: "1.25rem",
-      xlarge: "1.563rem",
-      xxlarge: "1.953rem",
-      xxxlage: "2.441rem",
+      large: "1.333rem",
+      xlarge: "1.777rem",
+      xxlarge: "2.369rem",
+      xxxlage: "3.157rem",
+      title: "4.209rem",
     },
     lineheights: {
       small: "0.8rem",

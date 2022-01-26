@@ -1,10 +1,10 @@
 import React, { useState, useContext, FunctionComponent } from "react";
-import { MainWindow, TerminalWindow } from "../components/Console/MainWindows";
-import TopBar from "../components/Console/TopBar";
-import TextArea from "../components/Console/TextArea";
-import InputArea from "../components/Console/InputBox";
-import { welcomeText } from "../constants/text";
-import ThemeContext from "../context/theme/themeContext";
+import { MainWindow, TerminalWindow } from "./styles/MainWindows";
+import TopBar from "./TopBar";
+import TextArea from "./TextArea";
+import InputArea from "./InputBox";
+import { welcomeText } from "../../constants/text";
+import ThemeContext from "../../context/theme/themeContext";
 
 const ConsolePage: FunctionComponent = () => {
   const [consoleText, setConsoleText] = useState<Array<string>>(welcomeText);

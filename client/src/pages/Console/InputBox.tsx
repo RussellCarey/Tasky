@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useRef, useEffect, useState, useContext } from "react";
 import { InputContainer } from "./styles/InputBox.styles";
-import { IPropsInputArea } from "../types/types";
+import { IPropsInputArea } from "./types/types";
 import { checkMatch } from "../../services/textAreaServies";
 import { ECommandReturnOptions } from "../../types/commandReturnEnums";
 import {

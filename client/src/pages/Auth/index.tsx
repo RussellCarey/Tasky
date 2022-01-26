@@ -1,41 +1,9 @@
 import React, { useState, useEffect, FunctionComponent, useContext } from "react";
-import { theme } from "../theme/theme";
-import styled from "styled-components";
-import ThemeContext from "../context/theme/themeContext";
+import ThemeContext from "../../context/theme/themeContext";
 import { useSearchParams } from "react-router-dom";
-import { authenticateUser } from "../services/dbServices";
+import { authenticateUser } from "../../services/dbServices";
 
-const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
-
-  background-color: ${(props) => props.theme.backgroundColor};
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const MessageWindow = styled.div`
-  width: 70vw;
-  height: max-content;
-  padding: ${theme.spacing.xlarge} ${theme.spacing.xlarge};
-  position: relative;
-
-  background-color: ${(props) => props.theme.terminalColor};
-  border: 5px solid ${(props) => props.theme.borderColor};
-  border-radius: 20px;
-  box-shadow: 20px 20px 0px ${(props) => props.theme.shadowColor};
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  overflow: wrap;
-
-  text-align: center;
-`;
+import { Container, MessageWindow } from "./styles/styles";
 
 const AuthPage: FunctionComponent = () => {
   const themeContext = useContext(ThemeContext);
@@ -46,6 +14,7 @@ const AuthPage: FunctionComponent = () => {
 
   const paramString = params.toString().slice(1);
 
+  //!
   const attemptAuthUsingParam = async (param: string) => {
     try {
       await authenticateUser(param);

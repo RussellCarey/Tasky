@@ -19,3 +19,11 @@ export const Title = styled.h5`
   font-size: ${theme.font.sizes.large};
   font-weight: bold;
 `;
+
+export const CloseButton = styled.p`
+  font-size: ${theme.font.sizes.large};
+
+  &:hover {
+    cursor: pointer;
+  }
+`;

@@ -1,6 +1,6 @@
 import { FunctionComponent, useEffect, useRef, useContext } from "react";
 import { TextAreaContainer, Text } from "./styles/TextArea.styles";
-import { IPropsTextArea } from "../types/types";
+import { IPropsTextArea } from "./types/types";
 import ThemeContext from "../../context/theme/themeContext";
 
 export const TextArea: FunctionComponent<IPropsTextArea> = ({ consoleText }) => {

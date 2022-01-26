@@ -1,6 +1,7 @@
-import { useContext } from "react";
-import ConsolePage from "./pages/console";
-import AuthPage from "./pages/auth";
+import ConsolePage from "./pages/Console/index";
+import AuthPage from "./pages/Auth/index";
+import HomePage from "./pages/Home/index";
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import ThemeState from "./context/theme/themeState";
@@ -11,7 +12,8 @@ function App() {
       <>
         <Router>
           <Routes>
-            <Route path="/" element={<ConsolePage />} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/console/" element={<ConsolePage />} />
             <Route path="/auth/" element={<AuthPage />} />
           </Routes>
         </Router>
