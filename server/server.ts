@@ -29,8 +29,8 @@ app.use(
 app.use(helmet());
 app.use(express.json({ limit: "1mb" }));
 
-app.use("/api/auth", AuthRoutes);
-app.use("/api/tasks", TasksRoutes);
+app.use(!isDev() ? "/taskyapi/auth" : "/api/auth", AuthRoutes);
+app.use(!isDev() ? "/taskyapi/tasks" : "/api/tasks", TasksRoutes);
 
 app.use(ErrorController);
 
