@@ -12,7 +12,7 @@ export const TextArea: FunctionComponent<IPropsTextArea> = ({ consoleText }) => 
     scrollToBottom();
   }, [textDivElement, consoleText]);
 
-  // On change to the text in the  console, scroll to the bottom automatically..
+  // On change to the text in the  console, scroll to the bottom automatically.....
   const scrollToBottom = () => {
     if (textDivElement && textDivElement.current)
       textDivElement.current?.scrollTo({ behavior: "smooth", top: textDivElement.current.scrollHeight });
