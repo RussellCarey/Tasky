@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { theme } from "../../styles/theme";
+import { theme } from "../../../theme/theme";
 
 export const TopBarContainer = styled.div`
   width: 100%;

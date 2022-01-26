@@ -1,5 +1,5 @@
 import React, { useState, useContext, FunctionComponent } from "react";
-import { MainWindow, TerminalWindow } from "../components/styles/styled";
+import { MainWindow, TerminalWindow } from "../components/Console/MainWindows";
 import TopBar from "../components/Console/TopBar";
 import TextArea from "../components/Console/TextArea";
 import InputArea from "../components/Console/InputBox";

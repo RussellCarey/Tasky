@@ -1,5 +1,5 @@
 import React, { useState, useEffect, FunctionComponent, useContext } from "react";
-import { theme } from "../components/styles/theme";
+import { theme } from "../theme/theme";
 import styled from "styled-components";
 import ThemeContext from "../context/theme/themeContext";
 import { useSearchParams } from "react-router-dom";

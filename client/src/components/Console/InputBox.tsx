@@ -38,23 +38,28 @@ const InputArea: FunctionComponent<IPropsInputArea> = ({ inputText, setInputText
   const inputElement = useRef<HTMLInputElement | null>(null);
   const [canPress, setCanPress] = useState<Boolean>(true);
 
-  //! DOES NOT WORK
   const textOnChange = (e: React.ChangeEvent) => {
     const target = e.target as HTMLInputElement;
     const targetText = target.value.toLowerCase();
+
+    // WHen using the login command, this will hide the password with ***s
     const stringText = hideLoginPassword(targetText, passwordRef);
+
     setInputText(stringText);
   };
 
+  // DOnt want user being able to type why a network request etc is happening..
   const resetPress = () => {
     setInputText("");
     setCanPress(true);
   };
 
+  //
   const addConsoleText = (textArray: Array<string>) => {
     setConsoleText([...consoleText, ...textArray]);
   };
 
+  //
   const onEnterPress = async (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && canPress) {
       try {

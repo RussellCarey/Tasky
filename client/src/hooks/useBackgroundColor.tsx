@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { theme } from "../components/styles/theme";
+import { theme } from "../theme/theme";
 
 // NOT USED FOR NOW / UNFINISHED / MAY USE LATER
 // NOT USED FOR NOW / UNFINISHED / MAY USE LATER
