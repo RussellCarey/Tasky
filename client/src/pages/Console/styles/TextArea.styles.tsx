@@ -42,7 +42,7 @@ export const Text = styled.p`
   line-height: ${theme.spacing.large};
   margin-bottom: ${theme.spacing.xsmall};
 
-  @media (max-width: 500) {
-    font-size: ${theme.font.sizes.small};
+  @media (max-width: 500px) {
+    margin-bottom: ${theme.spacing.small};
   }
 `;

@@ -21,6 +21,7 @@ import {
 import { aboutText, helpScreenText } from "../../constants/text";
 import ThemeContext from "../../context/theme/themeContext";
 import { hideLoginPassword } from "./utils/hideLoginPassword";
+
 const InputArea: FunctionComponent<IPropsInputArea> = ({ inputText, setInputText, consoleText, setConsoleText }) => {
   const themeContext = useContext(ThemeContext);
   const {

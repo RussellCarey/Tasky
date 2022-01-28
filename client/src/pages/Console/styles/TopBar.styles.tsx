@@ -7,7 +7,6 @@ export const TopBarContainer = styled.div`
   padding: ${theme.spacing.medium};
 
   border-bottom: 5px solid ${(props) => props.theme.borderColor};
-
   color: ${(props) => props.theme.textColor};
 
   display: flex;

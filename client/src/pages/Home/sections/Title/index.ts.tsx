@@ -1,7 +1,6 @@
-import React, { FunctionComponent } from "react";
-import { MainHeading, TerminalBox, TerminalButton, SmallHeading, SubHeading } from "./styles/styles";
-import { TitleSectionDiv, ButtonContainer } from "./styles/TitleSection.styles";
-
+import { FunctionComponent } from "react";
+import { MainHeading, TerminalBox, TerminalButton, ButtonTextLarge, SubHeading } from "../../../common/styles";
+import { TitleSectionDiv, ButtonContainer } from "./Title.styles";
 import { Link } from "react-router-dom";
 
 //!!!!!! NOT AANY
@@ -19,21 +18,21 @@ const TitleSection: FunctionComponent<any> = ({ theme }) => {
       <ButtonContainer>
         <Link to="/help" style={{ textDecoration: "none" }}>
           <TerminalButton theme={theme}>
-            <SmallHeading>docs</SmallHeading>
+            <ButtonTextLarge>docs</ButtonTextLarge>
           </TerminalButton>
         </Link>
 
         {/* Go to the console */}
         <Link to="/console" style={{ textDecoration: "none" }}>
           <TerminalButton theme={theme}>
-            <SmallHeading>console</SmallHeading>
+            <ButtonTextLarge>console</ButtonTextLarge>
           </TerminalButton>
         </Link>
 
         {/* Go to the account page */}
         <Link to="/account" style={{ textDecoration: "none" }}>
           <TerminalButton theme={theme}>
-            <SmallHeading>account</SmallHeading>
+            <ButtonTextLarge>account</ButtonTextLarge>
           </TerminalButton>
         </Link>
       </ButtonContainer>
