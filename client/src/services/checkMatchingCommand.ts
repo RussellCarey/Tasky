@@ -13,6 +13,7 @@ const returnedObject = (args: Array<string>, commandName: string, fullSentence: 
 export const checkStarting = (text: string, commandMap: Record<string, ICommandReturnFunction>) => {
   const textArray = text.split(" ");
 
+  // Loop through command hashmap.
   for (const command in commandMap) {
     const commandInText = command.replaceAll("_", " ");
     const commandWordArray = command.split("_");

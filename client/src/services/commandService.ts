@@ -126,7 +126,9 @@ export const signup = async (commandObject: ICommandInitalObject) => {
     // Run checks on inputs..
     if (!checkValidUsername(commandObject.args[0]))
       return ["Username should contain no numbers, spaces or special characters."];
+
     if (!checkValidEmail(commandObject.args[1])) return ["Failed. Email was not valid."];
+
     if (!checkValidPassword(commandObject.args[2], commandObject.args[3]))
       return ["Check passwords match and ensure password is greater than 8 charactrers long."];
 
@@ -224,16 +226,13 @@ export const showTasksOnDate = async (commandObject: ICommandInitalObject) => {
 
     // Get single days tasks..
     const daysTasks = await getTasksOnDate(date);
-    console.log(daysTasks);
     if (daysTasks.data.data.rows.length === 0) return ["Sorry, you have no tasks saved for this date."];
 
     // Convert the data into an object where each task is collected. Data is task name, hours, percetage.
     const percetangesAndCollection = calculatePercentages(daysTasks.data.data.rows);
-    console.log(percetangesAndCollection);
 
     // Convert above object into an array. Return string with data to return to console.
     const stringArrayResults: Array<string> = Object.entries(percetangesAndCollection).map((data: any) => {
-      console.log(data);
       return `[${data[1].id}] ${data[1].taskname} for ${data[1].hours} hours. [${data[1].percentage}%]`;
     });
 
@@ -242,9 +241,6 @@ export const showTasksOnDate = async (commandObject: ICommandInitalObject) => {
       ? `${commandObject.args[0]}'s tasks, time and time percentages..`
       : "Todays tasks, time and time percentages.";
     stringArrayResults.unshift(dateString);
-
-    // Push starting sentence.
-    stringArrayResults.unshift("Attempting to get tasks..");
 
     return stringArrayResults;
   } catch (error: any) {
