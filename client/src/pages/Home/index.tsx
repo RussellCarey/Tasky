@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Main } from "../common/styles";
+import { Main } from "../styles/styles";
 import TitleSection from "./sections/Title/index.ts";
 
 import ThemeContext from "../../context/theme/themeContext";

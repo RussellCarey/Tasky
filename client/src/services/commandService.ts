@@ -18,27 +18,29 @@ import {
 } from "./dbServices";
 import { checkValidEmail, checkValidPassword, checkValidUsername } from "../utils/inputValidation";
 
+import { ICommandInitalObject } from "../types/types";
+
 // UTILITIES
-export const showCommandNotFound = (args: Array<string>) => {
-  const joinedStrings = args.join(" ");
+export const showCommandNotFound = (commandObject: ICommandInitalObject) => {
+  const joinedStrings = commandObject.args.join(" ");
   return [`Did not recognise command ${joinedStrings}.`];
 };
 
 //
-export const showHelpText = (args: Array<string>) => {
-  if (args.length > 0) return ["Please type show help without arguments to use this function."];
+export const showHelpText = (commandObject: ICommandInitalObject) => {
+  if (commandObject.args.length > 0) return ["Please type show help without arguments to use this function."];
   return helpScreenText;
 };
 
 //
-export const showAboutText = (args: Array<string>) => {
-  if (args.length > 0) return ["Please type show about without arguments to use this function."];
+export const showAboutText = (commandObject: ICommandInitalObject) => {
+  if (commandObject.args.length > 0) return ["Please type show about without arguments to use this function."];
   return aboutText;
 };
 
 //
-export const clearWindowText = (args: Array<string>) => {
-  if (args.length > 0) return ["Please type clear without arguments to use this function."];
+export const clearWindowText = (commandObject: ICommandInitalObject) => {
+  if (commandObject.args.length > 0) return ["Please type clear without arguments to use this function."];
   return ECommandReturnOptions.clear;
 };
 
@@ -82,68 +84,71 @@ const calculatePercentages = (itemsArray: Array<ITaskObject>) => {
 };
 
 // LOGIN LOGOUT SIGNUP.
-export const login = async (args: Array<string>, password: string) => {
+export const login = async (commandObject: ICommandInitalObject) => {
+  const password = commandObject.passwordRef;
+
   try {
-    if (args.length !== 2)
+    if (commandObject.args.length !== 2)
       return ["Please type login followed by only the username and password to use this function."];
 
-    const loginRequest = await loginAttempt(args[0], password);
+    const loginRequest = await loginAttempt(commandObject.args[0], password);
     if (loginRequest.data.status !== "success") return ["Error logging in. Please try again."];
 
-    return ["Attempting login, please wait...", "Logged into your account"];
+    return ["Logged into your account"];
   } catch (error: any) {
-    return errorMessage(error);
+    return ["Error logging in, please try again."];
   }
 };
 
 //
-export const logout = async (args: Array<string>) => {
+export const logout = async (commandObject: ICommandInitalObject) => {
   try {
-    if (args.length !== 0) return ["Please type logout only to use this function."];
+    if (commandObject.args.length !== 0) return ["Please type logout only to use this function."];
 
-    const cookie = Cookies.get("jwt");
+    const cookie = await Cookies.get("jwt");
     if (!cookie) return ["You are not logged in."];
 
     // Logout service.
-    const logoutRequest = await logoutAttempt(args);
-    if (logoutRequest.data.status !== "success") return ["Attempting logout, please wait..."];
+    const logoutRequest = await logoutAttempt(commandObject.args);
+    if (logoutRequest.data.status !== "success") throw new Error();
 
-    return ["Attempting logout, please wait...", "Logged out of your account. Have a great day!"];
+    return ["Logged out of your account. Have a great day!"];
   } catch (error: any) {
-    return ["Attempting logout, please wait...", `Failed to logout. Please try again.`];
+    return [`Failed to logout. Please try again.`];
   }
 };
 
-export const signup = async (args: Array<string>) => {
+export const signup = async (commandObject: ICommandInitalObject) => {
   try {
     // signup username email password passwordconfirm
-    if (args.length > 4)
+    if (commandObject.args.length > 4)
       return ["Please type sign up followed by desired username, email, and passwords to use this function."];
 
     // Run checks on inputs..
-    if (!checkValidUsername(args[0])) return ["Username should contain no numbers, spaces or special characters."];
-    if (!checkValidEmail(args[1])) return ["Failed. Email was not valid."];
-    if (!checkValidPassword(args[2], args[3]))
+    if (!checkValidUsername(commandObject.args[0]))
+      return ["Username should contain no numbers, spaces or special characters."];
+    if (!checkValidEmail(commandObject.args[1])) return ["Failed. Email was not valid."];
+    if (!checkValidPassword(commandObject.args[2], commandObject.args[3]))
       return ["Check passwords match and ensure password is greater than 8 charactrers long."];
 
-    const signupRequest = await signupAttempt(args);
+    const signupRequest = await signupAttempt(commandObject.args);
 
-    return ["Attempting sign up, please wait...", "Welcome, you are all signed up. Please login to continue!"];
+    return ["Welcome, you are all signed up. Please login to continue!"];
   } catch (error: any) {
     return errorMessage(error);
   }
 };
 
 // TASK NAMES (NOT ACTUAL SAVED TASK WITH HOURS)
-export const addNewTaskName = async (args: Array<string>) => {
+export const addNewTaskName = async (commandObject: ICommandInitalObject) => {
   try {
     // signup username email password passwordconfirm
-    const nameString: string = args.join(" ");
+    const nameString: string = commandObject.args.join(" ");
 
     // Add the new task name..
     const newTaskNameRequest = await addNewTaskNameAttempt(nameString);
 
-    return ["Attempting to add your new task name!", "Task name was added!"];
+    return ["Task name was added!"];
   } catch (error: any) {
     return errorMessage(error);
   }
@@ -160,71 +165,66 @@ export const getAllTaskNames = async () => {
     });
 
     // If the user has no presaved tasks.
-    if (tasksSentences.length === 0)
-      return [
-        "Attempting to find for your task names, please wait..",
-        "You have no saved task names. Add some using `add new task name (name)`",
-      ];
+    if (tasksSentences.length === 0) return ["You have no saved task names. Add some using `add new task name (name)`"];
 
     // Return found tasks
-    return ["Attempting to find for your task names, please wait..", "Retrieved tasks:", ...tasksSentences];
+    return ["Retrieved tasks:", ...tasksSentences];
   } catch (error: any) {
     return errorMessage(error);
   }
 };
 
-export const deleteTaskNames = async (args: Array<string>) => {
+export const deleteTaskNames = async (commandObject: ICommandInitalObject) => {
   try {
-    const id = Number(args[0]);
+    const id = Number(commandObject.args[0]);
 
     const deletedTaskName = await deleteTaskName(id);
     console.log(deletedTaskName);
 
-    return ["Attempting to delete task name..", "Your task name was deleted. "];
+    return ["Your task name was deleted. "];
   } catch (error: any) {
     return errorMessage(error);
   }
 };
 
 // USERS SAVED TASK WITH HOURS
-export const addNewTask = async (args: Array<string>) => {
+export const addNewTask = async (commandObject: ICommandInitalObject) => {
   try {
-    const taskID = Number(args[1]);
-    const taskHours = Number(args[0]);
+    const taskID = Number(commandObject.args[1]);
+    const taskHours = Number(commandObject.args[0]);
 
     // Save users task and the hours spent doing it.
     const newTask = await addNewTaskHours(taskID, taskHours);
     console.log(newTask);
 
-    return ["Attempting to add new task..", "Task was added!"];
+    return ["Task was added!"];
   } catch (error: any) {
     return errorMessage(error);
   }
 };
 
-export const deleteTask = async (args: Array<string>) => {
+export const deleteTask = async (commandObject: ICommandInitalObject) => {
   try {
-    const taskID = Number(args[0]);
+    const taskID = Number(commandObject.args[0]);
 
     const deleteTaskAndData = await deleteTaskWithHours(taskID);
     console.log(deleteTaskAndData);
 
-    return ["Attempting to delete task..", "Task was deleted!"];
+    return ["Task was deleted!"];
   } catch (error: any) {
     return errorMessage(error);
   }
 };
 
-export const showTasksOnDate = async (args: Array<string>) => {
+export const showTasksOnDate = async (commandObject: ICommandInitalObject) => {
   try {
-    if (args.length > 1) return ["Too many argumentssssss fro show tasks on date."];
-    const date = args[0];
+    if (commandObject.args.length > 1) return ["Too many argumentssssss fro show tasks on date."];
+    const date = commandObject.args[0];
 
     // Get single days tasks..
     const daysTasks = await getTasksOnDate(date);
     console.log(daysTasks);
-    if (daysTasks.data.data.rows.length === 0)
-      return ["Attempting to get tasks..", "Sorry, you have no tasks saved for this date."];
+    if (daysTasks.data.data.rows.length === 0) return ["Sorry, you have no tasks saved for this date."];
 
     // Convert the data into an object where each task is collected. Data is task name, hours, percetage.
     const percetangesAndCollection = calculatePercentages(daysTasks.data.data.rows);
@@ -237,8 +237,8 @@ export const showTasksOnDate = async (args: Array<string>) => {
     });
 
     // Push date into the start of the array.
-    const dateString = args[0]
-      ? `${args[0]}'s tasks, time and time percentages..`
+    const dateString = commandObject.args[0]
+      ? `${commandObject.args[0]}'s tasks, time and time percentages..`
       : "Todays tasks, time and time percentages.";
     stringArrayResults.unshift(dateString);
 
@@ -251,11 +251,11 @@ export const showTasksOnDate = async (args: Array<string>) => {
   }
 };
 
-export const showTasksDateRange = async (args: Array<string>) => {
+export const showTasksDateRange = async (commandObject: ICommandInitalObject) => {
   try {
-    if (args.length > 2) return ["Too many argumentssssss from show task date range."];
-    const dateStart = args[0];
-    const dateEnd = args[1];
+    if (commandObject.args.length > 2) return ["Too many argumentssssss from show task date range."];
+    const dateStart = commandObject.args[0];
+    const dateEnd = commandObject.args[1];
 
     const daysTasks = await getTasksFromDateRange(dateStart, dateEnd);
     if (daysTasks.data.data.rows.length === 0) return ["Sorry, you have no tasks saved for this date range."];
@@ -271,8 +271,8 @@ export const showTasksDateRange = async (args: Array<string>) => {
     });
 
     // Push date into the start of the array.
-    const dateString = args[0]
-      ? `${args[0]} to ${args[1]} tasks, time and time percentages..`
+    const dateString = commandObject.args[0]
+      ? `${commandObject.args[0]} to ${commandObject.args[1]} tasks, time and time percentages..`
       : "Time and time percentages.";
     stringArrayResults.unshift(dateString);
 
@@ -282,12 +282,11 @@ export const showTasksDateRange = async (args: Array<string>) => {
   }
 };
 
-export const deleteTasksFromRange = async (args: Array<string>) => {
-  console.log("jdsbfjsdubfd");
+export const deleteTasksFromRange = async (commandObject: ICommandInitalObject) => {
   try {
-    if (args.length > 2) return ["Too many argumentssssss from DELETE ASK DAET RANGE"];
-    const dateStart = args[0];
-    const dateEnd = args[1];
+    if (commandObject.args.length > 2) return ["Too many arguments for this command."];
+    const dateStart = commandObject.args[0];
+    const dateEnd = commandObject.args[1];
 
     const daysTasks = await deleteTasksFromDateRange(dateStart, dateEnd);
     if (daysTasks.data.data.rows.length === 0) return ["Deleted Tasks"];
@@ -298,10 +297,10 @@ export const deleteTasksFromRange = async (args: Array<string>) => {
   }
 };
 
-export const deleteTasksOnDate = async (args: Array<string>) => {
+export const deleteTasksOnDate = async (commandObject: ICommandInitalObject) => {
   try {
-    if (args.length > 1) return ["Too many argumentssssss fro DELETE tasks on date!!!"];
-    const date = args[0];
+    if (commandObject.args.length > 1) return ["Too many arguments for this command."];
+    const date = commandObject.args[0];
 
     const daysTasks = await deleteTasksDate(date);
     if (daysTasks.data.data.rows.length === 0) return ["Deleted tasks."];

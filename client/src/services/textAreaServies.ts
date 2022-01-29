@@ -18,19 +18,20 @@ export const checkMatch = (text: string) => {
   // If so, return the command object (name and function to run);
   for (const command of commands) {
     const fourLetterCheck = checkStartingWords(text, 4);
-    if (fourLetterCheck.name === command.name) return { command: command, args: fourLetterCheck.args };
+    if (fourLetterCheck.name === command.name) return { command: command, args: fourLetterCheck.args, passwordRef: "" };
 
     const threeLetterCheck = checkStartingWords(text, 3);
-    if (threeLetterCheck.name === command.name) return { command: command, args: threeLetterCheck.args };
+    if (threeLetterCheck.name === command.name)
+      return { command: command, args: threeLetterCheck.args, passwordRef: "" };
 
     const twoLetterCheck = checkStartingWords(text, 2);
-    if (twoLetterCheck.name === command.name) return { command: command, args: twoLetterCheck.args };
+    if (twoLetterCheck.name === command.name) return { command: command, args: twoLetterCheck.args, passwordRef: "" };
 
     const oneLetterCheck = checkStartingWords(text, 1);
-    if (oneLetterCheck.name === command.name) return { command: command, args: oneLetterCheck.args };
+    if (oneLetterCheck.name === command.name) return { command: command, args: oneLetterCheck.args, passwordRef: "" };
   }
 
   // [0] Is always the error option in the commands.
   const noMatch = checkStartingWords(text, 0);
-  return { command: commands[0], args: noMatch.args };
+  return { command: commands[0], args: noMatch.args, passwordRef: "" };
 };

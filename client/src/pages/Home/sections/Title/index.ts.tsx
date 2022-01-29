@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import { MainHeading, TerminalBox, TerminalButton, ButtonTextLarge, SubHeading } from "../../../common/styles";
+import { MainHeading, TerminalBox, TerminalButton, ButtonTextLarge, SubHeading } from "../../../styles/styles";
 import { TitleSectionDiv, ButtonContainer } from "./Title.styles";
 import { Link } from "react-router-dom";
 

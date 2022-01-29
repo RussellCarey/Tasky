@@ -126,7 +126,7 @@ exports.logout = (req: Request, res: Response, next: NextFunction) => {
   res.cookie("jwt", "", cookieOptions);
 
   res.json({
-    success: "success",
+    status: "success",
   });
 };
 

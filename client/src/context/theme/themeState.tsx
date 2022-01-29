@@ -38,45 +38,56 @@ const ThemeState = (props: IPropsState) => {
     console.log(hex);
     dispatch({ type: SET_BACKGROUND_COLOR, payload: hex });
     localStorage.setItem("theme", JSON.stringify({ ...theme, backgroundColor: hex }));
+    return ["Changed background color."];
   };
   const setBorderColor = (hex: string) => {
     dispatch({ type: SET_BORDER_COLOR, payload: hex });
     localStorage.setItem("theme", JSON.stringify(theme));
+    return ["Changed border color."];
   };
   const setTerminalColor = (hex: string) => {
     dispatch({ type: SET_TERMINAL_COLOR, payload: hex });
     localStorage.setItem("theme", JSON.stringify(theme));
+    return ["Changed terminal color."];
   };
   const setShadowColor = (hex: string) => {
     dispatch({ type: SET_SHADOW_COLOR, payload: hex });
     localStorage.setItem("theme", JSON.stringify(theme));
+    return ["Changed shadow color."];
   };
   const setTextColor = (hex: string) => {
     dispatch({ type: SET_TEXT_COLOR, payload: hex });
     localStorage.setItem("theme", JSON.stringify(theme));
+    return ["Changed text color."];
   };
 
   const setLightTheme = () => {
     dispatch({ type: SET_LIGHT_THEME, payload: lightThemeDefault });
     localStorage.setItem("theme", JSON.stringify(lightThemeDefault));
+    return ["Changed theme to light."];
   };
 
   const setDarkTheme = () => {
     dispatch({ type: SET_DARK_THEME, payload: darkThemeDefault });
     localStorage.setItem("theme", JSON.stringify(darkThemeDefault));
+    return ["Changed theme to dark."];
+  };
+
+  const uiCommandMap = {
+    set_background_color: setBackgroundColor,
+    set_border_color: setBorderColor,
+    set_shadow_color: setShadowColor,
+    set_terminal_color: setTerminalColor,
+    set_text_color: setTextColor,
+    set_theme_light: setLightTheme,
+    set_theme_dark: setDarkTheme,
   };
 
   return (
     <ThemeContext.Provider
       value={{
         theme,
-        setBackgroundColor,
-        setBorderColor,
-        setShadowColor,
-        setTerminalColor,
-        setTextColor,
-        setDarkTheme,
-        setLightTheme,
+        uiCommandMap,
       }}
     >
       {props.children}
