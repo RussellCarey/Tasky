@@ -19,6 +19,7 @@ export const checkStarting = (text: string, commandMap: Record<string, ICommandR
     const commandWordCount = commandWordArray.length;
 
     // If text matches a starting string, send back the object else send the error object.
+    // Starts with allows extra letter be added onto the last word - this is okay for now.
     if (text.startsWith(commandInText))
       return returnedObject(textArray.slice(commandWordCount), command, text, commandMap[command]);
   }
