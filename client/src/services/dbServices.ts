@@ -80,6 +80,7 @@ export const getTaskNames = async () => {
     },
   });
 
+  console.log(taskNames);
   return taskNames;
 };
 

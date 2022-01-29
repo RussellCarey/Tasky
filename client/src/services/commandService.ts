@@ -1,6 +1,5 @@
 import Cookies from "js-cookie";
 import { helpScreenText, aboutText } from "../constants/text";
-import { ECommandReturnOptions } from "../types/commandReturnEnums";
 
 import {
   logoutAttempt,
@@ -41,7 +40,7 @@ export const showAboutText = (commandObject: ICommandInitalObject) => {
 //
 export const clearWindowText = (commandObject: ICommandInitalObject) => {
   if (commandObject.args.length > 0) return ["Please type clear without arguments to use this function."];
-  return ECommandReturnOptions.clear;
+  return "clear";
 };
 
 const errorMessage = (error: any) => {
@@ -155,9 +154,11 @@ export const addNewTaskName = async (commandObject: ICommandInitalObject) => {
 };
 
 export const getAllTaskNames = async () => {
+  console.log("getting task names");
   try {
     // Get all users saves task names
     const taskNamesList = await getTaskNames();
+    console.log(taskNamesList);
 
     // Return the task name along with its ID which the user needs to input.
     const tasksSentences = taskNamesList.data.data.rows.map((task: any, ind: any) => {

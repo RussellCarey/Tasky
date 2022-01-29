@@ -7,7 +7,6 @@ export const commandMap: Record<string, ICommandReturnFunction> = {
   error: CommandServices.showCommandNotFound,
   about: CommandServices.showAboutText,
   show_help: CommandServices.showHelpText,
-  clear: CommandServices.clearWindowText,
   login: CommandServices.login,
   logout: CommandServices.logout,
   signup: CommandServices.signup,

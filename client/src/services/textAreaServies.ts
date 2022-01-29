@@ -1,4 +1,4 @@
-import commands from "../constants/commands";
+import { commandMap } from "./commandMap";
 
 export const checkStartingWords = (text: string, words: number) => {
   //   const checkFirstTwo = /^((?:\S+\s+){1}\S+).*/;
@@ -14,24 +14,32 @@ export const checkStartingWords = (text: string, words: number) => {
 };
 
 export const checkMatch = (text: string) => {
+  const commandEntries = Object.entries(commandMap);
+  console.log(commandEntries);
+
   // Loop though current commands and check that the words input match the commands.
   // If so, return the command object (name and function to run);
-  for (const command of commands) {
+  for (const command of commandEntries) {
+    const formattedString = command[0].replaceAll(" ", "_");
+
     const fourLetterCheck = checkStartingWords(text, 4);
-    if (fourLetterCheck.name === command.name) return { command: command, args: fourLetterCheck.args, passwordRef: "" };
+    if (fourLetterCheck.name === formattedString)
+      return { command: command, args: fourLetterCheck.args, passwordRef: "" };
 
     const threeLetterCheck = checkStartingWords(text, 3);
-    if (threeLetterCheck.name === command.name)
+    if (threeLetterCheck.name === formattedString)
       return { command: command, args: threeLetterCheck.args, passwordRef: "" };
 
     const twoLetterCheck = checkStartingWords(text, 2);
-    if (twoLetterCheck.name === command.name) return { command: command, args: twoLetterCheck.args, passwordRef: "" };
+    if (twoLetterCheck.name === formattedString)
+      return { command: command, args: twoLetterCheck.args, passwordRef: "" };
 
     const oneLetterCheck = checkStartingWords(text, 1);
-    if (oneLetterCheck.name === command.name) return { command: command, args: oneLetterCheck.args, passwordRef: "" };
+    if (oneLetterCheck.name === formattedString)
+      return { command: command, args: oneLetterCheck.args, passwordRef: "" };
   }
 
   // [0] Is always the error option in the commands.
   const noMatch = checkStartingWords(text, 0);
-  return { command: commands[0], args: noMatch.args, passwordRef: "" };
+  return { command: commandEntries[0][0], args: noMatch.args, passwordRef: "" };
 };

@@ -2,9 +2,6 @@ import React, { FunctionComponent, useRef, useEffect, useState, useContext } fro
 import { InputContainer } from "./styles/InputBox.styles";
 import { IPropsInputArea } from "./types/types";
 import { checkMatch } from "../../services/textAreaServies";
-import { ECommandReturnOptions } from "../../types/commandReturnEnums";
-
-import { aboutText, helpScreenText } from "../../constants/text";
 import ThemeContext from "../../context/theme/themeContext";
 import { hideLoginPassword } from "./utils/hideLoginPassword";
 
@@ -46,16 +43,21 @@ const InputArea: FunctionComponent<IPropsInputArea> = ({ inputText, setInputText
         // Check if matching commands exists in the string and return that, with its arguments..
         // Convert spaces to _ as the commands in the object are named using _ as spaces.
         const checkForCommand = await checkMatch(inputText);
-        const commandName: string = checkForCommand.command.name.replace(" ", "_");
+        const commandName: string = checkForCommand.command.name.replaceAll(" ", "_");
 
-        // Check and run non UI based commands..
+        // Check for clear
+        if (commandName === "clear") {
+          setConsoleText("");
+        }
+
+        // Check and run non UI based commands.. (uses local state)
         if (commandMap[commandName]) {
           checkForCommand.passwordRef = passwordRef.current;
           const runCommand = await commandMap[commandName](checkForCommand);
           addConsoleText([...runCommand]);
         }
 
-        // Check UI commands..
+        // Check UI commands.. (uses context)..
         if (commandMap[commandName]) {
           const runUICommand = await uiCommandMap[commandName](checkForCommand.args);
           addConsoleText([...runUICommand]);
