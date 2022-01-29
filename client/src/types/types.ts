@@ -1,7 +1,7 @@
 export interface ICommandInitalObject {
-  command: {
-    name: string;
-  };
+  commandName: string;
+  fullSentence: string;
+  commandFunc: Function;
   args: Array<string>;
   passwordRef: string;
 }

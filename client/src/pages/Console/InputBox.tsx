@@ -1,10 +1,9 @@
 import React, { FunctionComponent, useRef, useEffect, useState, useContext } from "react";
 import { InputContainer } from "./styles/InputBox.styles";
 import { IPropsInputArea } from "./types/types";
-import { checkMatch } from "../../services/textAreaServies";
+import { checkStarting } from "../../services/textAreaServies";
 import ThemeContext from "../../context/theme/themeContext";
 import { hideLoginPassword } from "./utils/hideLoginPassword";
-
 import { commandMap } from "../../services/commandMap";
 
 const InputArea: FunctionComponent<IPropsInputArea> = ({ inputText, setInputText, consoleText, setConsoleText }) => {
@@ -42,26 +41,19 @@ const InputArea: FunctionComponent<IPropsInputArea> = ({ inputText, setInputText
 
         // Check if matching commands exists in the string and return that, with its arguments..
         // Convert spaces to _ as the commands in the object are named using _ as spaces.
-        const checkForCommand = await checkMatch(inputText);
-        const commandName: string = checkForCommand.command.name.replaceAll(" ", "_");
+        const commandMapCombined = { ...commandMap, ...uiCommandMap };
+        const checkForCommand = await checkStarting(inputText, commandMapCombined);
+        checkForCommand.passwordRef = passwordRef.current;
 
-        // Check for clear
-        if (commandName === "clear") {
-          setConsoleText("");
+        // Check for clear first
+        if (checkForCommand.commandName === "clear") {
+          resetPress();
+          return setConsoleText("");
         }
 
-        // Check and run non UI based commands.. (uses local state)
-        if (commandMap[commandName]) {
-          checkForCommand.passwordRef = passwordRef.current;
-          const runCommand = await commandMap[commandName](checkForCommand);
-          addConsoleText([...runCommand]);
-        }
-
-        // Check UI commands.. (uses context)..
-        if (commandMap[commandName]) {
-          const runUICommand = await uiCommandMap[commandName](checkForCommand.args);
-          addConsoleText([...runUICommand]);
-        }
+        // Check merged theme and commands hashmaps for matching command.
+        const runCommand = await checkForCommand.commandFunc(checkForCommand);
+        addConsoleText([...runCommand]);
 
         resetPress();
       } catch (error) {

@@ -5,6 +5,7 @@ export type ICommandReturnFunction = (args: ICommandInitalObject) => any;
 
 export const commandMap: Record<string, ICommandReturnFunction> = {
   error: CommandServices.showCommandNotFound,
+  clear: CommandServices.clearWindowText,
   about: CommandServices.showAboutText,
   show_help: CommandServices.showHelpText,
   login: CommandServices.login,
