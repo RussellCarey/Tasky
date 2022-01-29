@@ -41,6 +41,7 @@ const InputArea: FunctionComponent<IPropsInputArea> = ({ inputText, setInputText
 
         // Check if matching commands exists in the string and return that, with its arguments..
         // Convert spaces to _ as the commands in the object are named using _ as spaces.
+        // Combine context map with command map.
         const combinedMaps = { ...commandMap, ...uiCommandMap };
         const checkForCommand = checkStarting(inputText, combinedMaps);
         checkForCommand.passwordRef = passwordRef.current;
