@@ -26,5 +26,5 @@ export const checkStarting = (text: string, commandMap: Record<string, ICommandR
   }
 
   // If no command is found above, return the not found error object.
-  return returnedObject(textArray.slice(1), "error", text, commandMap["error"]);
+  return returnedObject(textArray, "error", text, commandMap["error"]);
 };

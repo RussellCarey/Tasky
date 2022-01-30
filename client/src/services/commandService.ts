@@ -221,7 +221,7 @@ export const deleteTask = async (commandObject: ICommandInitalObject) => {
 
 export const showTasksOnDate = async (commandObject: ICommandInitalObject) => {
   try {
-    if (commandObject.args.length > 1) return ["Too many argumentssssss fro show tasks on date."];
+    if (commandObject.args.length > 1) return ["Too many arguments provided"];
     const date = commandObject.args[0];
 
     // Get single days tasks..
