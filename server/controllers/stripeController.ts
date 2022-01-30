@@ -27,3 +27,11 @@ exports.CreateIntent = catchAsync(async (req: Request, res: Response, next: Next
     data: paymentIntent.client_secret,
   });
 });
+
+exports.webhook = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  console.log("THIS IS FROM THE STRIPE WEBHOOK");
+  const sig = req.headers["stripe-signature"];
+  const event = stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
+  console.log(event);
+  next();
+});

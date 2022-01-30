@@ -2,7 +2,7 @@
 // // stripe listen --forward-to http://localhost:8080/webhook
 // // This allows to listen on the local host..
 // // This then returned a key which is saved in the env.
-// const stripeAPI = require("../stripe.js");
+// const stripeAPI = require("./stripeAPI");
 
 // const webhookHandlers = {
 //   "checkout.session.completed": () => (data:) => {

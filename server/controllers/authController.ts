@@ -5,19 +5,14 @@ import catchAsync from "../utils/catchAsync";
 const { promisify } = require("util");
 
 import {
-  checkPasswordsMatch,
-  checkUserExistsEmail,
   checkUserExistsUsername,
-  addUserToTheDB,
-  bcryptPassword,
   bcryptComaprePasswords,
   authorizeUser,
   findUserByAuthKey,
 } from "../services/authServices";
-import { sendWelcomeEmail } from "./emailController";
 
 // Create a JWT, set a cookie and its options and send it back to the client......
-const createAndSendJWT = async (res: Response, data: any) => {
+export const createAndSendJWT = async (res: Response, data: any) => {
   // Sign token with data provided
   const token = await jwt.sign(data, process.env.JWT_SECRET!);
 
@@ -37,39 +32,6 @@ const createAndSendJWT = async (res: Response, data: any) => {
     data: token,
   });
 };
-
-// Sign up, get data, check if the username or email exists. if it does not then create a new account and return data, cookie etc back to the client..
-exports.signUp = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-  const body = req.body;
-  if (!body) throw new AppError("Failed. Error signing up.", 500);
-
-  // Check passwords are the same..
-  const passwordsMatch = await checkPasswordsMatch(body.password, body.passwordConfirm);
-  if (!passwordsMatch) throw new AppError("Passwords did not match.", 500);
-
-  // Check for exisiting email
-  const checkEmail = await checkUserExistsEmail(body.email);
-  if (checkEmail.rows.length > 1) throw new AppError("This email has already been taken.", 500);
-
-  // Check for existing username
-  const checkUsername = await checkUserExistsUsername(body.username);
-  if (checkUsername.rows.length > 1) throw new AppError("Username has already been taken.", 500);
-
-  // Encrypt password with bcrypt
-  const cryptedPassword = await bcryptPassword(req.body.password);
-  if (!cryptedPassword) throw new AppError("Failed. Sorry, please try again.", 500);
-
-  // Add to the DB - WE use uuid to give user a code. The chance of a repeating code is so small we dont need to check it exists.
-  const addedUser = await addUserToTheDB(body, cryptedPassword);
-
-  // Send welcome email to the user.
-  const welcomeEmail = await sendWelcomeEmail(body.username, body.email, addedUser);
-
-  // Create token
-  res.json({
-    status: "success",
-  });
-});
 
 // login, check email exists and check and decrypt pasword to check if we can login, send back JWT cookie and data.
 exports.login = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
