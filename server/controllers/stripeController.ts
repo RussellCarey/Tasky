@@ -37,5 +37,11 @@ exports.webhook = catchAsync(async (req: IReqBodyRaw, res: Response, next: NextF
   console.log(event);
   console.log(event.type);
   console.log("END WEBHOOK CATCH FUNCTION");
-  next();
+
+  res.json({
+    status: "success",
+    data: {
+      type: event.type,
+    },
+  });
 });
