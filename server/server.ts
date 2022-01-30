@@ -11,6 +11,7 @@ const AuthRoutes = require("./routes/authRoutes");
 const TasksRoutes = require("./routes/taskRoutes");
 const PaymentRoutes = require("./routes/paymentRoutes");
 const AccountRoutes = require("./routes/accountRoutes");
+
 const ErrorController = require("./controllers/errorController");
 
 const whiteListDev = ["localhost:3000", "http://localhost:3000", "http://127.0.0.1:3000"];
@@ -38,10 +39,6 @@ app.use(!isDev() ? "/taskyapi/account" : "/api/account", AccountRoutes);
 
 // Error handler for all requests etc...
 app.use(ErrorController);
-
-process.on("unhandledRejection", (reason, promise) => {
-  console.log(reason);
-});
 
 app.listen(process.env.PORT, () => {
   console.log(`Connected to server on port ${process.env.PORT}`);
