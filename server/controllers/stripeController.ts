@@ -35,5 +35,7 @@ exports.webhook = catchAsync(async (req: IReqBodyRaw, res: Response, next: NextF
   const sig = req.headers["stripe-signature"];
   const event = stripe.webhooks.constructEvent(req.rawBody, sig, process.env.STRIPE_WEBHOOK_SECRET);
   console.log(event);
+  console.log(event.type);
+  console.log("END WEBHOOK CATCH FUNCTION");
   next();
 });
