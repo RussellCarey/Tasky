@@ -134,7 +134,7 @@ export const signup = async (commandObject: ICommandInitalObject) => {
 
     const signupRequest = await signupAttempt(commandObject.args);
 
-    return ["Welcome, you are all signed up. Please login to continue!"];
+    return ["Welcome, you are all signed up. Please check your email for an activation link!"];
   } catch (error: any) {
     return errorMessage(error);
   }
