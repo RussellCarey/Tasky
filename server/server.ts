@@ -31,7 +31,6 @@ app.use(
 
 app.use(helmet());
 
-app.use("/taskyapi/payment/stripe-webhook", express.raw({ type: "*/*" }));
 app.use(express.json({ limit: "1mb" }));
 
 app.use(!isDev() ? "/taskyapi/auth" : "/api/auth", AuthRoutes);
