@@ -2,9 +2,14 @@ const Pool = require("pg").Pool;
 import isDev from "./isDev";
 
 const prodPool = new Pool({
-  connectionString: process.env.PROD_DATABASE_URL,
+  username: "doadmin",
+  password: process.env.PROD_DB_PW,
+  host: process.env.PROD_DB_HOST,
+  port: process.env.PROD_DB_PORT,
+  database: process.env.PROD_DB_NAME,
   ssl: {
-    rejectUnauthorized: false,
+    rejectUnauthorized: true,
+    ca: process.env.CACERT,
   },
 });
 

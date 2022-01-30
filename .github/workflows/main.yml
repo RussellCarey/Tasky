@@ -41,7 +41,11 @@ jobs:
           touch .env
           echo NODE_ENV='${{ secrets.NODE_ENV }}' >> .env
           echo JWT_SECRET='${{ secrets.JWT_SECRET }}' >> .env
-          echo PROD_DATABASE_URL='${{ secrets.PROD_DATABASE_URL }}' >> .env
+          echo PROD_DB_PW='${{ secrets.PROD_DB_PW }}' >> .env
+          echo PROD_DB_PORT='${{ secrets.PROD_DB_PORT }}' >> .env
+          echo PROD_DB_HOST='${{ secrets.PROD_DB_HOST }}' >> .env
+          echo PROD_DB_NAME='${{ secrets.PROD_DB_NAME }}' >> .env
+          echo CA_CERT='${{ secrets.CA_CERT }}' >> .env
           echo PORT='${{ secrets.PORT }}' >> .env
           echo SENDGRID_API='${{ secrets.SENDGRID_API }}' >> .env
           echo ADMIN_EMAIL='${{ secrets.ADMIN_EMAIL }}' >> .env
