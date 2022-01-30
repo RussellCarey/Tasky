@@ -3,7 +3,7 @@ const Pool = require("pg").Pool;
 import isDev from "./isDev";
 
 const prodPool = new Pool({
-  username: process.env.PROD_DB_USERNAME,
+  user: process.env.PROD_DB_USERNAME,
   password: process.env.PROD_DB_PW,
   host: process.env.PROD_DB_HOST,
   port: process.env.PROD_DB_PORT,
@@ -25,4 +25,4 @@ const devPool = new Pool({
   connectionTimeoutMillis: 2000,
 });
 
-export default isDev() ? prodPool : prodPool;
+export default isDev() ? devPool : prodPool;
