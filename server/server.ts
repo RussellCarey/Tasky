@@ -11,6 +11,7 @@ const AuthRoutes = require("./routes/authRoutes");
 const TasksRoutes = require("./routes/taskRoutes");
 const PaymentRoutes = require("./routes/paymentRoutes");
 const AccountRoutes = require("./routes/accountRoutes");
+const StripeController = require("./controllers/stripeController");
 
 const ErrorController = require("./controllers/errorController");
 
@@ -30,7 +31,8 @@ app.use(
 );
 
 app.use(helmet());
-
+// Before the parser kicks in..
+app.use("/taskyapi/payment/stripe-webhook", express.raw({ type: "*/*" }), StripeController.webhook);
 app.use(express.json({ limit: "1mb" }));
 
 app.use(!isDev() ? "/taskyapi/auth" : "/api/auth", AuthRoutes);
