@@ -95,7 +95,7 @@ export const login = async (commandObject: ICommandInitalObject) => {
 
     return ["Logged into your account"];
   } catch (error: any) {
-    return ["Error logging in, please try again."];
+    return errorMessage(error);
   }
 };
 

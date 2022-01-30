@@ -26,4 +26,4 @@ const devPool = new Pool({
   connectionTimeoutMillis: 2000,
 });
 
-export default isDev() ? prodPool : prodPool;
+export default isDev() ? devPool : prodPool;

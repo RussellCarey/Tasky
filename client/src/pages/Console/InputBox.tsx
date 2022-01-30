@@ -38,6 +38,7 @@ const InputArea: FunctionComponent<IPropsInputArea> = ({ inputText, setInputText
     if (e.key === "Enter" && canPress) {
       try {
         setCanPress(false);
+        addConsoleText(["Please wait, running task."]);
 
         // Check if matching commands exists in the string and return that, with its arguments..
         // Convert spaces to _ as the commands in the object are named using _ as spaces.
