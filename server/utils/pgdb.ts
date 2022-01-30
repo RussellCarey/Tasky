@@ -1,3 +1,4 @@
+const fs = require("fs");
 const Pool = require("pg").Pool;
 import isDev from "./isDev";
 
@@ -13,7 +14,8 @@ const prodPool = new Pool({
   port: process.env.PROD_DB_PORT,
   database: process.env.PROD_DB_NAME,
   ssl: {
-    ca: process.env.CA_CERT,
+    rejectUnauthorized: false,
+    ca: fs.readFileSync("../cert/ca-certificate.crt").toString(),
   },
 });
 
