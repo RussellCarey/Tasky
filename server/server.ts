@@ -35,6 +35,10 @@ app.use(!isDev() ? "/taskyapi/tasks" : "/api/tasks", TasksRoutes);
 // Error handler for all requests etc...
 app.use(ErrorController);
 
+process.on("unhandledRejection", (reason, promise) => {
+  console.log(reason);
+});
+
 app.listen(process.env.PORT, () => {
   console.log(`Connected to server on port ${process.env.PORT}`);
 });
