@@ -2,6 +2,7 @@ const fs = require("fs");
 const Pool = require("pg").Pool;
 import isDev from "./isDev";
 
+// user not username!!!!
 const prodPool = new Pool({
   user: process.env.PROD_DB_USERNAME,
   password: process.env.PROD_DB_PW,
@@ -25,4 +26,4 @@ const devPool = new Pool({
   connectionTimeoutMillis: 2000,
 });
 
-export default isDev() ? devPool : prodPool;
+export default isDev() ? prodPool : prodPool;
