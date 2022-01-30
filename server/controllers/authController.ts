@@ -73,11 +73,15 @@ exports.signUp = catchAsync(async (req: Request, res: Response, next: NextFuncti
 
 // login, check email exists and check and decrypt pasword to check if we can login, send back JWT cookie and data.
 exports.login = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  console.log("loggin in");
   const body = req.body;
 
+  console.log("Gettting user");
   // Check email exists
   const getUser = await checkUserExistsUsername(body.username);
   if (getUser.rows.length === 0) throw new AppError("Username or password is incorrect.", 500);
+
+  console.log("Got user using postgres");
 
   const usersConfirmationStatus = getUser.rows[0].active;
   if (!usersConfirmationStatus) throw new AppError("Not authenticated. Please confirm your email address.", 500);
