@@ -9,6 +9,7 @@ const cors = require("cors");
 
 const AuthRoutes = require("./routes/authRoutes");
 const TasksRoutes = require("./routes/taskRoutes");
+const PaymentRoutes = require("./routes/paymentRoutes");
 const ErrorController = require("./controllers/errorController");
 
 const whiteListDev = ["localhost:3000", "http://localhost:3000", "http://127.0.0.1:3000"];
@@ -31,6 +32,7 @@ app.use(express.json({ limit: "1mb" }));
 
 app.use(!isDev() ? "/taskyapi/auth" : "/api/auth", AuthRoutes);
 app.use(!isDev() ? "/taskyapi/tasks" : "/api/tasks", TasksRoutes);
+app.use(!isDev() ? "/taskyapi/payment" : "/api/payment", PaymentRoutes);
 
 // Error handler for all requests etc...
 app.use(ErrorController);
