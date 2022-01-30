@@ -2,6 +2,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 import express from "express";
+var bodyParser = require("body-parser");
 import helmet from "helmet";
 import isDev from "./utils/isDev";
 const app = express();
@@ -11,9 +12,10 @@ const AuthRoutes = require("./routes/authRoutes");
 const TasksRoutes = require("./routes/taskRoutes");
 const PaymentRoutes = require("./routes/paymentRoutes");
 const AccountRoutes = require("./routes/accountRoutes");
-const StripeController = require("./controllers/stripeController");
 
 const ErrorController = require("./controllers/errorController");
+
+import { IReqBodyRaw } from "./types/types";
 
 const whiteListDev = ["localhost:3000", "http://localhost:3000", "http://127.0.0.1:3000"];
 const whiteListProd = [
@@ -31,7 +33,16 @@ app.use(
 );
 
 app.use(helmet());
-app.use(express.json({ limit: "1mb" }));
+
+// Doubles ram usage for every request - maybe find a better way.
+app.use(
+  bodyParser.json({
+    // limit: "1mb",
+    verify: (req: IReqBodyRaw, res: Response, buf: any) => {
+      req.rawBody = buf;
+    },
+  })
+);
 
 app.use(!isDev() ? "/taskyapi/auth" : "/api/auth", AuthRoutes);
 app.use(!isDev() ? "/taskyapi/tasks" : "/api/tasks", TasksRoutes);

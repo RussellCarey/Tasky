@@ -3,6 +3,8 @@ import { Request, Response, NextFunction } from "express";
 import AppError from "../utils/AppError";
 import stripe from "../utils/stripeAPI";
 
+import { IReqBodyRaw } from "../types/types";
+
 exports.CreateIntent = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   const { amount, description, email, shipping } = req.body;
 
@@ -28,10 +30,10 @@ exports.CreateIntent = catchAsync(async (req: Request, res: Response, next: Next
   });
 });
 
-exports.webhook = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+exports.webhook = catchAsync(async (req: IReqBodyRaw, res: Response, next: NextFunction) => {
   console.log("THIS IS FROM THE STRIPE WEBHOOK");
   const sig = req.headers["stripe-signature"];
-  const event = stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
+  const event = stripe.webhooks.constructEvent(req.rawBody, sig, process.env.STRIPE_WEBHOOK_SECRET);
   console.log(event);
   next();
 });
