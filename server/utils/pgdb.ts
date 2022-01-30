@@ -2,7 +2,7 @@ const fs = require("fs");
 const Pool = require("pg").Pool;
 import isDev from "./isDev";
 
-// user not username!!!!
+// user not username!!!!!!
 const prodPool = new Pool({
   user: process.env.PROD_DB_USERNAME,
   password: process.env.PROD_DB_PW,
