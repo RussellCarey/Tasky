@@ -1,16 +1,18 @@
 const Pool = require("pg").Pool;
 import isDev from "./isDev";
 
+let ssl = null;
+if (isDev()) {
+  ssl = { rejectUnauthorized: false };
+}
+
 const prodPool = new Pool({
   username: "doadmin",
   password: process.env.PROD_DB_PW,
   host: process.env.PROD_DB_HOST,
   port: process.env.PROD_DB_PORT,
   database: process.env.PROD_DB_NAME,
-  ssl: {
-    rejectUnauthorized: false,
-    ca: process.env.CACERT,
-  },
+  ssl: ssl,
 });
 
 const devPool = new Pool({
