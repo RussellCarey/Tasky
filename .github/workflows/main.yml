@@ -41,6 +41,7 @@ jobs:
           touch .env
           echo NODE_ENV='${{ secrets.NODE_ENV }}' >> .env
           echo JWT_SECRET='${{ secrets.JWT_SECRET }}' >> .env
+          echo PROD_DB_USERNAME='${{ secrets.PROD_DB_USERNAME }}' >> .env
           echo PROD_DB_PW='${{ secrets.PROD_DB_PW }}' >> .env
           echo PROD_DB_PORT='${{ secrets.PROD_DB_PORT }}' >> .env
           echo PROD_DB_HOST='${{ secrets.PROD_DB_HOST }}' >> .env
