@@ -25,7 +25,6 @@ jobs:
           CI: false
 
       - run: pm2 delete tasky_client
-      - run: pm2 delete tasky_server
 
       - run: pm2 start npm --name "tasky_client" -- run serve
         working-directory: client
@@ -57,7 +56,7 @@ jobs:
       - run: |
           pm2 stop tasky_client
           pm2 start tasky_client
-          pm2 stop tasky_server
+
           pm2 start tasky_server
           pm2 save
           sudo service nginx restart
