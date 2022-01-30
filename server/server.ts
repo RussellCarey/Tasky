@@ -31,8 +31,6 @@ app.use(
 );
 
 app.use(helmet());
-// Before the parser kicks in..
-app.use("/taskyapi/payment/stripe-webhook", express.raw({ type: "*/*" }), StripeController.webhook);
 app.use(express.json({ limit: "1mb" }));
 
 app.use(!isDev() ? "/taskyapi/auth" : "/api/auth", AuthRoutes);
