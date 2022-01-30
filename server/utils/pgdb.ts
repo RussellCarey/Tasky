@@ -15,7 +15,7 @@ const prodPool = new Pool({
   database: process.env.PROD_DB_NAME,
   ssl: {
     rejectUnauthorized: false,
-    ca: fs.readFileSync("../cert/ca-certificate.crt").toString(),
+    ca: fs.readFileSync("./cert/ca-certificate.crt").toString(),
   },
 });
 
