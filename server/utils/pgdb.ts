@@ -12,7 +12,9 @@ const prodPool = new Pool({
   host: process.env.PROD_DB_HOST,
   port: process.env.PROD_DB_PORT,
   database: process.env.PROD_DB_NAME,
-  ssl: ssl,
+  ssl: {
+    ca: process.env.CA_CERT,
+  },
 });
 
 const devPool = new Pool({
