@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useRef, useEffect, useState, useContext } from "react";
 import { InputContainer } from "./styles/InputBox.styles";
 import { IPropsInputArea } from "./types/types";
-import { checkStarting } from "../../services/checkMatchingCommand";
+import { checkStarting } from "../../utils/checkMatchingCommand";
 import ThemeContext from "../../context/theme/themeContext";
 import { hideLoginPassword } from "./utils/hideLoginPassword";
 import { commandMap } from "../../services/commandMap";

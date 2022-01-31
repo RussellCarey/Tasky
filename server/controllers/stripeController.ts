@@ -5,6 +5,26 @@ import stripe from "../utils/stripeAPI";
 
 import { IReqBodyRaw } from "../types/types";
 
+// const webhookHandlers = {
+//   // "checkout.session.completed": () => (data:) => {
+//   //   console.log("Checkout completed!", data);
+//   //   // Other
+//   //   // Email user, change in the database etc.
+//   // },
+
+//   "payment_intent.succeeded": () => (data) => {
+//     console.log("Payment taking completed!", data);
+//   },
+
+//   "charge.succeeded": () => (data) => {
+//     console.log("Charge succeeded", data);
+//   },
+
+//   "payment_intent.failed": () => (data) => {
+//     console.log("Payment taking FAILED!", data);
+//   },
+// };
+
 exports.CreateIntent = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   const { amount, description, email, shipping } = req.body;
 
@@ -31,12 +51,9 @@ exports.CreateIntent = catchAsync(async (req: Request, res: Response, next: Next
 });
 
 exports.webhook = catchAsync(async (req: IReqBodyRaw, res: Response, next: NextFunction) => {
-  console.log("THIS IS FROM THE STRIPE WEBHOOK");
   const sig = req.headers["stripe-signature"];
   const event = stripe.webhooks.constructEvent(req.rawBody, sig, process.env.STRIPE_WEBHOOK_SECRET);
-  console.log(event);
-  console.log(event.type);
-  console.log("END WEBHOOK CATCH FUNCTION");
+  if (!event) new AppError("Webhook event not recognized.", 500);
 
   res.json({
     status: "success",

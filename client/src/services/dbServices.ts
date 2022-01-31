@@ -230,19 +230,13 @@ export const authenticateUser = async (uuid: string) => {
   return authUser;
 };
 
-export const getPaymentIntent = async (amount: number, description: string, email: string, shipping: string) => {
+export const getPaymentIntent = async () => {
   const paymentIntent = await axios.request({
     withCredentials: true,
     method: "POST",
     url: !isDev()
-      ? `${projectURLS.productionWithAPI}/payment/payment-intent`
-      : `${projectURLS.development}/api/payment/payment-intent`,
-    data: {
-      amount,
-      description,
-      email,
-      shipping,
-    },
+      ? `${projectURLS.productionWithAPI}/payment/create-intent`
+      : `${projectURLS.development}/api/payment/create-intent`,
     headers: {
       jwt: `${Cookies.get("jwt")}`,
     },

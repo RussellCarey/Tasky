@@ -25,3 +25,9 @@ export const AccountButton = styled(TerminalButton)`
   width: fit-content;
   margin-bottom: ${theme.spacing.xxlarge};
 `;
+
+export const AccountInput = styled.input`
+  ${mixinDefaultTheme}
+  width: 300px;
+  height: 50px;
+`;
