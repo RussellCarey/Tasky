@@ -35,16 +35,14 @@ app.use(
 app.use(helmet());
 
 // Doubles ram usage for every request - maybe find a better way.
-// app.use(
-//   bodyParser.json({
-//     // limit: "1mb",
-//     verify: (req: IReqBodyRaw, res: Response, buf: any) => {
-//       req.rawBody = buf;
-//     },
-//   })
-// );
-
-app.use(express.json());
+app.use(
+  bodyParser.json({
+    // limit: "1mb",
+    verify: (req: IReqBodyRaw, res: Response, buf: any) => {
+      req.rawBody = buf;
+    },
+  })
+);
 
 app.use(!isDev() ? "/taskyapi/auth" : "/api/auth", AuthRoutes);
 app.use(!isDev() ? "/taskyapi/tasks" : "/api/tasks", TasksRoutes);
