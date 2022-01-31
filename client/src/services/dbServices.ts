@@ -230,7 +230,7 @@ export const authenticateUser = async (uuid: string) => {
   return authUser;
 };
 
-export const getPaymentIntent = async () => {
+export const getPaymentIntent = async (userDetails: Object) => {
   const paymentIntent = await axios.request({
     withCredentials: true,
     method: "POST",
@@ -239,6 +239,9 @@ export const getPaymentIntent = async () => {
       : `${projectURLS.development}/api/payment/create-intent`,
     headers: {
       jwt: `${Cookies.get("jwt")}`,
+    },
+    data: {
+      userDetails,
     },
   });
 

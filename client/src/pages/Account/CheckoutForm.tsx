@@ -1,5 +1,5 @@
 import React, { useState, useEffect, FunctionComponent, ChangeEvent } from "react";
-import { paymentIntent } from "../../services/accountServices";
+import { getPaymentIntent } from "../../services/dbServices";
 import { CardNumberElement, useStripe, useElements } from "@stripe/react-stripe-js";
 
 import {
@@ -26,56 +26,66 @@ const CheckoutForm: FunctionComponent<IProps> = ({ theme }) => {
   //! Dont let them submit until we have an intent saved. (check first).  -- Make a payment screen?
   const [processing, setProcessing] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
-  const [userDetails, setUserDetails] = useState();
-  const [clientSecret, setClientSecret] = useState<string>("");
-  const [paymentCode, setPaymentCode] = useState<string>("");
+  const [userDetails, setUserDetails] = useState({
+    fullname: "",
+    line1: "",
+    line2: "",
+    city: "",
+    postcode: "",
+    country: "",
+    state: "",
+  });
 
   // Only one product so we can create payment intent for this.
   const createPaymentIntent = async () => {
-    const pi = await paymentIntent();
-    console.log(pi.data);
-    setClientSecret(pi.data.data);
-  };
-
-  const onChange = (e: any) => {
-    const { errorMessage } = e;
-    console.log(errorMessage);
-    setError(error ? errorMessage.message : "");
+    const pi = await getPaymentIntent(userDetails);
+    return pi.data.data;
   };
 
   // Handle user clicking the buy button with card details.
   const handlePurchase = async () => {
     setProcessing(true);
-    console.log("HANDLEING PURCHSE");
+
+    // Get a payment intent from the server.
+    const clientSecret = await createPaymentIntent();
+    if (!clientSecret) return setError("Error with payment, please try again. ");
+
+    // Get all stripe IFRAME react elements.
     const cardElement = elements!.getElement(CardNumberElement);
 
-    // Confirm payment using the card and payment intent that was returned
+    // Send user details and card numbers for checking.
     const payload = await stripe!.confirmCardPayment(clientSecret, {
       payment_method: {
         card: cardElement!,
       },
     });
 
-    console.log(payload);
-
     setProcessing(false);
 
+    // Error
     if (payload.error) return setError(`Payment failed: ${payload.error.message}`);
+
+    // Sucess??
   };
 
-  useEffect(() => {
-    createPaymentIntent();
-  }, []);
+  const onChangeInputs = (e: ChangeEvent) => {
+    const target = e.target as HTMLInputElement;
+    setUserDetails({ ...userDetails, [target.id]: target.value });
+  };
 
   return (
     <DarkBackground>
       <CheckoutTerminalWindow theme={theme}>
-        <AccountInput placeholder="Full Name" theme={theme} />
-        <AccountInput placeholder="Email" theme={theme} />
+        <AccountInput id="fullname" placeholder="Full Name" theme={theme} onChange={onChangeInputs} />
+        <AccountInput id="line1" placeholder="Line 1" theme={theme} onChange={onChangeInputs} />
+        <AccountInput id="line2" placeholder="Line 2" theme={theme} onChange={onChangeInputs} />
+        <AccountInput id="city" placeholder="City" theme={theme} onChange={onChangeInputs} />
+        <AccountInput id="postcode" placeholder="Post Code" theme={theme} onChange={onChangeInputs} />
+        <AccountInput id="country" placeholder="Country" theme={theme} onChange={onChangeInputs} />
         <AccountCardNumberElement theme={theme} />
         <AccountCVCNumber theme={theme} />
         <AccountCardExpiry theme={theme} />
-        <button onClick={() => handlePurchase()}>BUY</button>
+        <button onClick={() => handlePurchase()}>{processing ? "Please Wait" : "Click to buy"}</button>
       </CheckoutTerminalWindow>
     </DarkBackground>
   );

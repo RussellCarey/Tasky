@@ -17,6 +17,6 @@ export const changePassword = async (password: string, id: number) => {
 
 // Update account subscription level
 export const updateSubcriptionActive = async (id: number) => {
-  const activate = await pool.query("UPDATE users SET active = true WHERE id = $1", [id]);
+  const activate = await pool.query("UPDATE users SET ismember = true WHERE id = $1", [id]);
   return activate;
 };
