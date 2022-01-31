@@ -3,6 +3,7 @@ import { ICommandInitalObject } from "../types/types";
 
 export type ICommandReturnFunction = (args: ICommandInitalObject) => any;
 
+//
 export const commandMap: Record<string, ICommandReturnFunction> = {
   error: CommandServices.showCommandNotFound,
   clear: CommandServices.clearWindowText,
