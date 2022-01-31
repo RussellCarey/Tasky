@@ -11,7 +11,6 @@ import {
   addUserToTheDB,
 } from "../services/authServices";
 import { sendWelcomeEmail } from "./emailController";
-import { createAndSendJWT } from "./authController";
 import { changeUsername, changeEmail, updateSubcriptionActive } from "../services/acountServices";
 
 // Change the user name of the user.
