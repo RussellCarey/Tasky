@@ -68,7 +68,7 @@ exports.checkLoggedIn = catchAsync(async (req: Request, res: Response, next: Nex
   await jwt.verify(cookie, process.env.JWT_SECRET!, (err, dec) => {
     console.log(dec);
     if (dec) checkCookie = dec;
-    if (err) throw new AppError("JWT VERIFY ERROR...", 500);
+    if (err) throw new AppError(`JWT VERIFY ERROR...${cookie}`, 500);
   });
 
   if (!checkCookie) throw new AppError("User is not logged in.", 500);
