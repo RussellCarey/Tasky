@@ -3,6 +3,7 @@ import { projectURLS } from "../constants/urls";
 import Cookies from "js-cookie";
 import isDev from "../utils/isDev";
 
+//
 export const logoutAttempt = async (args: Array<string>) => {
   const logout = await axios.request({
     withCredentials: true,
