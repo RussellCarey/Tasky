@@ -34,12 +34,18 @@ exports.CreateIntent = catchAsync(async (req: Request, res: Response, next: Next
     return new AppError("Make sure you have submitted all details", 500);
 
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: amount,
+    amount: 500,
     currency: "usd",
-    description: description,
+    description: "testing inputs",
     payment_method_types: ["card"],
-    receipt_email: email,
-    shipping: shipping,
+    receipt_email: "test@test.com",
+    shipping: {
+      address: {
+        city: "Tokyo",
+        country: "Japan",
+        line1: "test street",
+      },
+    },
   });
 
   if (!paymentIntent.client_secret) return new AppError("Error processing payment intent.", 500);
