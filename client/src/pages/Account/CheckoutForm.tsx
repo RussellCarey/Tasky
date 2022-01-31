@@ -44,26 +44,32 @@ const CheckoutForm: FunctionComponent<IProps> = ({ theme }) => {
 
   // Handle user clicking the buy button with card details.
   const handlePurchase = async () => {
-    setProcessing(true);
+    try {
+      setProcessing(true);
 
-    // Get a payment intent from the server.
-    const clientSecret = await createPaymentIntent();
-    if (!clientSecret) return setError("Error with payment, please try again. ");
+      // Get a payment intent from the server.
+      const clientSecret = await createPaymentIntent();
+      if (!clientSecret) return setError("Error with payment, please try again. ");
 
-    // Get all stripe IFRAME react elements.
-    const cardElement = elements!.getElement(CardNumberElement);
+      // Get all stripe IFRAME react elements.
+      const cardElement = elements!.getElement(CardNumberElement);
 
-    // Send user details and card numbers for checking.
-    const payload = await stripe!.confirmCardPayment(clientSecret, {
-      payment_method: {
-        card: cardElement!,
-      },
-    });
+      // Send user details and card numbers for checking.
+      const payload = await stripe!.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: cardElement!,
+        },
+      });
 
-    setProcessing(false);
+      console.log(payload);
 
-    // Error
-    if (payload.error) return setError(`Payment failed: ${payload.error.message}`);
+      setProcessing(false);
+    } catch (error: any) {
+      setProcessing(false);
+      console.log(error);
+      console.log(error.response);
+      console.log(error.data);
+    }
 
     // Sucess??
   };
