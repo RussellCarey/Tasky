@@ -71,14 +71,6 @@ exports.changeUserPassword = catchAsync(async (req: Request, res: Response, next
   });
 });
 
-// Upgrade account from free to unpaid
-exports.upgradeAccount = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-  if (!req.body.user) new AppError("Could not find user.", 500);
-  const changedLevel = await updateSubcriptionActive(req.body.user.id);
-  console.log(changedLevel);
-  next();
-});
-
 // Sign up, get data, check if the username or email exists. if it does not then create a new account and return data, cookie etc back to the client..
 exports.signUp = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   const body = req.body;
