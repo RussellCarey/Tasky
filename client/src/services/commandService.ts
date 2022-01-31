@@ -1,4 +1,3 @@
-import Cookies from "js-cookie";
 import { helpScreenText, aboutText } from "../constants/text";
 
 import {
@@ -103,9 +102,6 @@ export const login = async (commandObject: ICommandInitalObject) => {
 export const logout = async (commandObject: ICommandInitalObject) => {
   try {
     if (commandObject.args.length !== 0) return ["Please type logout only to use this function."];
-
-    const cookie = await Cookies.get("jwt");
-    if (!cookie) return ["You are not logged in."];
 
     // Logout service.
     const logoutRequest = await logoutAttempt(commandObject.args);
