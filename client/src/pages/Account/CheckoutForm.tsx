@@ -1,15 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, FunctionComponent, ChangeEvent } from "react";
 import { paymentIntent } from "../../services/accountServices";
-import {
-  Elements,
-  CardNumberElement,
-  CardExpiryElement,
-  CardCvcElement,
-  useStripe,
-  useElements,
-} from "@stripe/react-stripe-js";
+import { CardNumberElement, useStripe, useElements } from "@stripe/react-stripe-js";
 
-export default function CheckoutForm() {
+import {
+  DarkBackground,
+  CheckoutTerminalWindow,
+  AccountCardNumberElement,
+  AccountCVCNumber,
+  AccountCardExpiry,
+} from "./styles/CheckoutForm.styles";
+
+import { AccountInput } from "./styles/CheckoutForm.styles";
+
+//! CHANGEANINFIENE
+interface IProps {
+  theme: any;
+}
+
+const CheckoutForm: FunctionComponent<IProps> = ({ theme }) => {
   // Stripe object, use stripe.confirmCardPayment etc
   const stripe = useStripe();
   const elements = useElements();
@@ -25,13 +33,20 @@ export default function CheckoutForm() {
   // Only one product so we can create payment intent for this.
   const createPaymentIntent = async () => {
     const pi = await paymentIntent();
-    console.log(pi);
+    console.log(pi.data);
+    setClientSecret(pi.data.data);
+  };
+
+  const onChange = (e: any) => {
+    const { errorMessage } = e;
+    console.log(errorMessage);
+    setError(error ? errorMessage.message : "");
   };
 
   // Handle user clicking the buy button with card details.
   const handlePurchase = async () => {
     setProcessing(true);
-
+    console.log("HANDLEING PURCHSE");
     const cardElement = elements!.getElement(CardNumberElement);
 
     // Confirm payment using the card and payment intent that was returned
@@ -52,5 +67,18 @@ export default function CheckoutForm() {
     createPaymentIntent();
   }, []);
 
-  return null;
-}
+  return (
+    <DarkBackground>
+      <CheckoutTerminalWindow theme={theme}>
+        <AccountInput placeholder="Full Name" theme={theme} />
+        <AccountInput placeholder="Email" theme={theme} />
+        <AccountCardNumberElement theme={theme} />
+        <AccountCVCNumber theme={theme} />
+        <AccountCardExpiry theme={theme} />
+        <button onClick={() => handlePurchase()}>BUY</button>
+      </CheckoutTerminalWindow>
+    </DarkBackground>
+  );
+};
+
+export default CheckoutForm;

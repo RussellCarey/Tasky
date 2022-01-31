@@ -1,5 +1,6 @@
 import catchAsync from "../utils/catchAsync";
 import { Request, Response, NextFunction } from "express";
+import isDev from "../utils/isDev";
 import AppError from "../utils/AppError";
 import stripe from "../utils/stripeAPI";
 
@@ -28,10 +29,8 @@ import { IReqBodyRaw } from "../types/types";
 exports.CreateIntent = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   const { amount, description, email, shipping } = req.body;
 
-  console.log(req.body);
-
-  if (!amount || !description || !email || !shipping)
-    return new AppError("Make sure you have submitted all details", 500);
+  //   if (!amount || !description || !email || !shipping)
+  //     throw new AppError("Make sure you have submitted all details", 500);
 
   const paymentIntent = await stripe.paymentIntents.create({
     amount: 500,
@@ -45,6 +44,8 @@ exports.CreateIntent = catchAsync(async (req: Request, res: Response, next: Next
         country: "Japan",
         line1: "test street",
       },
+      name: "Russell Carey",
+      phone: "01243 830185",
     },
   });
 
@@ -57,8 +58,9 @@ exports.CreateIntent = catchAsync(async (req: Request, res: Response, next: Next
 });
 
 exports.webhook = catchAsync(async (req: IReqBodyRaw, res: Response, next: NextFunction) => {
+  const webhookSecret = isDev() ? process.env.STRIPE_WEBHOOK_SECRET_DEV : process.env.STRIPE_WEBHOOK_SECRET;
   const sig = req.headers["stripe-signature"];
-  const event = stripe.webhooks.constructEvent(req.rawBody, sig, process.env.STRIPE_WEBHOOK_SECRET);
+  const event = stripe.webhooks.constructEvent(req.rawBody, sig, webhookSecret);
   if (!event) new AppError("Webhook event not recognized.", 500);
 
   res.json({

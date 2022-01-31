@@ -12,10 +12,6 @@ const AccountsPage: FunctionComponent = () => {
 
   const [showCheckout, setShowCheckout] = useState<boolean>(false);
 
-  const showCheckoutScreen = () => {
-    setShowCheckout(!showCheckout);
-  };
-
   const stripePromise = loadStripe(
     "pk_test_51KNWhcLDODnvjffbUbztYMavuGapXRvYcp2tLpAtlVXqWsSJ67sApOnTV5lnJRITLwVpBVJ8HHrbfgFhy8I0jUUx00FhK3noVA"
   );
@@ -24,7 +20,7 @@ const AccountsPage: FunctionComponent = () => {
     <>
       {showCheckout ? (
         <Elements stripe={stripePromise}>
-          <CheckoutForm />
+          <CheckoutForm theme={theme} />
         </Elements>
       ) : null}
 
@@ -42,7 +38,7 @@ const AccountsPage: FunctionComponent = () => {
             <SubHeading>email: russell_carey@hotmail.co.uk</SubHeading>
           </AccountTerminalWindow>
 
-          <AccountButton onClick={() => showCheckoutScreen()}>
+          <AccountButton onClick={() => setShowCheckout(!showCheckout)}>
             <SubHeading>Upgrade Account?</SubHeading>
           </AccountButton>
 
