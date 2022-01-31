@@ -231,6 +231,9 @@ export const authenticateUser = async (uuid: string) => {
 };
 
 export const getPaymentIntent = async (userDetails: Object) => {
+  console.log("Payment intent JWT token");
+  console.log(Cookies.get("jwt"));
+
   const paymentIntent = await axios.request({
     withCredentials: true,
     method: "POST",

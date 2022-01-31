@@ -68,7 +68,6 @@ const CheckoutForm: FunctionComponent<IProps> = ({ theme }) => {
       setProcessing(false);
       console.log(error);
       console.log(error.response);
-      console.log(error.data);
     }
 
     // Sucess??
