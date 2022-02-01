@@ -27,7 +27,7 @@ jobs:
       - run: pm2 delete tasky_client
       - run: pm2 delete tasky_server
 
-      - run: pm2 start npm --name "tasky_client" -- run serve
+      - run: pm2 start npm --name "tasky_client" -- run serve --spa
         working-directory: client
 
       - run: npm i
