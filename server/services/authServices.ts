@@ -33,6 +33,12 @@ export const checkUserExistsUsername = async (username: string) => {
   return user;
 };
 
+// Check if username is taken
+export const checkUserExistsID = async (id: string) => {
+  const user = await pool.query("SELECT * from users WHERE id = $1", [id]);
+  return user;
+};
+
 // Add users data to the database..
 export const addUserToTheDB = async (body: any, password: string) => {
   const currentDate = new Date(Date.now()).getTime();

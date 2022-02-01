@@ -6,15 +6,15 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "./CheckoutForm";
 
+const stripePromise = loadStripe(
+  "pk_test_51KNWhcLDODnvjffbUbztYMavuGapXRvYcp2tLpAtlVXqWsSJ67sApOnTV5lnJRITLwVpBVJ8HHrbfgFhy8I0jUUx00FhK3noVA"
+);
+
 const AccountsPage: FunctionComponent = () => {
   const themeContext = useContext(ThemeContext);
   const { theme } = themeContext;
 
   const [showCheckout, setShowCheckout] = useState<boolean>(false);
-
-  const stripePromise = loadStripe(
-    "pk_test_51KNWhcLDODnvjffbUbztYMavuGapXRvYcp2tLpAtlVXqWsSJ67sApOnTV5lnJRITLwVpBVJ8HHrbfgFhy8I0jUUx00FhK3noVA"
-  );
 
   return (
     <>

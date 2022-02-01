@@ -10,7 +10,9 @@ import {
   AccountCardExpiry,
 } from "./styles/CheckoutForm.styles";
 
-import { AccountInput } from "./styles/CheckoutForm.styles";
+import { AccountInput, AccountTerminalButtom } from "./styles/CheckoutForm.styles";
+import { AccountTerminalWindow } from "./styles/styles";
+import { SubHeading, Text } from "../styles/styles";
 
 //! CHANGEANINFIENE
 interface IProps {
@@ -61,9 +63,12 @@ const CheckoutForm: FunctionComponent<IProps> = ({ theme }) => {
         },
       });
 
-      console.log(payload);
+      console.log(payload.paymentIntent!.status);
 
-      setProcessing(false);
+      // if (payload.paymentIntent!.status ==="succeeded"){
+
+      //    setProcessing(false);
+      // }
     } catch (error: any) {
       setProcessing(false);
       console.log(error);
@@ -81,6 +86,20 @@ const CheckoutForm: FunctionComponent<IProps> = ({ theme }) => {
   return (
     <DarkBackground>
       <CheckoutTerminalWindow theme={theme}>
+        <AccountTerminalWindow>
+          <SubHeading>Upgrade to unlimited.</SubHeading>
+        </AccountTerminalWindow>
+        <AccountTerminalWindow>
+          <Text style={{ marginBottom: "22px" }}>
+            Remove all limits on number of tasks you can have and go unlimited!
+          </Text>
+          <Text style={{ marginBottom: "22px" }}>Please enter your billing details below.</Text>
+          <Text>
+            Notice: This is a dummy payment system using stripe API payments. For the card number just enter 42
+            repeated. For the CVC, 424 and for the year and month, anything.
+          </Text>
+        </AccountTerminalWindow>
+
         <AccountInput id="fullname" placeholder="Full Name" theme={theme} onChange={onChangeInputs} />
         <AccountInput id="line1" placeholder="Line 1" theme={theme} onChange={onChangeInputs} />
         <AccountInput id="line2" placeholder="Line 2" theme={theme} onChange={onChangeInputs} />
@@ -90,7 +109,9 @@ const CheckoutForm: FunctionComponent<IProps> = ({ theme }) => {
         <AccountCardNumberElement theme={theme} />
         <AccountCVCNumber theme={theme} />
         <AccountCardExpiry theme={theme} />
-        <button onClick={() => handlePurchase()}>{processing ? "Please Wait" : "Click to buy"}</button>
+        <AccountTerminalButtom onClick={() => handlePurchase()}>
+          {processing ? "Please Wait" : "Click to buy"}
+        </AccountTerminalButtom>
       </CheckoutTerminalWindow>
     </DarkBackground>
   );

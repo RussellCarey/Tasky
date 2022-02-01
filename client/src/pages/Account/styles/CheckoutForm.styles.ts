@@ -19,17 +19,26 @@ export const DarkBackground = styled.div`
   justify-content: center;
   align-items: center;
 
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.8);
 `;
 
 export const CheckoutTerminalWindow = styled(TerminalWindow)`
   ${mixinDefaultTheme}
   width: 80vw;
-  height: fit-content;
-  padding: ${theme.spacing.large};
+  height: 80vh;
+  padding: ${theme.spacing.xxlarge};
 
   display: flex;
   flex-direction: column;
+  align-items: center;
+
+  overflow-y: scroll;
+`;
+
+export const AccountTerminalButtom = styled(TerminalButton)`
+  text-align: center;
+  margin: 0;
+  width: 700px;
 `;
 
 export const AccountInput = styled.input`
@@ -37,6 +46,9 @@ export const AccountInput = styled.input`
   background-color: white;
   padding: 10px;
   box-shadow: 15px 15px 0 ${(props) => props.theme.shadowColor};
+
+  margin-bottom: ${theme.spacing.large};
+  width: 700px;
 `;
 
 export const AccountCardNumberElement = styled(CardNumberElement)`
@@ -44,6 +56,9 @@ export const AccountCardNumberElement = styled(CardNumberElement)`
   padding: 10px;
   background-color: white;
   box-shadow: 15px 15px 0 ${(props) => props.theme.shadowColor};
+
+  margin-bottom: ${theme.spacing.large};
+  width: 700px;
 `;
 
 export const AccountCVCNumber = styled(CardCvcElement)`
@@ -51,6 +66,9 @@ export const AccountCVCNumber = styled(CardCvcElement)`
   padding: 10px;
   background-color: white;
   box-shadow: 15px 15px 0 ${(props) => props.theme.shadowColor};
+
+  margin-bottom: ${theme.spacing.large};
+  width: 700px;
 `;
 
 export const AccountCardExpiry = styled(CardExpiryElement)`
@@ -58,4 +76,7 @@ export const AccountCardExpiry = styled(CardExpiryElement)`
   padding: 10px;
   background-color: white;
   box-shadow: 15px 15px 0 ${(props) => props.theme.shadowColor};
+
+  margin-bottom: ${theme.spacing.large};
+  width: 700px;
 `;

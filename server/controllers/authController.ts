@@ -94,11 +94,11 @@ exports.logout = (req: Request, res: Response, next: NextFunction) => {
 exports.authorize = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   // www.website.com/?user=df82f-23f23f-f23f23f-23f23f
   const uuid = req.body.uuid;
-  if (!uuid) return new AppError("URL does not contain valid ID string", 500);
+  if (!uuid) throw new AppError("URL does not contain valid ID string", 500);
 
   const foundUser = await findUserByAuthKey(uuid);
-  if (!foundUser || foundUser.rows.length === 0) return new AppError("Could not find user with the auth key.", 500);
-  if (foundUser.rows[0].active === true) return new AppError("You are already authenticated.", 500);
+  if (!foundUser || foundUser.rows.length === 0) throw new AppError("Could not find user with the auth key.", 500);
+  if (foundUser.rows[0].active === true) throw new AppError("You are already authenticated.", 500);
 
   const authorize = await authorizeUser(uuid);
 

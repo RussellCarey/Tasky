@@ -18,7 +18,7 @@ exports.changeUserUsername = catchAsync(async (req: Request, res: Response, next
   const { username, newUsername, newUsernameConfirm } = req.body;
 
   if (!username || !newUsername || !newUsernameConfirm) return new AppError("Please include all fields.", 500);
-  if (newUsername !== newUsernameConfirm) return new AppError("Input the same new username.", 500);
+  if (newUsername !== newUsernameConfirm) throw new AppError("Input the same new username.", 500);
 
   const changedUsername = await changeUsername(newUsername, req.body.user.id);
   console.log(changedUsername);
@@ -33,7 +33,7 @@ exports.changeUserEmail = catchAsync(async (req: Request, res: Response, next: N
   const { email, newEmail, newEmailConfirm } = req.body;
 
   if (!email || !newEmail || !newEmailConfirm) return new AppError("Please include all fields.", 500);
-  if (newEmail !== newEmailConfirm) return new AppError("Input the same new email.", 500);
+  if (newEmail !== newEmailConfirm) throw new AppError("Input the same new email.", 500);
 
   const changedEmail = await changeEmail(newEmail, req.body.user.id);
   console.log(changedEmail);

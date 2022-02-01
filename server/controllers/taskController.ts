@@ -1,4 +1,5 @@
-import { Request, Response, NextFunction, CookieOptions } from "express";
+import { Request, Response, NextFunction } from "express";
+import { checkUserExistsID } from "../services/authServices";
 import {
   createNewTaskName,
   findAllTaskNames,
@@ -16,9 +17,18 @@ import catchAsync from "../utils/catchAsync";
 exports.addNewTaskName = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   const taskName = req.body.taskName;
   const userID = req.body.user.id;
+  const maxNumberAllowed = 5;
 
-  if (userID === "" || null) return new AppError("User is not logged in.", 500);
-  if (taskName === "" || null) return new AppError("Task name was invalid or missing", 500);
+  //! Check if user is a member and if the task number has reached its max.
+  const usersTaskNames = await findAllTaskNames(userID);
+  if (usersTaskNames.rows.length > maxNumberAllowed)
+    throw new AppError(
+      "Max number of tasks added. If you would like to add more task names, please upgrade to a premium account!",
+      500
+    );
+
+  if (userID === "" || null) throw new AppError("User is not logged in.", 500);
+  if (taskName === "" || null) throw new AppError("Task name was invalid or missing", 500);
 
   const createdTask = await createNewTaskName(userID, taskName);
 
@@ -30,11 +40,11 @@ exports.addNewTaskName = catchAsync(async (req: Request, res: Response, next: Ne
 
 exports.getAllTaskNames = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   const userID = req.body.user.id;
-  if (userID === "" || null) return new AppError("User is not logged in.", 500);
+  if (userID === "" || null) throw new AppError("User is not logged in.", 500);
   console.log(userID);
 
   const taskNames = await findAllTaskNames(userID);
-  if (!taskNames) return new AppError("Unknown Error. Please try again.", 500);
+  if (!taskNames) throw new AppError("Unknown Error. Please try again.", 500);
   console.log(taskNames.rows);
 
   res.json({
@@ -45,7 +55,7 @@ exports.getAllTaskNames = catchAsync(async (req: Request, res: Response, next: N
 
 exports.deleteTaskName = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   const taskID = req.body.taskID;
-  if (!taskID) return new AppError("Task ID not found, please enter a correct ID", 500);
+  if (!taskID) throw new AppError("Task ID not found, please enter a correct ID", 500);
 
   const taskNameDelete = await deleteTaskName(taskID);
   console.log(taskNameDelete.rows);
@@ -58,10 +68,19 @@ exports.deleteTaskName = catchAsync(async (req: Request, res: Response, next: Ne
 
 exports.addNewTaskHours = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   const userID = req.body.user.id;
+  const user = await checkUserExistsID(userID);
+  const todaysDate = new Date(Date.now()).toISOString().slice(0, 10);
+  const todaysTasks = await findTasksByDate(todaysDate, userID);
 
-  // userid taskid hours
+  //! Check if user has posted the max number of tasks for today if free member.
+  if (todaysTasks.rows.length > 5 && !user.rows[0].ismember)
+    throw new AppError(
+      "You have reached the limit for task names. Please upgrade your account to premium to unlock unlimited names.",
+      500
+    );
+
   const addTask = await addNewTaskWithHours(userID, req.body.taskID, req.body.taskHours);
-  if (!addTask) return new AppError("Could not add task. Please try again", 500);
+  if (!addTask) throw new AppError("Could not add task. Please try again", 500);
 
   res.json({
     status: "success",
@@ -71,7 +90,7 @@ exports.addNewTaskHours = catchAsync(async (req: Request, res: Response, next: N
 
 exports.deleteTaskWithHours = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   const taskID = req.body.taskID;
-  if (!taskID) return new AppError("Task ID not found, please enter a correct ID", 500);
+  if (!taskID) throw new AppError("Task ID not found, please enter a correct ID", 500);
 
   const deleteTask = await deleteTaskWithHours(taskID);
   console.log(deleteTask.rows);
@@ -84,10 +103,10 @@ exports.deleteTaskWithHours = catchAsync(async (req: Request, res: Response, nex
 
 exports.getTasksOnDate = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   const userID = req.body.user.id;
-  if (userID === "" || null) return new AppError("User is not logged in.", 500);
+  if (userID === "" || null) throw new AppError("User is not logged in.", 500);
 
   const dateQuery = req.body.date;
-  if (dateQuery === "" || null) return new AppError("Date was not provided.", 500);
+  if (dateQuery === "" || null) throw new AppError("Date was not provided.", 500);
 
   const foundTasks = await findTasksByDate(dateQuery, userID);
   console.log(foundTasks.rows);
@@ -100,12 +119,12 @@ exports.getTasksOnDate = catchAsync(async (req: Request, res: Response, next: Ne
 
 exports.getTasksFromDateRange = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   const userID = req.body.user.id;
-  if (userID === "" || null) return new AppError("User is not logged in.", 500);
+  if (userID === "" || null) throw new AppError("User is not logged in.", 500);
 
   const dateFrom = req.body.dateFrom;
   const dateTo = req.body.dateTo;
-  if (dateFrom === "" || null) return new AppError("Dates were not provided.", 500);
-  if (dateTo === "" || null) return new AppError("Dates were not provided.", 500);
+  if (dateFrom === "" || null) throw new AppError("Dates were not provided.", 500);
+  if (dateTo === "" || null) throw new AppError("Dates were not provided.", 500);
 
   const foundTasks = await getTasksFromDates(dateFrom, dateTo, userID);
 
@@ -117,10 +136,10 @@ exports.getTasksFromDateRange = catchAsync(async (req: Request, res: Response, n
 
 exports.deleteTasksOnDate = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   const userID = req.body.user.id;
-  if (userID === "" || null) return new AppError("User is not logged in.", 500);
+  if (userID === "" || null) throw new AppError("User is not logged in.", 500);
 
   const dateQuery = req.body.date;
-  if (dateQuery === "" || null) return new AppError("Date was not provided.", 500);
+  if (dateQuery === "" || null) throw new AppError("Date was not provided.", 500);
 
   const deletedTasks = await deleteTasksFromDate(dateQuery, userID);
   console.log(deletedTasks.rows);
@@ -133,12 +152,12 @@ exports.deleteTasksOnDate = catchAsync(async (req: Request, res: Response, next:
 
 exports.deleteTasksFromDateRange = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   const userID = req.body.user.id;
-  if (userID === "" || null) return new AppError("User is not logged in.", 500);
+  if (userID === "" || null) throw new AppError("User is not logged in.", 500);
 
   const dateFrom = req.body.dateFrom;
   const dateTo = req.body.dateTo;
-  if (dateFrom === "" || null) return new AppError("Dates were not provided.", 500);
-  if (dateTo === "" || null) return new AppError("Dates were not provided.", 500);
+  if (dateFrom === "" || null) throw new AppError("Dates were not provided.", 500);
+  if (dateTo === "" || null) throw new AppError("Dates were not provided.", 500);
 
   const deletedTasks = await deleteTaskFromDateRange(dateFrom, dateTo, userID);
   console.log(deletedTasks);

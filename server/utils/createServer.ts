@@ -3,7 +3,6 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 import helmet from "helmet";
 
-const ErrorController = require("../controllers/errorController");
 import isDev from "../utils/isDev";
 import { IReqBodyRaw } from "../types/types";
 
@@ -39,9 +38,6 @@ export const createServer = () => {
       },
     })
   );
-
-  // Error handler for all requests etc...
-  app.use(ErrorController);
 
   return app;
 };

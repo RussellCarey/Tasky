@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { theme } from "../../../theme/theme";
 import { TerminalBox, TerminalButton } from "../../styles/styles";
-import { mixinDefaultTheme } from "../../../theme/mixins";
 
 export const MainWindow = styled(TerminalBox)`
   width: 100%;
+  max-width: 100%;
   height: fit-content;
 
   display: flex;
@@ -16,6 +16,8 @@ export const MainWindow = styled(TerminalBox)`
 `;
 
 export const AccountTerminalWindow = styled(TerminalBox)`
+  text-align: center;
+
   &:hover {
     transform: rotate(0deg);
   }

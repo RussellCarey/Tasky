@@ -60,7 +60,7 @@ exports.CreateIntent = catchAsync(async (req: Request, res: Response, next: Next
     },
   });
 
-  if (!paymentIntent.client_secret) return new AppError("Error processing payment intent.", 500);
+  if (!paymentIntent.client_secret) throw new AppError("Error processing payment intent.", 500);
 
   res.json({
     status: "success",
@@ -73,7 +73,7 @@ exports.webhook = catchAsync(async (req: IReqBodyRaw, res: Response, next: NextF
   const sig = req.headers["stripe-signature"];
   const event = stripe.webhooks.constructEvent(req.rawBody, sig, webhookSecret);
 
-  if (!event) new AppError("Webhook event not recognized.", 500);
+  if (!event) throw new AppError("Webhook event not recognized.", 500);
 
   if (event.type === "charge.succeeded") {
     const eventMetaData = event.data.object.metadata;

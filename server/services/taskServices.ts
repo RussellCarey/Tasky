@@ -39,6 +39,7 @@ export const deleteTaskWithHours = async (id: number) => {
 };
 
 export const findTasksByDate = async (date: string, userID: number) => {
+  console.log(date);
   const foundTasks = await pool.query(
     "SELECT * FROM tasks WHERE TO_TIMESTAMP(unix / 1000)::DATE = $1 AND userid = $2",
     [date, userID]
