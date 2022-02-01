@@ -1,6 +1,6 @@
 import axios from "axios";
 import { projectURLS } from "../constants/urls";
-import Cookies from "js-cookie";
+import Cookie from "js-cookie";
 import isDev from "../utils/isDev";
 
 //
@@ -12,6 +12,9 @@ export const logoutAttempt = async (args: Array<string>) => {
     data: {
       username: args[0],
       password: args[1],
+    },
+    headers: {
+      jwt: `${Cookie.get("jwt")}`,
     },
   });
 
@@ -58,6 +61,9 @@ export const addNewTaskNameAttempt = async (newTaskName: string) => {
     data: {
       taskName: newTaskName,
     },
+    headers: {
+      jwt: `${Cookie.get("jwt")}`,
+    },
   });
 
   return taskName;
@@ -70,6 +76,9 @@ export const getTaskNames = async () => {
     url: !isDev()
       ? `${projectURLS.productionWithAPI}/tasks/getAllTaskNames`
       : `${projectURLS.development}/api/tasks/getAllTaskNames`,
+    headers: {
+      jwt: `${Cookie.get("jwt")}`,
+    },
   });
 
   console.log(taskNames);
@@ -86,6 +95,9 @@ export const deleteTaskName = async (id: number) => {
     data: {
       taskID: id,
     },
+    headers: {
+      jwt: `${Cookie.get("jwt")}`,
+    },
   });
 
   return deleteTask;
@@ -101,6 +113,9 @@ export const addNewTaskHours = async (hours: number, taskid: number) => {
     data: {
       taskID: taskid,
       taskHours: hours,
+    },
+    headers: {
+      jwt: `${Cookie.get("jwt")}`,
     },
   });
 
@@ -119,6 +134,9 @@ export const deleteTaskWithHours = async (taskid: number) => {
     data: {
       taskID: taskid,
     },
+    headers: {
+      jwt: `${Cookie.get("jwt")}`,
+    },
   });
 
   console.log(deleteTask);
@@ -136,6 +154,9 @@ export const getTasksOnDate = async (date: string | null) => {
     data: {
       date: date || new Date(Date.now()).toISOString().slice(0, 10),
     },
+    headers: {
+      jwt: `${Cookie.get("jwt")}`,
+    },
   });
 
   return tasks;
@@ -152,6 +173,9 @@ export const getTasksFromDateRange = async (dateFrom: string, dateTo: string) =>
       dateTo: dateTo,
       dateFrom: dateFrom,
     },
+    headers: {
+      jwt: `${Cookie.get("jwt")}`,
+    },
   });
 
   return tasks;
@@ -166,6 +190,9 @@ export const deleteTasksDate = async (date: string) => {
       : `${projectURLS.development}/api/tasks/deleteTasksFromDate`,
     data: {
       date: date,
+    },
+    headers: {
+      jwt: `${Cookie.get("jwt")}`,
     },
   });
 
@@ -183,6 +210,9 @@ export const deleteTasksFromDateRange = async (dateFrom: string, dateTo: string)
       dateTo: dateTo,
       dateFrom: dateFrom,
     },
+    headers: {
+      jwt: `${Cookie.get("jwt")}`,
+    },
   });
 
   return deletedTasksRange;
@@ -195,6 +225,9 @@ export const authenticateUser = async (uuid: string) => {
     url: !isDev() ? `${projectURLS.productionWithAPI}/auth/authorize` : `${projectURLS.development}/api/auth/authorize`,
     data: {
       uuid: uuid,
+    },
+    headers: {
+      jwt: `${Cookie.get("jwt")}`,
     },
   });
 
@@ -211,6 +244,9 @@ export const getPaymentIntent = async (userDetails: Object) => {
 
     data: {
       userDetails,
+    },
+    headers: {
+      jwt: `${Cookie.get("jwt")}`,
     },
   });
 

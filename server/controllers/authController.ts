@@ -1,4 +1,4 @@
-import jwt, { JwtPayload } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction, CookieOptions } from "express";
 import AppError from "../utils/AppError";
 import catchAsync from "../utils/catchAsync";
@@ -55,22 +55,12 @@ exports.login = catchAsync(async (req: Request, res: Response, next: NextFunctio
 });
 
 exports.checkLoggedIn = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-  if (!req.headers.cookie) throw new AppError("Sorry. Cookie error. Something went wrong on our end.", 500);
+  if (!req.cookies.jwt) throw new AppError("Sorry. Cookie error. Something went wrong on our end.", 500);
 
-  // Removed the jwt= from the cookie and decode the users data..
-  // Get valid string from cookie;
-  const cookie = req.headers.cookie?.slice(4) as string;
+  const cookie = req.cookies.jwt;
 
   // Verify and decode the token and check for errors
-  // const checkCookie = await promisify(jwt.verify)(cookie, process.env.JWT_SECRET!);
-  let checkCookie: any;
-
-  await jwt.verify(cookie, process.env.JWT_SECRET!, (err, dec) => {
-    console.log(dec);
-    if (dec) checkCookie = dec;
-    if (err) throw new AppError(`JWT VERIFY ERROR...${cookie}`, 500);
-  });
-
+  const checkCookie = await promisify(jwt.verify)(cookie, process.env.JWT_SECRET!);
   if (!checkCookie) throw new AppError("User is not logged in.", 500);
 
   // Get user account data from the DB

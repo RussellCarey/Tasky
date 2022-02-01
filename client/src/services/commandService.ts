@@ -1,5 +1,5 @@
 import { helpScreenText, aboutText } from "../constants/text";
-
+import Cookie from "js-cookie";
 import {
   logoutAttempt,
   loginAttempt,
@@ -92,6 +92,9 @@ export const login = async (commandObject: ICommandInitalObject) => {
     const loginRequest = await loginAttempt(commandObject.args[0], password);
     if (loginRequest.data.status !== "success") return ["Error logging in. Please try again."];
 
+    // Set cookie to use
+    Cookie.set("jwt", loginRequest.data.data);
+
     return ["Logged into your account"];
   } catch (error: any) {
     return errorMessage(error);
@@ -152,7 +155,6 @@ export const addNewTaskName = async (commandObject: ICommandInitalObject) => {
 };
 
 export const getAllTaskNames = async () => {
-  console.log("getting task names");
   try {
     // Get all users saves task names
     const taskNamesList = await getTaskNames();
