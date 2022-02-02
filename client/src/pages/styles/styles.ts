@@ -10,9 +10,6 @@ export const Main = styled.div`
 
   overflow-y: scroll;
 
-  // Page padding..
-  padding: 0 10vw;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -23,9 +20,8 @@ export const Main = styled.div`
 
 // Terminal Styled Div
 export const TerminalBox = styled.div`
-  width: fit-content;
+  width: max-content;
   height: max-content;
-  max-width: 70%;
   ${mixinDefaultTheme};
 
   padding: ${theme.spacing.medium};
@@ -52,6 +48,7 @@ export const TerminalButton = styled.div`
   padding: ${theme.spacing.medium};
 
   margin-right: ${theme.spacing.xxlarge};
+  margin-bottom: ${theme.spacing.xxlarge};
 
   transition: all 0.5s ease;
 
@@ -59,11 +56,6 @@ export const TerminalButton = styled.div`
     cursor: pointer;
     filter: brightness(85%);
     transform: scale(102%) rotate(-1deg);
-  }
-
-  @media (max-width: 845px) {
-    margin-right: ${theme.spacing.xxlarge};
-    margin-bottom: ${theme.spacing.xxlarge};
   }
 
   @media (max-width: 600px) {
@@ -78,6 +70,10 @@ export const MainHeading = styled.p`
 
   @media (max-width: 600px) {
     font-size: ${theme.font.sizes.xxxlage};
+  }
+
+  @media (max-width: 400px) {
+    font-size: ${theme.font.sizes.xxlarge};
   }
 `;
 

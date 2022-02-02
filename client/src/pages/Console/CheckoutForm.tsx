@@ -47,11 +47,11 @@ const CheckoutForm: FunctionComponent<IPopupWindow> = ({ theme, closeWindow }) =
 
       if (payload.paymentIntent!.status === "succeeded") {
         setProcessing(false);
-        navigate("/success", { replace: true });
+        navigate("/payment?=success", { replace: true });
       }
     } catch (error: any) {
       setProcessing(false);
-      console.log(error.response);
+      navigate("/payment?=failed", { replace: true });
     }
   };
 

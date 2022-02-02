@@ -9,7 +9,6 @@ import {
   bcryptComaprePasswords,
   authorizeUser,
   findUserByAuthKey,
-  checkUserExistsID,
 } from "../services/authServices";
 
 // Create a JWT, set a cookie and its options and send it back to the client......
@@ -57,7 +56,6 @@ exports.login = catchAsync(async (req: Request, res: Response, next: NextFunctio
 
 exports.checkLoggedIn = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   if (!req.cookies.jwt) throw new AppError("Please login. If you are having issues please contact us.", 500);
-  const { id } = req.body.user;
   const cookie = req.cookies.jwt;
 
   // Verify and decode the token and check for errors
@@ -65,7 +63,7 @@ exports.checkLoggedIn = catchAsync(async (req: Request, res: Response, next: Nex
   if (!checkCookie) throw new AppError("User is not logged in.", 500);
 
   // Get user account data from the DB
-  const checkForUser = await checkUserExistsID(id);
+  const checkForUser = await checkUserExistsUsername(checkCookie.username);
   if (checkForUser.rows.length < 1) throw new AppError("User is not logged in. ", 500);
 
   // Add user data to the req object to user..
@@ -113,6 +111,7 @@ exports.getUserData = catchAsync(async (req: Request, res: Response, next: NextF
   if (!req.cookies.jwt) throw new AppError("Sorry. Cookie error. Something went wrong on our end.", 500);
 
   const cookie = req.cookies.jwt;
+  if (!cookie) throw new AppError("User is not logged in.", 500);
 
   // Verify and decode the token and check for errors
   const checkCookie = await promisify(jwt.verify)(cookie, process.env.JWT_SECRET!);

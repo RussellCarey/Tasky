@@ -1,6 +1,5 @@
 import { theme } from "../../../theme/theme";
 import styled from "styled-components";
-import { mixinDefaultTheme } from "../../../theme/mixins";
 
 export const Container = styled.div`
   width: 100vw;

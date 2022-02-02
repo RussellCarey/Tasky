@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from "express";
 import isDev from "../utils/isDev";
 import AppError from "../utils/AppError";
 import stripe from "../utils/stripeAPI";
-
+import { sendPaymentEmailSuccess } from "./emailController";
 import { IReqBodyRaw } from "../types/types";
 
 import { updateSubcriptionActive } from "../services/acountServices";
@@ -59,7 +59,8 @@ exports.webhook = catchAsync(async (req: IReqBodyRaw, res: Response, next: NextF
     const eventMetaData = event.data.object.metadata;
     const upgradedUser = await updateSubcriptionActive(eventMetaData.userID);
 
-    //! Send email to the user if there is an error or not. Thanks them or asking them to contact.
+    // Send email to the user
+    const sendMail = sendPaymentEmailSuccess(eventMetaData.userID, eventMetaData.email);
   }
 
   res.json({

@@ -31,3 +31,21 @@ export const sendWelcomeEmail = async (username: string, email: string, activate
 
   return msg;
 };
+
+export const sendPaymentEmailSuccess = async (username: string, email: string) => {
+  const msg = {
+    to: `${email}`, // Change to your recipient
+    from: process.env.ADMIN_EMAIL, // Change to your verified sender
+    subject: `Upgrade ahoooy, ${username}!`,
+    text: `${username}, This is just to let you know that your upgrade was successful. Your payment has gone through and your account has been upgraded! If you have any issues, please contact us!`,
+    html: `<strong>Upgrade ahoy! ${username}.</strong><br>
+    This is just to let you know that your upgrade was successful. <br>
+    Your payment has gone through and your account has been upgraded!<br>
+    If you have any issues, please contact us!<br><br>
+    Thank you for using tasky!`,
+  };
+
+  await sendMail(msg);
+
+  return msg;
+};

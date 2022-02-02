@@ -1,7 +1,6 @@
 import { FunctionComponent, useContext } from "react";
-import { MainHeading, TerminalBox, TerminalButton, ButtonTextLarge, Main } from "../styles/styles";
-import { TitleSectionDiv } from "../Home/sections/Title/Title.styles";
-import { ContactContainer } from "./styles/styles";
+import { MainHeading, ButtonTextLarge } from "../styles/styles";
+import { ContactMain, ContactHeading, ContactButton } from "./styles/styles";
 import { Link } from "react-router-dom";
 import ThemeContext from "../../context/theme/themeContext";
 
@@ -11,39 +10,59 @@ const ContactPage: FunctionComponent = () => {
   const { theme } = themeContext;
 
   return (
-    <Main theme={theme}>
-      <TitleSectionDiv theme={theme}>
-        <TerminalBox theme={theme}>
-          <MainHeading>Contact</MainHeading>
-        </TerminalBox>
+    <ContactMain theme={theme}>
+      <ContactHeading theme={theme}>
+        <MainHeading>Contact</MainHeading>
+      </ContactHeading>
 
-        <Link to="/contact" style={{ textDecoration: "none" }}>
-          <TerminalButton theme={theme}>
-            <ButtonTextLarge>website </ButtonTextLarge>
-          </TerminalButton>
-        </Link>
+      <a
+        href="https://www.russell-carey.com"
+        target="_blank"
+        rel="noopener"
+        aria-label="Homepage"
+        style={{ textDecoration: "none" }}
+      >
+        <ContactButton theme={theme}>
+          <ButtonTextLarge>website</ButtonTextLarge>
+        </ContactButton>
+      </a>
 
-        <ContactContainer>
-          <Link to="/help" style={{ textDecoration: "none" }}>
-            <TerminalButton theme={theme}>
-              <ButtonTextLarge>email</ButtonTextLarge>
-            </TerminalButton>
-          </Link>
+      <a
+        href="mailto:russell_carey@hotmail.co.uk"
+        rel="noopener"
+        target="_blank"
+        aria-label="Email"
+        style={{ textDecoration: "none" }}
+      >
+        <ContactButton theme={theme}>
+          <ButtonTextLarge>email</ButtonTextLarge>
+        </ContactButton>
+      </a>
 
-          <Link to="/console" style={{ textDecoration: "none" }}>
-            <TerminalButton theme={theme}>
-              <ButtonTextLarge>twitter</ButtonTextLarge>
-            </TerminalButton>
-          </Link>
+      <a
+        href="https://www.twitter.com/russellcareyy"
+        target="_blank"
+        rel="noopener"
+        aria-label="Github"
+        style={{ textDecoration: "none" }}
+      >
+        <ContactButton theme={theme}>
+          <ButtonTextLarge>twitter</ButtonTextLarge>
+        </ContactButton>
+      </a>
 
-          <Link to="/contact" style={{ textDecoration: "none" }}>
-            <TerminalButton theme={theme}>
-              <ButtonTextLarge>github</ButtonTextLarge>
-            </TerminalButton>
-          </Link>
-        </ContactContainer>
-      </TitleSectionDiv>
-    </Main>
+      <a
+        href="https://github.com/russellcarey"
+        target="_blank"
+        rel="noopener"
+        aria-label="Github"
+        style={{ textDecoration: "none" }}
+      >
+        <ContactButton theme={theme}>
+          <ButtonTextLarge>github</ButtonTextLarge>
+        </ContactButton>
+      </a>
+    </ContactMain>
   );
 };
 
