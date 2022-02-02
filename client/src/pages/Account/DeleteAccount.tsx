@@ -18,11 +18,11 @@ const DeleteForm: FunctionComponent<IPopupWindow> = ({ theme, closeWindow }) => 
   return (
     <DarkBackground>
       <CheckoutMainWindow theme={theme}>
-        <AccountCrossButton onClick={() => deleteUserAccount()}>X</AccountCrossButton>
+        <AccountCrossButton onClick={() => closeWindow(false)}>X</AccountCrossButton>
         <AccountTerminalWindow theme={theme}>
           <SubHeading>Delete Account?</SubHeading>
         </AccountTerminalWindow>
-        <AccountBuyButton onClick={() => console.log("WOW")} theme={theme}>
+        <AccountBuyButton onClick={() => () => deleteUserAccount()} theme={theme}>
           {processing ? "Please Wait" : "Delete Account"}
         </AccountBuyButton>
       </CheckoutMainWindow>
