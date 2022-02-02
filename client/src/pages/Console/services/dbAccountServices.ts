@@ -14,9 +14,6 @@ export const getPaymentIntent = async (userDetails: Object) => {
     data: {
       userDetails,
     },
-    headers: {
-      jwt: `${Cookie.get("jwt")}`,
-    },
   });
 
   return paymentIntent;
@@ -29,9 +26,6 @@ export const getUserInformation = async () => {
     url: !isDev()
       ? `${projectURLS.productionWithAPI}/auth/getUserData`
       : `${projectURLS.development}/api/auth/getUserData`,
-    headers: {
-      jwt: `${Cookie.get("jwt")}`,
-    },
   });
 
   return userInformation;
@@ -44,9 +38,7 @@ export const changeUserEmail = async (current: string, newEmail: string, newConf
     url: !isDev()
       ? `${projectURLS.productionWithAPI}/account/changeEmail`
       : `${projectURLS.development}/api/account/changeEmail`,
-    headers: {
-      jwt: `${Cookie.get("jwt")}`,
-    },
+
     data: {
       email: current,
       newEmail: newEmail,
@@ -64,9 +56,7 @@ export const changeUserPassword = async (current: string, newPassword: string, n
     url: !isDev()
       ? `${projectURLS.productionWithAPI}/account/changePassword`
       : `${projectURLS.development}/api/account/changePassword`,
-    headers: {
-      jwt: `${Cookie.get("jwt")}`,
-    },
+
     data: {
       password: current,
       newPassword: newPassword,
@@ -84,9 +74,7 @@ export const deleteUserAccount = async (password: string, passwordConfirm: strin
     url: !isDev()
       ? `${projectURLS.productionWithAPI}/account/deleteAccount`
       : `${projectURLS.development}/api/account/deleteAccount`,
-    headers: {
-      jwt: `${Cookie.get("jwt")}`,
-    },
+
     data: {
       password,
       passwordConfirm,

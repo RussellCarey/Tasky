@@ -5,6 +5,7 @@ import { checkStarting } from "./utils/checkMatchingCommand";
 import ThemeContext from "../../context/theme/themeContext";
 import { hideLoginPassword } from "./utils/hideLoginPassword";
 import { commandMap } from "./commands/commandMap";
+import Cookies from "js-cookie";
 
 const InputArea: FunctionComponent<IPropsInputArea> = ({
   inputText,
@@ -61,9 +62,13 @@ const InputArea: FunctionComponent<IPropsInputArea> = ({
 
         // Check for clear first
         if (checkForCommand.commandName === "upgrade_account") {
-          setShowCheckout(true);
-          resetPress();
-          return addConsoleText(["Opening purchase window."]);
+          if (Cookies.get("jwt")) {
+            setShowCheckout(true);
+            resetPress();
+            return addConsoleText(["Opening purchase window."]);
+          }
+
+          return addConsoleText(["Please log into to upgrade account."]);
         }
 
         // Check merged theme and commands hashmaps for matching command.

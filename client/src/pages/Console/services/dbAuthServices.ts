@@ -13,9 +13,6 @@ export const logoutAttempt = async (args: Array<string>) => {
       username: args[0],
       password: args[1],
     },
-    headers: {
-      jwt: `${Cookie.get("jwt")}`,
-    },
   });
 
   return logout;

@@ -30,7 +30,9 @@ export const logout = async (commandObject: ICommandInitalObject) => {
 
     // Logout service.
     const logoutRequest = await logoutAttempt(commandObject.args);
-    if (logoutRequest.data.status !== "success") throw new Error();
+    if (logoutRequest.data.status !== "success") return ["Error logging out. Please try again."];
+
+    Cookie.set("jwt", "");
 
     return ["Logged out of your account. Have a great day!"];
   } catch (error: any) {

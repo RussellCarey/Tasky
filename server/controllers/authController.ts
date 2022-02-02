@@ -80,7 +80,7 @@ exports.logout = (req: Request, res: Response, next: NextFunction) => {
     expires: new Date(Date.now()),
     secure: false,
     httpOnly: false,
-    sameSite: false,
+    sameSite: "none",
   };
 
   res.cookie("jwt", "", cookieOptions);
