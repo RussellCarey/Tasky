@@ -105,6 +105,7 @@ exports.changeUserPassword = catchAsync(async (req: Request, res: Response, next
 // Sign up, get data, check if the username or email exists. if it does not then create a new account and return data, cookie etc back to the client..
 exports.signUp = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   const body = req.body;
+  console.log(body);
   if (!body) throw new AppError("Failed. Error signing up.", 500);
 
   // Check passwords are the same..
@@ -113,11 +114,11 @@ exports.signUp = catchAsync(async (req: Request, res: Response, next: NextFuncti
 
   // Check for exisiting email
   const checkEmail = await checkUserExistsEmail(body.email);
-  if (checkEmail.rows.length > 1) throw new AppError("This email has already been taken.", 500);
+  if (checkEmail.rows.length !== 0) throw new AppError("This email has already been taken.", 500);
 
   // Check for existing username
   const checkUsername = await checkUserExistsUsername(body.username);
-  if (checkUsername.rows.length > 1) throw new AppError("Username has already been taken.", 500);
+  if (checkUsername.rows.length !== 0) throw new AppError("Username has already been taken.", 500);
 
   // Encrypt password with bcrypt
   const cryptedPassword = await bcryptPassword(req.body.password);

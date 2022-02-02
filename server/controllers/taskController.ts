@@ -72,7 +72,7 @@ exports.addNewTaskHours = catchAsync(async (req: Request, res: Response, next: N
   const todaysDate = new Date(Date.now()).toISOString().slice(0, 10);
   const todaysTasks = await findTasksByDate(todaysDate, userID);
 
-  //! Check if user has posted the max number of tasks for today if free member.
+  // Check if user has posted the max number of tasks for today if free member.
   if (todaysTasks.rows.length > 5 && !user.rows[0].ismember)
     throw new AppError(
       "You have reached the limit for task names. Please upgrade your account to premium to unlock unlimited names.",

@@ -8,26 +8,6 @@ import { IReqBodyRaw } from "../types/types";
 
 import { updateSubcriptionActive } from "../services/acountServices";
 
-// const webhookHandlers = {
-//   // "checkout.session.completed": () => (data:) => {
-//   //   console.log("Checkout completed!", data);
-//   //   // Other
-//   //   // Email user, change in the database etc.
-//   // },
-
-//   "payment_intent.succeeded": () => (data) => {
-//     console.log("Payment taking completed!", data);
-//   },
-
-//   "charge.succeeded": () => (data) => {
-//     console.log("Charge succeeded", data);
-//   },
-
-//   "payment_intent.failed": () => (data) => {
-//     console.log("Payment taking FAILED!", data);
-//   },
-// };
-
 exports.CreateIntent = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   const userDetails = req.body.userDetails;
   const { id, username, email } = req.body.user;

@@ -23,19 +23,19 @@ export const bcryptComaprePasswords = async (password: string, hasedPassword: st
 
 // Check if email exists
 export const checkUserExistsEmail = async (email: string) => {
-  const user = await pool.query("SELECT * from users WHERE email = $1", [email]);
+  const user = await pool.query("SELECT * from users WHERE email = $1 ", [email]);
   return user;
 };
 
 // Check if username is taken
 export const checkUserExistsUsername = async (username: string) => {
-  const user = await pool.query("SELECT * from users WHERE username = $1", [username]);
+  const user = await pool.query("SELECT * from users WHERE username = $1 ", [username]);
   return user;
 };
 
 // Check if username is taken
 export const checkUserExistsID = async (id: string) => {
-  const user = await pool.query("SELECT * from users WHERE id = $1", [id]);
+  const user = await pool.query("SELECT * from users WHERE id = $1 ", [id]);
   return user;
 };
 

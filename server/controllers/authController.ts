@@ -9,6 +9,7 @@ import {
   bcryptComaprePasswords,
   authorizeUser,
   findUserByAuthKey,
+  checkUserExistsID,
 } from "../services/authServices";
 
 // Create a JWT, set a cookie and its options and send it back to the client......
@@ -19,7 +20,7 @@ export const createAndSendJWT = async (res: Response, data: any) => {
   if (!token) throw new AppError("Failed in signing token", 500);
 
   const cookieOptions: CookieOptions = {
-    expires: new Date(Date.now() + 100000000000),
+    expires: new Date(Date.now() + 100000),
     secure: true,
     httpOnly: false,
     sameSite: "none",
@@ -56,7 +57,7 @@ exports.login = catchAsync(async (req: Request, res: Response, next: NextFunctio
 
 exports.checkLoggedIn = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   if (!req.cookies.jwt) throw new AppError("Please login. If you are having issues please contact us.", 500);
-
+  const { id } = req.body.user;
   const cookie = req.cookies.jwt;
 
   // Verify and decode the token and check for errors
@@ -64,7 +65,7 @@ exports.checkLoggedIn = catchAsync(async (req: Request, res: Response, next: Nex
   if (!checkCookie) throw new AppError("User is not logged in.", 500);
 
   // Get user account data from the DB
-  const checkForUser = await checkUserExistsUsername(checkCookie.username);
+  const checkForUser = await checkUserExistsID(id);
   if (checkForUser.rows.length < 1) throw new AppError("User is not logged in. ", 500);
 
   // Add user data to the req object to user..

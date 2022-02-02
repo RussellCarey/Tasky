@@ -5,6 +5,7 @@ export const welcomeText = [
 
 export const helpScreenText = [
   "Below are some quick help commands to get your started. Please check the docs page for a more commands and a short walkthrough of this app.",
+  "All text typed is in lower case and your username may only contain letters.",
   "Type  'upgrade account' to open the buying window to upgrade to a paid membership.",
   "Type  'signup (username) (email) (password) (password confirm)  to start the signup process.",
   "Type  'login (username) (password)'  to login to your account.",

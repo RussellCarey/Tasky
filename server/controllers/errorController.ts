@@ -16,7 +16,6 @@ const sendProductionError = (err: IError, res: Response) => {
     code: err.statusCode,
     status: err.status,
     message: err.isOperational ? err.message : "EC: Something went wrong on our end, please try again!",
-    stack: err.stack,
   });
 };
 
