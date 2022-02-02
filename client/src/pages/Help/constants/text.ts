@@ -20,7 +20,10 @@ export const commandHelpText = [
     name: "upgrade account",
     info: "To upgrade your account to premium. Will show you a screen where you can purchase the upgrade",
   },
-  { name: "delete account", info: "Will permenently delete your account. Caution." },
+  {
+    name: "delete account PASSWORD PASSWORD",
+    info: "Will permenently delete your account. Type delete account followed by your current password twice.",
+  },
   { name: "add new task NAME", info: "Will add a new task name. These are used to record your tasks and times." },
   { name: "show task names", info: "Will show all current task names you have recorded for use." },
 

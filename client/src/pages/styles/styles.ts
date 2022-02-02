@@ -16,6 +16,10 @@ export const Main = styled.div`
   align-items: center;
 
   background-color: ${(props) => props.theme.backgroundColor};
+
+  @media (max-width: 400px) {
+    /* max-height: -webkit-fill-available; */
+  }
 `;
 
 // Terminal Styled Div

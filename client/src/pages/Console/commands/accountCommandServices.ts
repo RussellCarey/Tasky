@@ -71,8 +71,8 @@ export const deleteAccount = async (commandObject: ICommandInitalObject) => {
   try {
     const args = commandObject.args;
 
-    if (args.length > 2) return ["Too many arguments for this command."];
-    if (args.length < 2) return ["Too few arguments for this command."];
+    if (args.length > 2) return ["Too many arguments for this command. Please enter your password and confirmation."];
+    if (args.length < 2) return ["Too few arguments for this command. Please enter your password and confirmation."];
 
     const password = args[0];
     const passwordConfirm = args[1];
