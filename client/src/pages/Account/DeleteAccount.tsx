@@ -10,6 +10,7 @@ const DeleteForm: FunctionComponent<IPopupWindow> = ({ theme, closeWindow }) => 
 
   const deleteUserAccount = async () => {
     setProcessing(true);
+    console.log("Deleting account");
     const deletedAccount = await deleteAccount();
     console.log(deletedAccount);
     setProcessing(false);
@@ -22,7 +23,7 @@ const DeleteForm: FunctionComponent<IPopupWindow> = ({ theme, closeWindow }) => 
         <AccountTerminalWindow theme={theme}>
           <SubHeading>Delete Account?</SubHeading>
         </AccountTerminalWindow>
-        <AccountBuyButton onClick={() => () => deleteUserAccount()} theme={theme}>
+        <AccountBuyButton onClick={() => deleteUserAccount()} theme={theme}>
           {processing ? "Please Wait" : "Delete Account"}
         </AccountBuyButton>
       </CheckoutMainWindow>

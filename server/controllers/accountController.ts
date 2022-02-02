@@ -11,15 +11,24 @@ import {
   addUserToTheDB,
 } from "../services/authServices";
 import { sendWelcomeEmail } from "./emailController";
-import { deleteUser, changeEmail, updateSubcriptionActive } from "../services/acountServices";
+import { deleteUser, changeEmail, changePassword } from "../services/acountServices";
+
+// Set expiry to now and remove JWT from cookie to log out user.
+const resetCookieOptions: CookieOptions = {
+  expires: new Date(Date.now()),
+  secure: true,
+  httpOnly: false,
+  sameSite: "none",
+};
 
 // Change the user name of the user.
 exports.deleteUserAccount = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  if (!req.body.user) throw new AppError("Could not authenticate user. Please try again", 500);
   const { id } = req.body.user;
-  if (!req.body.use || !id) throw new AppError("Could not authenticate user. Please try again", 500);
 
-  const deleteUserAttempt = deleteUser(id);
-  console.log(deleteUserAttempt);
+  const deleteUserAttempt = await deleteUser(id);
+
+  res.cookie("jwt", "", resetCookieOptions);
 
   res.json({
     status: "success",
@@ -38,7 +47,8 @@ exports.changeUserEmail = catchAsync(async (req: Request, res: Response, next: N
   if (existingEmail.rows[0]) throw new AppError("Email already taken.", 500);
 
   const changedEmail = await changeEmail(newEmail, req.body.user.id);
-  console.log(changedEmail);
+
+  res.cookie("jwt", "", resetCookieOptions);
 
   res.json({
     status: "success",
@@ -48,10 +58,10 @@ exports.changeUserEmail = catchAsync(async (req: Request, res: Response, next: N
 
 // Change the password of the user
 exports.changeUserPassword = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-  const { password, newpassword, newpasswordConfirm } = req.body;
+  const { password, newPassword, newPasswordConfirm } = req.body;
 
-  if (!password || !newpassword || !newpasswordConfirm) return new AppError("Please include all fields.", 500);
-  if (newpassword !== newpasswordConfirm) return new AppError("Input the same new password.", 500);
+  if (!password || !newPassword || !newPasswordConfirm) throw new AppError("Please include all fields.", 500);
+  if (newPassword !== newPasswordConfirm) throw new AppError("Input the same new password.", 500);
 
   // Check database and get user information (Maybe keep this client side?);
   const currentUser = await checkUserExistsUsername(req.body.user.username);
@@ -62,11 +72,12 @@ exports.changeUserPassword = catchAsync(async (req: Request, res: Response, next
   if (!encryptedPassword) throw new AppError("Incorrect current password. Please try agaian", 500);
 
   // Encrypt new password
-  const newUserPassword = bcryptPassword(newpassword);
+  const newUserPassword = await bcryptPassword(newPassword);
 
   // Save new password into the users DB.
-  const changedPassword = await changeEmail(newpassword, req.body.user.id);
-  console.log(changedPassword);
+  const changedPassword = await changePassword(newUserPassword, req.body.user.id);
+
+  res.cookie("jwt", "", resetCookieOptions);
 
   res.json({
     status: "success",

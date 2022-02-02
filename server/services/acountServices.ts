@@ -1,7 +1,7 @@
 import pool from "../utils/pgdb";
 
 export const deleteUser = async (id: number) => {
-  const deletedUser = await pool.query("DELETE from users WHERE id = $2", [id]);
+  const deletedUser = await pool.query("DELETE from users WHERE id = $1", [id]);
   return deletedUser;
 };
 
