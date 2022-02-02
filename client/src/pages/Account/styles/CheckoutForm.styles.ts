@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { theme } from "../../../theme/theme";
-import { TerminalBox, TerminalButton } from "../../styles/styles";
+import { AccountButton } from "./styles";
+import { TerminalButton } from "../../styles/styles";
 import { mixinDefaultTheme } from "../../../theme/mixins";
 import { TerminalWindow } from "../../Console/styles/MainWindows";
-
 import { CardNumberElement, CardExpiryElement, CardCvcElement } from "@stripe/react-stripe-js";
 
 export const DarkBackground = styled.div`
@@ -14,6 +14,8 @@ export const DarkBackground = styled.div`
   width: 100vw;
   height: 100vh;
 
+  padding: ${theme.spacing.xxxlage} 0;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -22,10 +24,25 @@ export const DarkBackground = styled.div`
   background-color: rgba(0, 0, 0, 0.8);
 `;
 
+export const CheckoutMainWindow = styled(TerminalWindow)`
+  ${mixinDefaultTheme}
+  position: relative;
+  background-color: ${(props) => props.theme.backgroundColor};
+  width: 90vw;
+  height: max-content;
+  padding: 100px ${theme.spacing.xxxlage};
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  overflow-y: scroll;
+`;
+
 export const CheckoutTerminalWindow = styled(TerminalWindow)`
   ${mixinDefaultTheme}
-  width: 80vw;
-  height: 80vh;
+  width: 90vw;
+  height: 90vh;
   padding: ${theme.spacing.xxlarge};
 
   display: flex;
@@ -79,4 +96,11 @@ export const AccountCardExpiry = styled(CardExpiryElement)`
 
   margin-bottom: ${theme.spacing.large};
   width: 700px;
+`;
+
+export const AccountBuyButton = styled(AccountButton)`
+  margin: 0;
+  margin-top: ${theme.spacing.xxlarge};
+  text-align: center;
+  width: 600px;
 `;

@@ -4,10 +4,8 @@ import HomePage from "./pages/Home/index";
 import AccountsPage from "./pages/Account";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
 import ThemeState from "./context/theme/themeState";
 
-//////
 function App() {
   return (
     <ThemeState>

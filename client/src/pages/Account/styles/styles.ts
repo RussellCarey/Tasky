@@ -6,6 +6,7 @@ export const MainWindow = styled(TerminalBox)`
   width: 100%;
   max-width: 100%;
   height: fit-content;
+  margin-top: ${theme.spacing.large};
 
   display: flex;
   flex-direction: column;
@@ -16,7 +17,7 @@ export const MainWindow = styled(TerminalBox)`
 `;
 
 export const AccountTerminalWindow = styled(TerminalBox)`
-  text-align: center;
+  text-align: left;
 
   &:hover {
     transform: rotate(0deg);
@@ -26,4 +27,16 @@ export const AccountTerminalWindow = styled(TerminalBox)`
 export const AccountButton = styled(TerminalButton)`
   width: fit-content;
   margin-bottom: ${theme.spacing.xxlarge};
+`;
+
+export const AccountCrossButton = styled.p`
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: ${theme.font.sizes.large};
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(108%);
+  }
 `;

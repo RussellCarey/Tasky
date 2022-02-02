@@ -252,3 +252,18 @@ export const getPaymentIntent = async (userDetails: Object) => {
 
   return paymentIntent;
 };
+
+export const getUserInformation = async () => {
+  const userInformation = await axios.request({
+    withCredentials: true,
+    method: "GET",
+    url: !isDev()
+      ? `${projectURLS.productionWithAPI}/auth/getUserData`
+      : `${projectURLS.development}/api/auth/getUserData`,
+    headers: {
+      jwt: `${Cookie.get("jwt")}`,
+    },
+  });
+
+  return userInformation;
+};

@@ -1,42 +1,30 @@
-import React, { useState, useEffect, FunctionComponent, ChangeEvent } from "react";
+import { useState, FunctionComponent, ChangeEvent } from "react";
 import { getPaymentIntent } from "../../services/dbServices";
 import { CardNumberElement, useStripe, useElements } from "@stripe/react-stripe-js";
-
+import { IPopupWindow, IUserDetails } from "./types/types";
+import { DefaultUserObject } from "./constants/constants";
+import { useNavigate } from "react-router-dom";
 import {
   DarkBackground,
-  CheckoutTerminalWindow,
   AccountCardNumberElement,
   AccountCVCNumber,
   AccountCardExpiry,
+  CheckoutMainWindow,
+  AccountBuyButton,
 } from "./styles/CheckoutForm.styles";
 
-import { AccountInput, AccountTerminalButtom } from "./styles/CheckoutForm.styles";
-import { AccountTerminalWindow } from "./styles/styles";
+import { AccountInput } from "./styles/CheckoutForm.styles";
+import { AccountCrossButton, AccountTerminalWindow } from "./styles/styles";
 import { SubHeading, Text } from "../styles/styles";
 
-//! CHANGEANINFIENE
-interface IProps {
-  theme: any;
-}
-
-const CheckoutForm: FunctionComponent<IProps> = ({ theme }) => {
+const CheckoutForm: FunctionComponent<IPopupWindow> = ({ theme, closeWindow }) => {
   // Stripe object, use stripe.confirmCardPayment etc
   const stripe = useStripe();
   const elements = useElements();
-
-  //! Check if the payment enter screen is opened, then send intent..
-  //! Dont let them submit until we have an intent saved. (check first).  -- Make a payment screen?
+  const navigate = useNavigate();
   const [processing, setProcessing] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
-  const [userDetails, setUserDetails] = useState({
-    fullname: "",
-    line1: "",
-    line2: "",
-    city: "",
-    postcode: "",
-    country: "",
-    state: "",
-  });
+  const [userDetails, setUserDetails] = useState<IUserDetails>(DefaultUserObject);
 
   // Only one product so we can create payment intent for this.
   const createPaymentIntent = async () => {
@@ -49,29 +37,20 @@ const CheckoutForm: FunctionComponent<IProps> = ({ theme }) => {
     try {
       setProcessing(true);
 
-      // Get a payment intent from the server.
       const clientSecret = await createPaymentIntent();
       if (!clientSecret) return setError("Error with payment, please try again. ");
 
-      // Get all stripe IFRAME react elements.
       const cardElement = elements!.getElement(CardNumberElement);
-
-      // Send user details and card numbers for checking.
       const payload = await stripe!.confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: cardElement!,
-        },
+        payment_method: { card: cardElement! },
       });
 
-      console.log(payload.paymentIntent!.status);
-
-      // if (payload.paymentIntent!.status ==="succeeded"){
-
-      //    setProcessing(false);
-      // }
+      if (payload.paymentIntent!.status === "succeeded") {
+        setProcessing(false);
+        navigate("/success", { replace: true });
+      }
     } catch (error: any) {
       setProcessing(false);
-      console.log(error);
       console.log(error.response);
     }
 
@@ -85,11 +64,12 @@ const CheckoutForm: FunctionComponent<IProps> = ({ theme }) => {
 
   return (
     <DarkBackground>
-      <CheckoutTerminalWindow theme={theme}>
-        <AccountTerminalWindow>
+      <CheckoutMainWindow theme={theme}>
+        <AccountCrossButton onClick={() => closeWindow(false)}>X</AccountCrossButton>
+        <AccountTerminalWindow theme={theme}>
           <SubHeading>Upgrade to unlimited.</SubHeading>
         </AccountTerminalWindow>
-        <AccountTerminalWindow>
+        <AccountTerminalWindow theme={theme}>
           <Text style={{ marginBottom: "22px" }}>
             Remove all limits on number of tasks you can have and go unlimited!
           </Text>
@@ -109,10 +89,10 @@ const CheckoutForm: FunctionComponent<IProps> = ({ theme }) => {
         <AccountCardNumberElement theme={theme} />
         <AccountCVCNumber theme={theme} />
         <AccountCardExpiry theme={theme} />
-        <AccountTerminalButtom onClick={() => handlePurchase()}>
+        <AccountBuyButton onClick={() => handlePurchase()} theme={theme}>
           {processing ? "Please Wait" : "Click to buy"}
-        </AccountTerminalButtom>
-      </CheckoutTerminalWindow>
+        </AccountBuyButton>
+      </CheckoutMainWindow>
     </DarkBackground>
   );
 };

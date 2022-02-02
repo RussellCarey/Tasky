@@ -107,3 +107,25 @@ exports.authorize = catchAsync(async (req: Request, res: Response, next: NextFun
     date: authorize,
   });
 });
+
+exports.getUserData = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  if (!req.cookies.jwt) throw new AppError("Sorry. Cookie error. Something went wrong on our end.", 500);
+
+  const cookie = req.cookies.jwt;
+
+  // Verify and decode the token and check for errors
+  const checkCookie = await promisify(jwt.verify)(cookie, process.env.JWT_SECRET!);
+  if (!checkCookie) throw new AppError("User is not logged in.", 500);
+
+  // Get user account data from the DB
+  const checkForUser = await checkUserExistsUsername(checkCookie.username);
+  if (!checkForUser.rows[0]) throw new AppError("User is not logged in. ", 500);
+
+  const userData = checkForUser.rows[0];
+  userData.password = "";
+
+  res.json({
+    status: "Success",
+    data: userData,
+  });
+});

@@ -4,7 +4,11 @@ import { mixinDefaultTheme } from "../../theme/mixins";
 
 // Main window container for pages
 export const Main = styled.div`
+  position: relative;
   width: 100vw;
+  min-height: 100vh;
+
+  overflow-y: scroll;
 
   // Page padding..
   padding: 0 10vw;
