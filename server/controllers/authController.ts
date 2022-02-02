@@ -55,7 +55,7 @@ exports.login = catchAsync(async (req: Request, res: Response, next: NextFunctio
 });
 
 exports.checkLoggedIn = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-  if (!req.cookies.jwt) throw new AppError("Sorry. Cookie error. Something went wrong on our end.", 500);
+  if (!req.cookies.jwt) throw new AppError("Please login. If you are having issues please contact us.", 500);
 
   const cookie = req.cookies.jwt;
 

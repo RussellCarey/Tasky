@@ -67,7 +67,6 @@ const InputArea: FunctionComponent<IPropsInputArea> = ({
             resetPress();
             return addConsoleText(["Opening purchase window."]);
           }
-
           return addConsoleText(["Please log into to upgrade account."]);
         }
 
