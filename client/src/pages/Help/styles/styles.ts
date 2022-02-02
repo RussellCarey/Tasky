@@ -4,7 +4,6 @@ import { Main, Text } from "../../styles/styles";
 import { TerminalBox } from "../../styles/styles";
 
 export const HelpMain = styled(Main)`
-  position: relative;
   padding: ${theme.spacing.side};
 
   @media (max-width: 800px) {

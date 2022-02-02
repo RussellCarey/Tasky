@@ -20,7 +20,7 @@ export const Main = styled.div`
 
 // Terminal Styled Div
 export const TerminalBox = styled.div`
-  width: max-content;
+  width: fit-content;
   height: max-content;
   ${mixinDefaultTheme};
 
