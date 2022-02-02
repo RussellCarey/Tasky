@@ -1,7 +1,7 @@
 import axios from "axios";
-import { projectURLS } from "../constants/urls";
+import { projectURLS } from "../../../constants/urls";
 import Cookie from "js-cookie";
-import isDev from "../utils/isDev";
+import isDev from "../../../utils/isDev";
 
 //
 export const logoutAttempt = async (args: Array<string>) => {
@@ -216,54 +216,4 @@ export const deleteTasksFromDateRange = async (dateFrom: string, dateTo: string)
   });
 
   return deletedTasksRange;
-};
-
-export const authenticateUser = async (uuid: string) => {
-  const authUser = await axios.request({
-    withCredentials: true,
-    method: "PATCH",
-    url: !isDev() ? `${projectURLS.productionWithAPI}/auth/authorize` : `${projectURLS.development}/api/auth/authorize`,
-    data: {
-      uuid: uuid,
-    },
-    headers: {
-      jwt: `${Cookie.get("jwt")}`,
-    },
-  });
-
-  return authUser;
-};
-
-export const getPaymentIntent = async (userDetails: Object) => {
-  const paymentIntent = await axios.request({
-    withCredentials: true,
-    method: "POST",
-    url: !isDev()
-      ? `${projectURLS.productionWithAPI}/payment/create-intent`
-      : `${projectURLS.development}/api/payment/create-intent`,
-
-    data: {
-      userDetails,
-    },
-    headers: {
-      jwt: `${Cookie.get("jwt")}`,
-    },
-  });
-
-  return paymentIntent;
-};
-
-export const getUserInformation = async () => {
-  const userInformation = await axios.request({
-    withCredentials: true,
-    method: "GET",
-    url: !isDev()
-      ? `${projectURLS.productionWithAPI}/auth/getUserData`
-      : `${projectURLS.development}/api/auth/getUserData`,
-    headers: {
-      jwt: `${Cookie.get("jwt")}`,
-    },
-  });
-
-  return userInformation;
 };

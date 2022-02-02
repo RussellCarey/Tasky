@@ -3,8 +3,8 @@ import { AccountTerminalWindow, AccountCrossButton } from "./styles/styles";
 import { AccountInput } from "./styles/CheckoutForm.styles";
 import { SubHeading } from "../styles/styles";
 import { IPopupWindow } from "./types/types";
-
 import { DarkBackground, CheckoutMainWindow, AccountBuyButton } from "./styles/CheckoutForm.styles";
+import { changePassword } from "./services/services";
 
 // This is very similar to the email form, maybe combine them into one?
 const PasswordForm: FunctionComponent<IPopupWindow> = ({ theme, closeWindow }) => {
@@ -18,6 +18,17 @@ const PasswordForm: FunctionComponent<IPopupWindow> = ({ theme, closeWindow }) =
   const onChangePasswords = (e: ChangeEvent) => {
     const target = e.target as HTMLInputElement;
     setPasswordData({ ...passwordData, [target.id]: target.value });
+  };
+
+  const changeUserPassword = async () => {
+    setProcessing(true);
+    const changedPassword = await changePassword(
+      passwordData.currentPassword,
+      passwordData.newPassword,
+      passwordData.newPasswordConfirm
+    );
+    console.log(changedPassword);
+    setProcessing(false);
   };
 
   return (
@@ -36,7 +47,7 @@ const PasswordForm: FunctionComponent<IPopupWindow> = ({ theme, closeWindow }) =
           theme={theme}
           onChange={onChangePasswords}
         />
-        <AccountBuyButton onClick={() => console.log("WOW")} theme={theme}>
+        <AccountBuyButton onClick={() => changeUserPassword()} theme={theme}>
           {processing ? "Please Wait" : "Submit"}
         </AccountBuyButton>
       </CheckoutMainWindow>

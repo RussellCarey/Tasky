@@ -7,7 +7,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "./CheckoutForm";
 import { IUserObject } from "./types/types";
-import { getUserInformation } from "../../services/dbServices";
+import { getUserInformation } from "./services/dbServices";
 import EmailForm from "./ChangeEmail";
 import PasswordForm from "./ChangePassword";
 import DeleteForm from "./DeleteAccount";

@@ -1,5 +1,5 @@
 import { useState, FunctionComponent, ChangeEvent } from "react";
-import { getPaymentIntent } from "../../services/dbServices";
+import { getPaymentIntent } from "./services/dbServices";
 import { CardNumberElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { IPopupWindow, IUserDetails } from "./types/types";
 import { DefaultUserObject } from "./constants/constants";
@@ -53,8 +53,6 @@ const CheckoutForm: FunctionComponent<IPopupWindow> = ({ theme, closeWindow }) =
       setProcessing(false);
       console.log(error.response);
     }
-
-    // Sucess??
   };
 
   const onChangeInputs = (e: ChangeEvent) => {

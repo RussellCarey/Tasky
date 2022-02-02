@@ -5,6 +5,8 @@ import { SubHeading } from "../styles/styles";
 import { IPopupWindow } from "./types/types";
 import { DarkBackground, CheckoutMainWindow, AccountBuyButton } from "./styles/CheckoutForm.styles";
 
+import { changeEmail, changePassword } from "./services/services";
+
 const EmailForm: FunctionComponent<IPopupWindow> = ({ theme, closeWindow }) => {
   const [processing, setProcessing] = useState(false);
   const [emailData, setEmailData] = useState({
@@ -16,6 +18,13 @@ const EmailForm: FunctionComponent<IPopupWindow> = ({ theme, closeWindow }) => {
   const onChangeEmails = (e: ChangeEvent) => {
     const target = e.target as HTMLInputElement;
     setEmailData({ ...emailData, [target.id]: target.value });
+  };
+
+  const changeUserEmail = async () => {
+    setProcessing(true);
+    const changedEmail = await changeEmail(emailData.currentEmail, emailData.newEmail, emailData.newEmailConfirm);
+    console.log(changedEmail);
+    setProcessing(false);
   };
 
   return (
@@ -34,7 +43,7 @@ const EmailForm: FunctionComponent<IPopupWindow> = ({ theme, closeWindow }) => {
           theme={theme}
           onChange={onChangeEmails}
         />
-        <AccountBuyButton onClick={() => console.log("WOW")} theme={theme}>
+        <AccountBuyButton onClick={() => changeUserEmail()} theme={theme}>
           {processing ? "Please Wait" : "Submit"}
         </AccountBuyButton>
       </CheckoutMainWindow>

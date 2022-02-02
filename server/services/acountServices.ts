@@ -1,8 +1,8 @@
 import pool from "../utils/pgdb";
 
-export const changeUsername = async (newUsername: string, id: number) => {
-  const newUser = await pool.query("UPDATE users SET username = $1 WHERE id = $2", [newUsername, id]);
-  return newUser;
+export const deleteUser = async (id: number) => {
+  const deletedUser = await pool.query("DELETE from users WHERE id = $2", [id]);
+  return deletedUser;
 };
 
 export const changeEmail = async (email: string, id: number) => {

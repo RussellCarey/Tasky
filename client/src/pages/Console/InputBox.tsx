@@ -4,7 +4,7 @@ import { IPropsInputArea } from "./types/types";
 import { checkStarting } from "../../utils/checkMatchingCommand";
 import ThemeContext from "../../context/theme/themeContext";
 import { hideLoginPassword } from "./utils/hideLoginPassword";
-import { commandMap } from "../../services/commandMap";
+import { commandMap } from "./services/commandMap";
 
 const InputArea: FunctionComponent<IPropsInputArea> = ({ inputText, setInputText, consoleText, setConsoleText }) => {
   const themeContext = useContext(ThemeContext);

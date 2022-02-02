@@ -1,4 +1,4 @@
-import { helpScreenText, aboutText } from "../constants/text";
+import { helpScreenText, aboutText } from "../../../constants/text";
 import Cookie from "js-cookie";
 import {
   logoutAttempt,
@@ -14,9 +14,9 @@ import {
   deleteTasksDate,
   deleteTasksFromDateRange,
 } from "./dbServices";
-import { checkValidEmail, checkValidPassword, checkValidUsername } from "../utils/inputValidation";
+import { checkValidEmail, checkValidPassword, checkValidUsername } from "../../../utils/inputValidation";
 
-import { ICommandInitalObject } from "../types/types";
+import { ICommandInitalObject } from "../../../types/types";
 
 // UTILITIES
 export const showCommandNotFound = (commandObject: ICommandInitalObject) => {

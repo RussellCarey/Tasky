@@ -1,7 +1,7 @@
 import React, { useState, useEffect, FunctionComponent, useContext } from "react";
 import ThemeContext from "../../context/theme/themeContext";
 import { useSearchParams } from "react-router-dom";
-import { authenticateUser } from "../../services/dbServices";
+import { authenticateUser } from "./services/dbServices";
 
 import { Container, MessageWindow } from "./styles/styles";
 

@@ -11,20 +11,19 @@ import {
   addUserToTheDB,
 } from "../services/authServices";
 import { sendWelcomeEmail } from "./emailController";
-import { changeUsername, changeEmail, updateSubcriptionActive } from "../services/acountServices";
+import { deleteUser, changeEmail, updateSubcriptionActive } from "../services/acountServices";
 
 // Change the user name of the user.
-exports.changeUserUsername = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-  const { username, newUsername, newUsernameConfirm } = req.body;
+exports.deleteUserAccount = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  const { id } = req.body.user;
+  if (!req.body.use || !id) throw new AppError("Could not authenticate user. Please try again", 500);
 
-  if (!username || !newUsername || !newUsernameConfirm) return new AppError("Please include all fields.", 500);
-  if (newUsername !== newUsernameConfirm) throw new AppError("Input the same new username.", 500);
-
-  const changedUsername = await changeUsername(newUsername, req.body.user.id);
-  console.log(changedUsername);
+  const deleteUserAttempt = deleteUser(id);
+  console.log(deleteUserAttempt);
 
   res.json({
     status: "success",
+    data: deleteUserAttempt,
   });
 });
 
@@ -32,14 +31,18 @@ exports.changeUserUsername = catchAsync(async (req: Request, res: Response, next
 exports.changeUserEmail = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   const { email, newEmail, newEmailConfirm } = req.body;
 
-  if (!email || !newEmail || !newEmailConfirm) return new AppError("Please include all fields.", 500);
+  if (!email || !newEmail || !newEmailConfirm) throw new AppError("Please include all fields.", 500);
   if (newEmail !== newEmailConfirm) throw new AppError("Input the same new email.", 500);
+
+  const existingEmail = await checkUserExistsEmail(newEmail);
+  if (existingEmail.rows[0]) throw new AppError("Email already taken.", 500);
 
   const changedEmail = await changeEmail(newEmail, req.body.user.id);
   console.log(changedEmail);
 
   res.json({
     status: "success",
+    data: changedEmail,
   });
 });
 
@@ -62,11 +65,12 @@ exports.changeUserPassword = catchAsync(async (req: Request, res: Response, next
   const newUserPassword = bcryptPassword(newpassword);
 
   // Save new password into the users DB.
-  const changedpassword = await changeEmail(newpassword, req.body.user.id);
-  console.log(changedpassword);
+  const changedPassword = await changeEmail(newpassword, req.body.user.id);
+  console.log(changedPassword);
 
   res.json({
     status: "success",
+    data: changedPassword,
   });
 });
 

@@ -1,5 +1,5 @@
 import * as CommandServices from "./commandService";
-import { ICommandInitalObject } from "../types/types";
+import { ICommandInitalObject } from "../../../types/types";
 
 export type ICommandReturnFunction = (args: ICommandInitalObject) => any;
 
