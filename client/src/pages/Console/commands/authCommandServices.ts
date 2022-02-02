@@ -18,7 +18,7 @@ export const login = async (commandObject: ICommandInitalObject) => {
     // Set cookie to use
     Cookie.set("jwt", loginRequest.data.data);
 
-    return ["Logged into your account"];
+    return ["Logged into your account."];
   } catch (error: any) {
     return errorMessage(error);
   }
@@ -26,7 +26,7 @@ export const login = async (commandObject: ICommandInitalObject) => {
 
 export const logout = async (commandObject: ICommandInitalObject) => {
   try {
-    if (commandObject.args.length !== 0) return ["Please type logout only to use this function."];
+    if (commandObject.args.length !== 0) return ["Please type logout with no arguments to use this function."];
 
     // Logout service.
     const logoutRequest = await logoutAttempt(commandObject.args);
@@ -44,7 +44,7 @@ export const signup = async (commandObject: ICommandInitalObject) => {
   try {
     // signup username email password passwordconfirm
     if (commandObject.args.length > 4)
-      return ["Please type sign up followed by desired username, email, and passwords to use this function."];
+      return ["Please type signup followed by desired username, email, and passwords to use this function."];
 
     // Run checks on inputs..
     if (!checkValidUsername(commandObject.args[0]))

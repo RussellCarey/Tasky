@@ -1,5 +1,4 @@
 import pool from "../utils/pgdb";
-import catchAsync from "../utils/catchAsync";
 
 export const createNewTaskName = async (userID: number, taskName: string) => {
   const uploadedTaskName = await pool.query("INSERT into categories (userid, taskname) VALUES ($1, $2)", [

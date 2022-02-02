@@ -40,7 +40,8 @@ export const getAllTaskNames = async () => {
     });
 
     // If the user has no presaved tasks.
-    if (tasksSentences.length === 0) return ["You have no saved task names. Add some using `add new task name (name)`"];
+    if (tasksSentences.length === 0)
+      return ["You have no saved task names. Add some using `add new task name (name)`."];
 
     // Return found tasks
     return ["Retrieved tasks:", ...tasksSentences];
@@ -93,7 +94,7 @@ export const deleteTask = async (commandObject: ICommandInitalObject) => {
 
 export const showTasksOnDate = async (commandObject: ICommandInitalObject) => {
   try {
-    if (commandObject.args.length > 1) return ["Too many arguments provided"];
+    if (commandObject.args.length > 1) return ["Too many arguments provided."];
     const date = commandObject.args[0];
 
     // Get single days tasks..

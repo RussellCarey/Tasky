@@ -20,9 +20,7 @@ export const showUserInformation = async (commandObject: ICommandInitalObject) =
       "Your information: ",
       `Username: ${userData.username}`,
       `Email: ${userData.email}`,
-      `Status: ${
-        userData.ismember ? "Premium member. Thanks for upgrading" : "Free. Fancy upgrading to get more benefits?"
-      }`,
+      `Status: ${userData.ismember ? "Premium member!" : "Free. Fancy upgrading to get more benefits?"}`,
     ];
   } catch (error: any) {
     return errorMessage(error);
@@ -82,7 +80,7 @@ export const deleteAccount = async (commandObject: ICommandInitalObject) => {
     const changeAttempt = await deleteUserAccount(password, passwordConfirm);
     if (changeAttempt.data.status !== "success") return ["Error removing your account. Please try again."];
 
-    return [`Your account has been deleted. Sorry to see you go. You have been logged out.`];
+    return [`Your account has been deleted. Sorry to see you go! You have been logged out.`];
   } catch (error: any) {
     return errorMessage(error);
   }
