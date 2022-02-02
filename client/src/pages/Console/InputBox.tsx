@@ -1,12 +1,18 @@
 import React, { FunctionComponent, useRef, useEffect, useState, useContext } from "react";
 import { InputContainer } from "./styles/InputBox.styles";
 import { IPropsInputArea } from "./types/types";
-import { checkStarting } from "../../utils/checkMatchingCommand";
+import { checkStarting } from "./utils/checkMatchingCommand";
 import ThemeContext from "../../context/theme/themeContext";
 import { hideLoginPassword } from "./utils/hideLoginPassword";
-import { commandMap } from "./services/commandMap";
+import { commandMap } from "./commands/commandMap";
 
-const InputArea: FunctionComponent<IPropsInputArea> = ({ inputText, setInputText, consoleText, setConsoleText }) => {
+const InputArea: FunctionComponent<IPropsInputArea> = ({
+  inputText,
+  setInputText,
+  consoleText,
+  setConsoleText,
+  setShowCheckout,
+}) => {
   const themeContext = useContext(ThemeContext);
   const { theme, uiCommandMap } = themeContext;
 
@@ -51,6 +57,13 @@ const InputArea: FunctionComponent<IPropsInputArea> = ({ inputText, setInputText
         if (checkForCommand.commandName === "clear") {
           resetPress();
           return setConsoleText("");
+        }
+
+        // Check for clear first
+        if (checkForCommand.commandName === "upgrade_account") {
+          setShowCheckout(true);
+          resetPress();
+          return addConsoleText(["Opening purchase window."]);
         }
 
         // Check merged theme and commands hashmaps for matching command.

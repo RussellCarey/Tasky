@@ -1,4 +1,4 @@
-import { ICommandReturnFunction } from "../pages/Console/services/commandMap";
+import { ICommandReturnFunction } from "../commands/commandMap";
 
 const returnedObject = (args: Array<string>, commandName: string, fullSentence: string, commandFunc: Function) => {
   return {

@@ -1,9 +1,4 @@
-import { helpScreenText, aboutText } from "../../../constants/text";
-import Cookie from "js-cookie";
 import {
-  logoutAttempt,
-  loginAttempt,
-  signupAttempt,
   addNewTaskNameAttempt,
   getTaskNames,
   addNewTaskHours,
@@ -13,131 +8,10 @@ import {
   getTasksFromDateRange,
   deleteTasksDate,
   deleteTasksFromDateRange,
-} from "./dbServices";
-import { checkValidEmail, checkValidPassword, checkValidUsername } from "../../../utils/inputValidation";
+} from "../services/dbTaskServices";
 
+import { errorMessage, calculatePercentages } from "./utilCommandServices";
 import { ICommandInitalObject } from "../../../types/types";
-
-// UTILITIES
-export const showCommandNotFound = (commandObject: ICommandInitalObject) => {
-  const joinedStrings = commandObject.args.join(" ");
-  return [`Did not recognise command ${joinedStrings}.`];
-};
-
-//
-export const showHelpText = (commandObject: ICommandInitalObject) => {
-  if (commandObject.args.length > 0) return ["Please type show help without arguments to use this function."];
-  return helpScreenText;
-};
-
-//
-export const showAboutText = (commandObject: ICommandInitalObject) => {
-  if (commandObject.args.length > 0) return ["Please type show about without arguments to use this function."];
-  return aboutText;
-};
-
-//
-export const clearWindowText = (commandObject: ICommandInitalObject) => {
-  if (commandObject.args.length > 0) return ["Please type clear without arguments to use this function."];
-  return "clear";
-};
-
-const errorMessage = (error: any) => {
-  const err = error.response;
-  if (err.data.message) return [`Error. ${err.data.message}`];
-  return ["Unknown Error, please try again."];
-};
-
-interface ITaskObject {
-  hours: number;
-  id: number;
-  taskname: string;
-  userid: string;
-}
-
-const calculatePercentages = (itemsArray: Array<ITaskObject>) => {
-  const totalHours = itemsArray.map((tasks) => +tasks.hours).reduce((pre, curr) => pre + curr);
-  const tasksAndHours: any = {};
-
-  itemsArray.forEach((tasks) => {
-    const obj = tasksAndHours[tasks.taskname];
-
-    if (!obj)
-      return (tasksAndHours[tasks.taskname] = {
-        id: tasks.id,
-        taskname: tasks.taskname,
-        hours: +tasks.hours,
-        percentage: (tasks.hours / totalHours) * 100,
-      });
-
-    if (obj)
-      return (tasksAndHours[tasks.taskname] = {
-        ...obj,
-        hours: (obj.hours += +tasks.hours),
-        percentage: (+obj.hours / totalHours) * 100,
-      });
-  });
-
-  return tasksAndHours;
-};
-
-// LOGIN LOGOUT SIGNUP.
-export const login = async (commandObject: ICommandInitalObject) => {
-  const password = commandObject.passwordRef;
-
-  try {
-    if (commandObject.args.length !== 2)
-      return ["Please type login followed by only the username and password to use this function."];
-
-    const loginRequest = await loginAttempt(commandObject.args[0], password);
-    if (loginRequest.data.status !== "success") return ["Error logging in. Please try again."];
-
-    // Set cookie to use
-    Cookie.set("jwt", loginRequest.data.data);
-
-    return ["Logged into your account"];
-  } catch (error: any) {
-    return errorMessage(error);
-  }
-};
-
-//
-export const logout = async (commandObject: ICommandInitalObject) => {
-  try {
-    if (commandObject.args.length !== 0) return ["Please type logout only to use this function."];
-
-    // Logout service.
-    const logoutRequest = await logoutAttempt(commandObject.args);
-    if (logoutRequest.data.status !== "success") throw new Error();
-
-    return ["Logged out of your account. Have a great day!"];
-  } catch (error: any) {
-    return [`Failed to logout. Please try again.`];
-  }
-};
-
-export const signup = async (commandObject: ICommandInitalObject) => {
-  try {
-    // signup username email password passwordconfirm
-    if (commandObject.args.length > 4)
-      return ["Please type sign up followed by desired username, email, and passwords to use this function."];
-
-    // Run checks on inputs..
-    if (!checkValidUsername(commandObject.args[0]))
-      return ["Username should contain no numbers, spaces or special characters."];
-
-    if (!checkValidEmail(commandObject.args[1])) return ["Failed. Email was not valid."];
-
-    if (!checkValidPassword(commandObject.args[2], commandObject.args[3]))
-      return ["Check passwords match and ensure password is greater than 8 charactrers long."];
-
-    const signupRequest = await signupAttempt(commandObject.args);
-
-    return ["Welcome, you are all signed up. Please check your email for an activation link!"];
-  } catch (error: any) {
-    return errorMessage(error);
-  }
-};
 
 // TASK NAMES (NOT ACTUAL SAVED TASK WITH HOURS)
 export const addNewTaskName = async (commandObject: ICommandInitalObject) => {

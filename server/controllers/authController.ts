@@ -125,7 +125,7 @@ exports.getUserData = catchAsync(async (req: Request, res: Response, next: NextF
   userData.password = "";
 
   res.json({
-    status: "Success",
+    status: "success",
     data: userData,
   });
 });

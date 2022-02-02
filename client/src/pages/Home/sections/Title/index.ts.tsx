@@ -30,9 +30,9 @@ const TitleSection: FunctionComponent<any> = ({ theme }) => {
         </Link>
 
         {/* Go to the account page */}
-        <Link to="/account" style={{ textDecoration: "none" }}>
+        <Link to="/contact" style={{ textDecoration: "none" }}>
           <TerminalButton theme={theme}>
-            <ButtonTextLarge>account</ButtonTextLarge>
+            <ButtonTextLarge>contact</ButtonTextLarge>
           </TerminalButton>
         </Link>
       </ButtonContainer>

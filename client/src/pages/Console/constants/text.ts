@@ -4,20 +4,20 @@ export const welcomeText = [
 ];
 
 export const helpScreenText = [
-  "Below are some quick help commands to refresh your memory. Please check the docs page for a more detailed exsplanation",
+  "Below are some quick help commands to get your started. Please check the docs page for a more commands and a short walkthrough of this app.",
+  "Type  'upgrade account' to open the buying window to upgrade to a paid membership.",
+  "Type  'signup (username) (email) (password) (password confirm)  to start the signup process.",
   "Type  'login (username) (password)'  to login to your account.",
   "Type  'logout'  to logout from your account.",
-  "Type  'signup (username) (email) (password) (password confirm)  to start the signup process.",
   "Type  'add new task name (name)'  to create a new tasks name eg. Studied math.",
   "Type  'add new task (task number) (hours)'  to use the task name created to save the time doing that task.",
-  "Type  'delete task name (id)'  to delete a task name",
-  "Type  'delete task (id)'  to delete a tasks and it data.",
-  "Type  'delete tasks (date)'  to delete a tasks and it data from a specific day.",
-  "Type  'delete tasks (date from) (date to)'  to delete a tasks and it data from a specific day.",
   "Type  'show tasks'  to see todays current tasks and information.",
   "Type  'show tasks (date)'  to see that dates tasks and information.",
   "Type  'show tasks (date from) (date to)'  to see that range of dates tasks and information.",
-  "Type  'clear'  to clear the windows of all text.",
+  "Type  'set theme dark'  to change to dark mode.",
+  "Type  'set theme light'  to change to light mode.",
+  "You can change values of the UI by a hex code using commands. Please check the docs page for more info.",
+  "You can also see your account info, change your password etc using commands. Please check the docs page for more info.",
 ];
 
 export const aboutText = [

@@ -9,6 +9,7 @@ import {
   checkPasswordsMatch,
   checkUserExistsEmail,
   addUserToTheDB,
+  checkUserExistsID,
 } from "../services/authServices";
 import { sendWelcomeEmail } from "./emailController";
 import { deleteUser, changeEmail, changePassword } from "../services/acountServices";
@@ -23,8 +24,19 @@ const resetCookieOptions: CookieOptions = {
 
 // Change the user name of the user.
 exports.deleteUserAccount = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-  if (!req.body.user) throw new AppError("Could not authenticate user. Please try again", 500);
   const { id } = req.body.user;
+  const { password, passwordConfirm } = req.body;
+
+  if (!id) throw new AppError("Could not authenticate user. Please try again", 500);
+  if (password !== passwordConfirm) throw new AppError("Incorrect password. Please try again", 500);
+
+  // Check database and get user information (Maybe keep this client side?);
+  const currentUser = await checkUserExistsID(id);
+  if (!currentUser.rows[0]) throw new AppError("Cannot find user or you are not logged in", 500);
+
+  // Compare provided password with current one in the database.
+  const encryptedPassword = await bcryptComaprePasswords(password, currentUser.rows[0].password);
+  if (!encryptedPassword) throw new AppError("Incorrect current password. Please try agaian", 500);
 
   const deleteUserAttempt = await deleteUser(id);
 
@@ -42,6 +54,11 @@ exports.changeUserEmail = catchAsync(async (req: Request, res: Response, next: N
 
   if (!email || !newEmail || !newEmailConfirm) throw new AppError("Please include all fields.", 500);
   if (newEmail !== newEmailConfirm) throw new AppError("Input the same new email.", 500);
+
+  const currentUser = await checkUserExistsID(req.body.user.id);
+  if (!currentUser.rows[0]) throw new AppError("Cannot find user or you are not logged in", 500);
+
+  if (email !== currentUser.rows[0].email) throw new AppError("Please enter your correct current email address", 500);
 
   const existingEmail = await checkUserExistsEmail(newEmail);
   if (existingEmail.rows[0]) throw new AppError("Email already taken.", 500);
@@ -64,7 +81,7 @@ exports.changeUserPassword = catchAsync(async (req: Request, res: Response, next
   if (newPassword !== newPasswordConfirm) throw new AppError("Input the same new password.", 500);
 
   // Check database and get user information (Maybe keep this client side?);
-  const currentUser = await checkUserExistsUsername(req.body.user.username);
+  const currentUser = await checkUserExistsID(req.body.user.id);
   if (!currentUser.rows[0]) throw new AppError("Cannot find user or you are not logged in", 500);
 
   // Compare provided password with current one in the database.
