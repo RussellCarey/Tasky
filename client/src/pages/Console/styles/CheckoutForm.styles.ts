@@ -7,16 +7,36 @@ import { TerminalWindow } from "../../Console/styles/MainWindows";
 import { CardNumberElement, CardExpiryElement, CardCvcElement } from "@stripe/react-stripe-js";
 
 export const MainWindow = styled(TerminalBox)`
-  width: 100%;
+  width: 70%;
   max-width: 100%;
-  height: fit-content;
+  height: 100%;
   margin-top: ${theme.spacing.large};
+
+  padding: 0 ${theme.spacing.side};
 
   display: flex;
   flex-direction: column;
 
   &:hover {
     transform: rotate(0deg);
+  }
+`;
+
+export const CheckoutMainWindow = styled(TerminalWindow)`
+  ${mixinDefaultTheme}
+  position: relative;
+  background-color: ${(props) => props.theme.backgroundColor};
+
+  padding: 50px ${theme.spacing.side};
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  overflow-y: scroll;
+
+  @media (max-width: 600px) {
+    padding: 40px ${theme.spacing.small};
   }
 `;
 
@@ -63,21 +83,6 @@ export const DarkBackground = styled.div`
   background-color: rgba(0, 0, 0, 0.8);
 `;
 
-export const CheckoutMainWindow = styled(TerminalWindow)`
-  ${mixinDefaultTheme}
-  position: relative;
-  background-color: ${(props) => props.theme.backgroundColor};
-  width: 90vw;
-  height: max-content;
-  padding: 100px ${theme.spacing.xxxlage};
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  overflow-y: scroll;
-`;
-
 export const CheckoutTerminalWindow = styled(TerminalWindow)`
   ${mixinDefaultTheme}
   width: 90vw;
@@ -104,7 +109,7 @@ export const AccountInput = styled.input`
   box-shadow: 15px 15px 0 ${(props) => props.theme.shadowColor};
 
   margin-bottom: ${theme.spacing.large};
-  width: 700px;
+  width: 90%;
 `;
 
 export const AccountCardNumberElement = styled(CardNumberElement)`
@@ -114,7 +119,7 @@ export const AccountCardNumberElement = styled(CardNumberElement)`
   box-shadow: 15px 15px 0 ${(props) => props.theme.shadowColor};
 
   margin-bottom: ${theme.spacing.large};
-  width: 700px;
+  width: 90%;
 `;
 
 export const AccountCVCNumber = styled(CardCvcElement)`
@@ -124,7 +129,7 @@ export const AccountCVCNumber = styled(CardCvcElement)`
   box-shadow: 15px 15px 0 ${(props) => props.theme.shadowColor};
 
   margin-bottom: ${theme.spacing.large};
-  width: 700px;
+  width: 90%;
 `;
 
 export const AccountCardExpiry = styled(CardExpiryElement)`
@@ -134,12 +139,12 @@ export const AccountCardExpiry = styled(CardExpiryElement)`
   box-shadow: 15px 15px 0 ${(props) => props.theme.shadowColor};
 
   margin-bottom: ${theme.spacing.large};
-  width: 700px;
+  width: 90%;
 `;
 
 export const AccountBuyButton = styled(AccountButton)`
   margin: 0;
   margin-top: ${theme.spacing.xxlarge};
   text-align: center;
-  width: 600px;
+  width: 90%;
 `;

@@ -13,7 +13,6 @@ export const TitleContainer = styled(Container)`
   }
 `;
 
-//! Change to responseive grid?? Then can easily do grid gap etc..
 export const ButtonContainer = styled.div`
   width: 100%;
   height: min-content;

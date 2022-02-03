@@ -2,8 +2,8 @@ import React, { useState, useEffect, FunctionComponent, useContext } from "react
 import ThemeContext from "../../context/theme/themeContext";
 import { useSearchParams } from "react-router-dom";
 import { authenticateUser } from "./services/dbServices";
-
-import { Container, MessageWindow } from "./styles/styles";
+import { Container, MessageWindow, Title } from "./styles/styles";
+import { Text } from "../styles/styles";
 
 const AuthPage: FunctionComponent = () => {
   const themeContext = useContext(ThemeContext);
@@ -32,11 +32,11 @@ const AuthPage: FunctionComponent = () => {
   return (
     <Container theme={theme}>
       <MessageWindow theme={theme}>
-        <h2>Tasky</h2>
-        <p>{message}</p>
-        <p>
+        <Title>Tasky</Title>
+        <Text>{message}</Text>
+        <Text>
           Click <a href="/">here</a> to return to homepage
-        </p>
+        </Text>
       </MessageWindow>
     </Container>
   );

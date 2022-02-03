@@ -64,9 +64,11 @@ const CheckoutForm: FunctionComponent<IPopupWindow> = ({ theme, closeWindow }) =
     <DarkBackground>
       <CheckoutMainWindow theme={theme}>
         <AccountCrossButton onClick={() => closeWindow(false)}>X</AccountCrossButton>
+
         <AccountTerminalWindow theme={theme}>
           <SubHeading>Upgrade to unlimited.</SubHeading>
         </AccountTerminalWindow>
+
         <AccountTerminalWindow theme={theme}>
           <Text style={{ marginBottom: "22px" }}>
             Remove all limits on number of tasks you can have and go unlimited!

@@ -1,5 +1,6 @@
 import { theme } from "../../../theme/theme";
 import styled from "styled-components";
+import { SubHeading } from "../../styles/styles";
 import { mixinDefaultTheme } from "../../../theme/mixins";
 
 export const Container = styled.div`
@@ -14,15 +15,11 @@ export const Container = styled.div`
 `;
 
 export const MessageWindow = styled.div`
+  ${mixinDefaultTheme}
   width: 70vw;
   height: max-content;
   padding: ${theme.spacing.xlarge} ${theme.spacing.xlarge};
   position: relative;
-
-  background-color: ${(props) => props.theme.terminalColor};
-  border: 5px solid ${(props) => props.theme.borderColor};
-  border-radius: 20px;
-  box-shadow: 20px 20px 0px ${(props) => props.theme.shadowColor};
 
   display: flex;
   flex-direction: column;
@@ -32,4 +29,12 @@ export const MessageWindow = styled.div`
   overflow: wrap;
 
   text-align: center;
+
+  @media (max-width: 600px) {
+    width: 85vw;
+  }
+`;
+
+export const Title = styled(SubHeading)`
+  margin-bottom: ${theme.spacing.large};
 `;
