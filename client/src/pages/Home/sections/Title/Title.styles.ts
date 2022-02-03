@@ -7,6 +7,10 @@ export const TitleContainer = styled(Container)`
   flex-direction: column;
   justify-content: center;
   padding: ${theme.spacing.side};
+
+  @media (max-width: 600px) {
+    align-items: center;
+  }
 `;
 
 //! Change to responseive grid?? Then can easily do grid gap etc..
@@ -17,8 +21,16 @@ export const ButtonContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
+
+  @media (max-width: 600px) {
+    justify-content: center;
+  }
 `;
 
 export const TitleButton = styled(TerminalButton)`
   margin-right: ${theme.spacing.large};
+
+  @media (max-width: 600px) {
+    margin-bottom: ${theme.spacing.large};
+  }
 `;
