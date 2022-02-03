@@ -35,6 +35,10 @@ app.get("/payment", function (req, res) {
   res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
+app.get("/contact", function (req, res) {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+});
+
 app.listen(3002, () => {
   console.log("Client hosted on 3002!");
 });
