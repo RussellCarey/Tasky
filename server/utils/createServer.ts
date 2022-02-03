@@ -14,7 +14,6 @@ const whiteListProd = [
   "https://tasky.russell-carey.com",
   "https://tasky.russell-carey.com/taskyapi",
   "https://www.tasky.russell-carey.com",
-  "localhost:3002",
 ];
 
 // Main server and middleware / parsers
