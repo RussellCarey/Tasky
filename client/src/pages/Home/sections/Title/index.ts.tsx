@@ -3,7 +3,6 @@ import { MainHeading, TerminalBox, ButtonTextLarge, SubHeading } from "../../../
 import { TitleContainer, ButtonContainer, TitleButton } from "./Title.styles";
 import { Link } from "react-router-dom";
 
-//!!!!!! NOT AANY
 const TitleSection: FunctionComponent<any> = ({ theme }) => {
   return (
     <TitleContainer theme={theme}>

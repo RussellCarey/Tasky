@@ -50,7 +50,7 @@ exports.login = catchAsync(async (req: Request, res: Response, next: NextFunctio
 
   const removePassword = { ...body, password: "" };
 
-  // If so, send back the JWT and data
+  // If so, send back the JWT and data..
   await createAndSendJWT(res, removePassword);
 });
 

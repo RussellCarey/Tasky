@@ -59,7 +59,7 @@ exports.webhook = catchAsync(async (req: IReqBodyRaw, res: Response, next: NextF
     const eventMetaData = event.data.object.metadata;
     const upgradedUser = await updateSubcriptionActive(eventMetaData.userID);
 
-    // Send email to the user
+    // Send email to the user --- Check for error and send email.
     const sendMail = sendPaymentEmailSuccess(eventMetaData.userID, eventMetaData.email);
   }
 

@@ -102,7 +102,7 @@ export const showTasksOnDate = async (commandObject: ICommandInitalObject) => {
 
     // Convert above object into an array. Return string with data to return to console.
     const stringArrayResults: Array<string> = Object.entries(percetangesAndCollection).map((data: any) => {
-      return `[${data[1].id}] ${data[1].taskname} for ${data[1].hours} hours. [${Math.round(data[1].percentage)}%]`;
+      return `${data[1].taskname} for ${data[1].hours} hours. [${Math.round(data[1].percentage)}%]`;
     });
 
     // Push date into the start of the array.

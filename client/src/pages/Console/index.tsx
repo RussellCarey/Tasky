@@ -23,15 +23,6 @@ const ConsolePage: FunctionComponent = () => {
   const themeContext = useContext(ThemeContext);
   const { theme } = themeContext;
 
-  const getUser = async () => {
-    const userData = await getUserInformation();
-    setUsername(userData.data.data.username);
-  };
-
-  useEffect(() => {
-    if (Cookie.get("jwt")) getUser();
-  }, []);
-
   return (
     <>
       {showCheckout ? (

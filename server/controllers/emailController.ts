@@ -1,6 +1,10 @@
 const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(process.env.SENDGRID_API);
 
+// ---------
+// Emails are WIP - Need to tigten up the code / process and create better looking, formatted emails.
+//----------
+
 // Using SendGrid and its API..
 const sendMail = async (message: Object) => {
   try {

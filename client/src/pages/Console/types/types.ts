@@ -2,6 +2,13 @@ export interface IPropsTextArea {
   consoleText: Array<string>;
 }
 
+export interface ITaskObject {
+  hours: number;
+  id: number;
+  taskname: string;
+  userid: string;
+}
+
 export interface IPropsInputArea {
   inputText: string;
   setInputText: Function;

@@ -1,5 +1,6 @@
 import { helpScreenText, aboutText } from "../constants/text";
 import { ICommandInitalObject } from "../../../types/types";
+import { ITaskObject } from "../types/types";
 
 // UTILITIES
 export const showCommandNotFound = (commandObject: ICommandInitalObject) => {
@@ -30,13 +31,6 @@ export const errorMessage = (error: any) => {
   if (err.data.message) return [`Error. ${err.data.message}`];
   return ["Unknown Error, please try again."];
 };
-
-interface ITaskObject {
-  hours: number;
-  id: number;
-  taskname: string;
-  userid: string;
-}
 
 export const calculatePercentages = (itemsArray: Array<ITaskObject>) => {
   const totalHours = itemsArray.map((tasks) => +tasks.hours).reduce((pre, curr) => pre + curr);
