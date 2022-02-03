@@ -1,6 +1,6 @@
 const dotenv = require("dotenv");
 dotenv.config();
-import { createRouteLimit } from "../utils/routeLimited";
+import { createRouteLimit } from "./utils/routeLimiter";
 
 const AuthRoutes = require("./routes/authRoutes");
 const TasksRoutes = require("./routes/taskRoutes");
