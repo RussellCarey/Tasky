@@ -34,3 +34,13 @@ export const preparePaymentFailureHTML = (username: string, email: string) => {
     If you have any issues, please contact us!<br><br>
     Thank you for using tasky!`;
 };
+
+export const sendAdminSignupNotificationHTML = (username: string, email: string) => {
+  return `<strong>${username} just joined! </strong><br>
+  <p> Their email is ${email} </p>
+  `;
+};
+
+export const sendAdminSignupNotificationText = (username: string, email: string) => {
+  return `${username} just joined! Their email is ${email}`;
+};

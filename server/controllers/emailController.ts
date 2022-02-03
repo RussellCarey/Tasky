@@ -52,3 +52,16 @@ export const sendPaymentEmailFailure = async (username: string, email: string) =
   await sendMail(msg);
   return msg;
 };
+
+export const sendAdminSignUpNotification = async (username: string, email: string) => {
+  const msg = {
+    to: `admin@russell-carey.com`, // Change to your recipient
+    from: process.env.ADMIN_EMAIL, // Change to your verified sender
+    subject: `${username} has just signed up.`,
+    text: EmailHelper.sendAdminSignupNotificationText(username, email),
+    html: EmailHelper.sendAdminSignupNotificationHTML(username, email),
+  };
+
+  await sendMail(msg);
+  return msg;
+};

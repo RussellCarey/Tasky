@@ -11,7 +11,7 @@ import {
   addUserToTheDB,
   checkUserExistsID,
 } from "../services/authServices";
-import { sendWelcomeEmail } from "./emailController";
+import { sendWelcomeEmail, sendAdminSignUpNotification } from "./emailController";
 import { deleteUser, changeEmail, changePassword } from "../services/acountServices";
 
 // Set expiry to now and remove JWT from cookie to log out user.
@@ -128,6 +128,7 @@ exports.signUp = catchAsync(async (req: Request, res: Response, next: NextFuncti
 
   // Send welcome email to the user.
   const welcomeEmail = await sendWelcomeEmail(body.username, body.email, addedUser);
+  const emailAdminNotification = await sendAdminSignUpNotification(body.username, body.email);
 
   // Create token
   res.json({
