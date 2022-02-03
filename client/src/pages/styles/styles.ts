@@ -18,7 +18,7 @@ export const Main = styled.div`
   background-color: ${(props) => props.theme.backgroundColor};
 
   @media (max-width: 400px) {
-    /* max-height: -webkit-fill-available; */
+    height: calc(100vh - calc(100vh - 100%));
   }
 `;
 
