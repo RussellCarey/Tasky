@@ -128,7 +128,7 @@ exports.signUp = catchAsync(async (req: Request, res: Response, next: NextFuncti
 
   // Send welcome email to the user.
   const welcomeEmail = await sendWelcomeEmail(body.username, body.email, addedUser);
-  const emailAdminNotification = await sendAdminSignUpNotification(body.username, body.email);
+  // const emailAdminNotification = await sendAdminSignUpNotification(body.username, body.email);
 
   // Create token
   res.json({
