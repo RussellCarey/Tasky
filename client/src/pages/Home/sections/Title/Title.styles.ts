@@ -6,7 +6,7 @@ export const TitleContainer = styled(Container)`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: ${theme.spacing.side};
+  padding: ${theme.spacing.large} ${theme.spacing.side};
 
   @media (max-width: 600px) {
     align-items: center;
@@ -29,6 +29,7 @@ export const ButtonContainer = styled.div`
 
 export const TitleButton = styled(TerminalButton)`
   margin-right: ${theme.spacing.large};
+  margin-bottom: ${theme.spacing.large};
 
   @media (max-width: 600px) {
     margin-bottom: ${theme.spacing.large};
