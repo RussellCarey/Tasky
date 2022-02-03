@@ -19,6 +19,7 @@ const whiteListProd = [
 
 // Main server and middleware / parsers
 export const createServer = () => {
+  //
   app.use(
     cors({
       origin: isDev() ? whiteListDev : whiteListProd,

@@ -33,7 +33,7 @@ export const TerminalWindow = styled.div`
 
   @media (max-width: 500px) {
     width: 99vw;
-    height: 99vh;
+    height: calc(99vh - calc(100vh - 100%));
     box-shadow: 0px 0px 0px ${(props) => props.theme.shadowColor};
   }
 `;

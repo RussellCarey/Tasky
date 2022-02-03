@@ -25,7 +25,6 @@ const ConsolePage: FunctionComponent = () => {
 
   const getUser = async () => {
     const userData = await getUserInformation();
-    console.log(userData.data.data.username);
     setUsername(userData.data.data.username);
   };
 

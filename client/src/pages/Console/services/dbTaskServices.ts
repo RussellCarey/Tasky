@@ -27,7 +27,6 @@ export const getTaskNames = async () => {
       : `${projectURLS.development}/api/tasks/getAllTaskNames`,
   });
 
-  console.log(taskNames);
   return taskNames;
 };
 
@@ -59,8 +58,6 @@ export const addNewTaskHours = async (hours: number, taskid: number) => {
     },
   });
 
-  console.log(addTaskHours);
-
   return addTaskHours;
 };
 
@@ -75,8 +72,6 @@ export const deleteTaskWithHours = async (taskid: number) => {
       taskID: taskid,
     },
   });
-
-  console.log(deleteTask);
 
   return deleteTask;
 };

@@ -32,7 +32,6 @@ export const getAllTaskNames = async () => {
   try {
     // Get all users saves task names
     const taskNamesList = await getTaskNames();
-    console.log(taskNamesList);
 
     // Return the task name along with its ID which the user needs to input.
     const tasksSentences = taskNamesList.data.data.rows.map((task: any, ind: any) => {
@@ -55,7 +54,6 @@ export const deleteTaskNames = async (commandObject: ICommandInitalObject) => {
     const id = Number(commandObject.args[0]);
 
     const deletedTaskName = await deleteTaskName(id);
-    console.log(deletedTaskName);
 
     return ["Your task name was deleted. "];
   } catch (error: any) {
@@ -71,7 +69,6 @@ export const addNewTask = async (commandObject: ICommandInitalObject) => {
 
     // Save users task and the hours spent doing it.
     const newTask = await addNewTaskHours(taskID, taskHours);
-    console.log(newTask);
 
     return ["Task was added!"];
   } catch (error: any) {
@@ -84,7 +81,6 @@ export const deleteTask = async (commandObject: ICommandInitalObject) => {
     const taskID = Number(commandObject.args[0]);
 
     const deleteTaskAndData = await deleteTaskWithHours(taskID);
-    console.log(deleteTaskAndData);
 
     return ["Task was deleted!"];
   } catch (error: any) {
@@ -106,7 +102,7 @@ export const showTasksOnDate = async (commandObject: ICommandInitalObject) => {
 
     // Convert above object into an array. Return string with data to return to console.
     const stringArrayResults: Array<string> = Object.entries(percetangesAndCollection).map((data: any) => {
-      return `[${data[1].id}] ${data[1].taskname} for ${data[1].hours} hours. [${data[1].percentage}%]`;
+      return `[${data[1].id}] ${data[1].taskname} for ${data[1].hours} hours. [${Math.round(data[1].percentage)}%]`;
     });
 
     // Push date into the start of the array.
@@ -132,11 +128,9 @@ export const showTasksDateRange = async (commandObject: ICommandInitalObject) =>
 
     // Convert the data into an object where each task is collected. Data is task name, hours, percetage.
     const percetangesAndCollection = calculatePercentages(daysTasks.data.data.rows);
-    console.log(percetangesAndCollection);
 
     // Convert above object into an array. Return string with data to return to console.
     const stringArrayResults: Array<string> = Object.entries(percetangesAndCollection).map((data: any) => {
-      console.log(data);
       return `${data[1].taskname} for ${data[1].hours} hours. [${data[1].percentage}%]`;
     });
 

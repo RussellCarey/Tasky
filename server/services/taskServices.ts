@@ -13,6 +13,11 @@ export const findAllTaskNames = async (userID: number) => {
   return allTaskNames;
 };
 
+export const findOneTaskName = async (taskName: number) => {
+  const allTaskNames = await pool.query("SELECT * FROM categories WHERE taskname = $1", [taskName]);
+  return allTaskNames;
+};
+
 export const addNewTaskWithHours = async (userID: number, taskID: number, hours: number) => {
   const getTaskName = await pool.query("SELECT taskname FROM categories WHERE id = $1", [taskID]);
 

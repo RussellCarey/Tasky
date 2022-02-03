@@ -16,7 +16,6 @@ export const TextArea: FunctionComponent<IPropsTextArea> = ({ consoleText }) => 
   const scrollToBottom = () => {
     if (textDivElement && textDivElement.current)
       textDivElement.current?.scrollTo({ behavior: "smooth", top: textDivElement.current.scrollHeight });
-    console.log(textDivElement);
   };
 
   return (

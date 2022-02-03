@@ -6,7 +6,7 @@ import { mixinDefaultTheme } from "../../theme/mixins";
 export const Main = styled.div`
   position: relative;
   width: 100vw;
-  min-height: 100vh;
+  height: 100vh;
 
   overflow-y: scroll;
 

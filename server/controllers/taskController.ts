@@ -10,6 +10,7 @@ import {
   getTasksFromDates,
   deleteTasksFromDate,
   deleteTaskFromDateRange,
+  findOneTaskName,
 } from "../services/taskServices";
 import AppError from "../utils/AppError";
 import catchAsync from "../utils/catchAsync";
@@ -19,6 +20,9 @@ exports.addNewTaskName = catchAsync(async (req: Request, res: Response, next: Ne
   const userID = req.body.user.id;
   const maxNumberAllowed = 5;
 
+  if (userID === "" || null) throw new AppError("User is not logged in.", 500);
+  if (taskName === "" || null) throw new AppError("Task name was invalid or missing", 500);
+
   //! Check if user is a member and if the task number has reached its max.
   const usersTaskNames = await findAllTaskNames(userID);
   if (usersTaskNames.rows.length > maxNumberAllowed)
@@ -27,8 +31,9 @@ exports.addNewTaskName = catchAsync(async (req: Request, res: Response, next: Ne
       500
     );
 
-  if (userID === "" || null) throw new AppError("User is not logged in.", 500);
-  if (taskName === "" || null) throw new AppError("Task name was invalid or missing", 500);
+  // Check if the user has already saved this name (stop dupicates).
+  const checkExisting = await findOneTaskName(taskName);
+  if (checkExisting.rows[0]) throw new AppError("You already have a task name with this name.", 500);
 
   const createdTask = await createNewTaskName(userID, taskName);
 
@@ -41,11 +46,9 @@ exports.addNewTaskName = catchAsync(async (req: Request, res: Response, next: Ne
 exports.getAllTaskNames = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   const userID = req.body.user.id;
   if (userID === "" || null) throw new AppError("User is not logged in.", 500);
-  console.log(userID);
 
   const taskNames = await findAllTaskNames(userID);
   if (!taskNames) throw new AppError("Unknown Error. Please try again.", 500);
-  console.log(taskNames.rows);
 
   res.json({
     status: "success",
@@ -58,7 +61,6 @@ exports.deleteTaskName = catchAsync(async (req: Request, res: Response, next: Ne
   if (!taskID) throw new AppError("Task ID not found, please enter a correct ID", 500);
 
   const taskNameDelete = await deleteTaskName(taskID);
-  console.log(taskNameDelete.rows);
 
   res.json({
     status: "success",
@@ -93,7 +95,6 @@ exports.deleteTaskWithHours = catchAsync(async (req: Request, res: Response, nex
   if (!taskID) throw new AppError("Task ID not found, please enter a correct ID", 500);
 
   const deleteTask = await deleteTaskWithHours(taskID);
-  console.log(deleteTask.rows);
 
   res.json({
     status: "success",
@@ -109,7 +110,6 @@ exports.getTasksOnDate = catchAsync(async (req: Request, res: Response, next: Ne
   if (dateQuery === "" || null) throw new AppError("Date was not provided.", 500);
 
   const foundTasks = await findTasksByDate(dateQuery, userID);
-  console.log(foundTasks.rows);
 
   res.json({
     status: "success",
@@ -142,7 +142,6 @@ exports.deleteTasksOnDate = catchAsync(async (req: Request, res: Response, next:
   if (dateQuery === "" || null) throw new AppError("Date was not provided.", 500);
 
   const deletedTasks = await deleteTasksFromDate(dateQuery, userID);
-  console.log(deletedTasks.rows);
 
   res.json({
     status: "success",
@@ -160,7 +159,6 @@ exports.deleteTasksFromDateRange = catchAsync(async (req: Request, res: Response
   if (dateTo === "" || null) throw new AppError("Dates were not provided.", 500);
 
   const deletedTasks = await deleteTaskFromDateRange(dateFrom, dateTo, userID);
-  console.log(deletedTasks);
 
   res.json({
     status: "success",

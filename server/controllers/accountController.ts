@@ -105,7 +105,6 @@ exports.changeUserPassword = catchAsync(async (req: Request, res: Response, next
 // Sign up, get data, check if the username or email exists. if it does not then create a new account and return data, cookie etc back to the client..
 exports.signUp = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   const body = req.body;
-  console.log(body);
   if (!body) throw new AppError("Failed. Error signing up.", 500);
 
   // Check passwords are the same..
