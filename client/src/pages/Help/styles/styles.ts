@@ -4,11 +4,7 @@ import { Container, Text } from "../../styles/styles";
 import { TerminalBox } from "../../styles/styles";
 
 export const HelpMain = styled(Container)`
-  padding: ${theme.spacing.side};
-
-  @media (max-width: 800px) {
-    padding: ${theme.spacing.xxxlage};
-  }
+  padding: ${theme.spacing.xxxlage};
 
   @media (max-width: 500px) {
     padding: ${theme.spacing.large};
@@ -17,6 +13,7 @@ export const HelpMain = styled(Container)`
 
 export const HelpWindow = styled(TerminalBox)`
   margin-left: 0;
+  padding: ${theme.spacing.xxlarge};
 
   &:hover {
     transform: rotate(0deg);

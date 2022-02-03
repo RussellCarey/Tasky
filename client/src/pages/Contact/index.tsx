@@ -1,7 +1,7 @@
 import { FunctionComponent, useContext } from "react";
 import { MainHeading, ButtonTextLarge } from "../styles/styles";
 import { ContactMain, ContactHeading, ContactButton } from "./styles/styles";
-import { Link } from "react-router-dom";
+import NavBar from "../common/NavBar";
 import ThemeContext from "../../context/theme/themeContext";
 
 //!!!!!! NOT AANY
@@ -11,6 +11,7 @@ const ContactPage: FunctionComponent = () => {
 
   return (
     <ContactMain theme={theme}>
+      <NavBar title={"Contact"} />
       <ContactHeading theme={theme}>
         <MainHeading>Contact</MainHeading>
       </ContactHeading>

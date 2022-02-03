@@ -1,4 +1,5 @@
 import { FunctionComponent, useContext } from "react";
+import NavBar from "../common/NavBar";
 import ThemeContext from "../../context/theme/themeContext";
 import { HelpMain, HelpWindow, InfoText } from "./styles/styles";
 import { SubHeading } from "../styles/styles";
@@ -11,9 +12,7 @@ const DocsPage: FunctionComponent = () => {
 
   return (
     <HelpMain theme={theme}>
-      <HelpWindow theme={theme}>
-        <SubHeading>Documentation</SubHeading>
-      </HelpWindow>
+      <NavBar title={"Docs"} />
 
       <HelpWindow theme={theme}>
         {documentExplanation.split("\n").map((i) => (

@@ -3,6 +3,7 @@ import ThemeContext from "../../context/theme/themeContext";
 import { useSearchParams } from "react-router-dom";
 import { Container, MessageWindow, Title } from "./styles/styles";
 import { Text } from "../styles/styles";
+import NavBar from "../common/NavBar";
 
 const Paymentpage: FunctionComponent = () => {
   const themeContext = useContext(ThemeContext);
@@ -18,6 +19,7 @@ const Paymentpage: FunctionComponent = () => {
 
   return (
     <Container theme={theme}>
+      <NavBar title={"Payment"} />
       <MessageWindow theme={theme}>
         <Title>Tasky</Title>
         {success ? (

@@ -1,20 +1,22 @@
 import styled from "styled-components";
+import { theme } from "../../../theme/theme";
 import { mixinDefaultTheme } from "../../../theme/mixins";
 
 export const MainWindow = styled.div`
   width: 100vw;
   height: 100vh;
+  padding: ${theme.spacing.xxxlage};
 
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
 
   background-color: ${(props) => props.theme.backgroundColor};
 `;
 
 export const TerminalWindow = styled.div`
-  width: 85vw;
-  height: 80vh;
+  width: 100%;
+  height: 100%;
   position: relative;
   ${mixinDefaultTheme};
 

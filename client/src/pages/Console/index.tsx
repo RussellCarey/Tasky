@@ -1,7 +1,6 @@
-import { useState, useContext, FunctionComponent, useEffect } from "react";
-import Cookie from "js-cookie";
-import { getUserInformation } from "./services/dbAccountServices";
+import { useState, useContext, FunctionComponent } from "react";
 import { MainWindow, TerminalWindow } from "./styles/MainWindows";
+import NavBar from "../common/NavBar";
 import CheckoutForm from "./CheckoutForm";
 import TopBar from "./TopBar";
 import TextArea from "./TextArea";
@@ -31,6 +30,7 @@ const ConsolePage: FunctionComponent = () => {
         </Elements>
       ) : null}
       <MainWindow theme={theme}>
+        <NavBar title={"Console"} />
         <TerminalWindow theme={theme}>
           <TopBar />
           <TextArea consoleText={consoleText} />

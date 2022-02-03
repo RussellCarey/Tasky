@@ -43,3 +43,7 @@ export interface IUserDetails {
   country: string;
   state: string;
 }
+
+export interface INavBarProps {
+  title: string;
+}

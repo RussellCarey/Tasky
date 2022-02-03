@@ -18,7 +18,7 @@ function App() {
           <Route path="/auth/" element={<AuthPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/payment" element={<PaymentPage />} />
-          <Route path="/help" element={<DocsPage />} />
+          <Route path="/docs" element={<DocsPage />} />
         </Routes>
       </Router>
     </ThemeState>

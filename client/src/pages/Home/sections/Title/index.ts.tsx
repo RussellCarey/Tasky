@@ -17,7 +17,7 @@ const TitleSection: FunctionComponent<any> = ({ theme }) => {
 
         {/* Go to the docs */}
         <ButtonContainer>
-          <Link to="/help" style={{ textDecoration: "none" }}>
+          <Link to="/docs" style={{ textDecoration: "none" }}>
             <TitleButton theme={theme}>
               <ButtonTextLarge>docs</ButtonTextLarge>
             </TitleButton>
