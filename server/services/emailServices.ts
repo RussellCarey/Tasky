@@ -26,6 +26,7 @@ export const preparePaymentFailureText = (username: string, email: string) => {
   return `${username}, This is just to let you know that your upgrade was not successful. Your payment may have gone through. If you have any issues, please contact us!`;
 };
 
+//
 export const preparePaymentFailureHTML = (username: string, email: string) => {
   return `<strong>Upgrade ahoy! ${username}.</strong><br>
     This is just to let you know that your upgrade may not have been successful. <br>
