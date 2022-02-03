@@ -72,7 +72,7 @@ export const SubHeading = styled.h2`
   font-size: ${theme.font.sizes.xxlarge};
 
   @media (max-width: 600px) {
-    font-size: ${theme.font.sizes.xlarge};
+    font-size: ${theme.font.sizes.large};
     text-align: center;
   }
 `;
@@ -82,7 +82,7 @@ export const ButtonTextLarge = styled.h3`
   font-size: ${theme.font.sizes.xxxlage};
 
   @media (max-width: 600px) {
-    font-size: ${theme.font.sizes.xxlarge};
+    font-size: ${theme.font.sizes.large};
   }
 `;
 

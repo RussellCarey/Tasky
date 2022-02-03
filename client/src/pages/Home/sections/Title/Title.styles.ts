@@ -6,7 +6,14 @@ export const TitleContainer = styled(Container)`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   padding: ${theme.spacing.large} ${theme.spacing.side};
+`;
+
+export const TitleItems = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
   @media (max-width: 600px) {
     align-items: center;
