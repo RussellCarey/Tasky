@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Main } from "../styles/styles";
+import { Container } from "../styles/styles";
 import TitleSection from "./sections/Title/index.ts";
 
 import ThemeContext from "../../context/theme/themeContext";
@@ -9,9 +9,9 @@ function Index() {
   const { theme } = themeContext;
 
   return (
-    <Main theme={theme}>
+    <Container theme={theme}>
       <TitleSection theme={theme} />
-    </Main>
+    </Container>
   );
 }
 

@@ -3,23 +3,13 @@ import styled from "styled-components";
 import { mixinDefaultTheme } from "../../theme/mixins";
 
 // Main window container for pages
-export const Main = styled.div`
+export const Container = styled.div`
   position: relative;
-  width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
 
   overflow-y: scroll;
 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
   background-color: ${(props) => props.theme.backgroundColor};
-
-  @media (max-width: 400px) {
-    height: calc(100vh - calc(100vh - 100%));
-  }
 `;
 
 // Terminal Styled Div
@@ -51,9 +41,6 @@ export const TerminalButton = styled.div`
 
   padding: ${theme.spacing.medium};
 
-  margin-right: ${theme.spacing.xxlarge};
-  margin-bottom: ${theme.spacing.xxlarge};
-
   transition: all 0.5s ease;
 
   &:hover {
@@ -63,7 +50,6 @@ export const TerminalButton = styled.div`
   }
 
   @media (max-width: 600px) {
-    margin: ${theme.spacing.medium};
     box-shadow: 10px 10px 0px ${(props) => props.theme.shadowColor};
   }
 `;

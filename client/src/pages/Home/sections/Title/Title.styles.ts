@@ -1,22 +1,15 @@
 import { theme } from "../../../../theme/theme";
 import styled from "styled-components";
+import { Container, TerminalButton } from "../../../styles/styles";
 
-export const TitleSectionDiv = styled.div`
-  position: relative;
-  height: 100vh;
-
-  padding: 0 ${theme.spacing.xxxlage};
-
+export const TitleContainer = styled(Container)`
   display: flex;
   flex-direction: column;
-  align-items: space-between;
   justify-content: center;
-
-  @media (max-width: 560px) {
-    align-items: center;
-  }
+  padding: ${theme.spacing.side};
 `;
 
+//! Change to responseive grid?? Then can easily do grid gap etc..
 export const ButtonContainer = styled.div`
   width: 100%;
   height: min-content;
@@ -24,10 +17,8 @@ export const ButtonContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
+`;
 
-  @media (max-width: 560px) {
-    flex-wrap: none;
-    justify-content: center;
-    align-items: center;
-  }
+export const TitleButton = styled(TerminalButton)`
+  margin-right: ${theme.spacing.large};
 `;

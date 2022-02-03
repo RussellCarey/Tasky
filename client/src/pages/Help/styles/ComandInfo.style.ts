@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Main } from "../../styles/styles";
 import { mixinDefaultTheme } from "../../../theme/mixins";
 import { TerminalBox } from "../../styles/styles";
 import { theme } from "../../../theme/theme";

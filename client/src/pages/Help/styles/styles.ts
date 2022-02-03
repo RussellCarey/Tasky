@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { theme } from "../../../theme/theme";
-import { Main, Text } from "../../styles/styles";
+import { Container, Text } from "../../styles/styles";
 import { TerminalBox } from "../../styles/styles";
 
-export const HelpMain = styled(Main)`
+export const HelpMain = styled(Container)`
   padding: ${theme.spacing.side};
 
   @media (max-width: 800px) {

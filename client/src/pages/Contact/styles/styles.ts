@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import { Main, TerminalButton } from "../../styles/styles";
+import { Container, TerminalButton } from "../../styles/styles";
 import { ButtonContainer } from "../../Home/sections/Title/Title.styles";
 import { TerminalBox } from "../../styles/styles";
 
-export const ContactMain = styled(Main)`
+export const ContactMain = styled(Container)`
   display: flex;
   align-items: center;
   justify-content: center;

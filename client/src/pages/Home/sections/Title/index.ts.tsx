@@ -1,15 +1,16 @@
 import { FunctionComponent } from "react";
-import { MainHeading, TerminalBox, TerminalButton, ButtonTextLarge, SubHeading } from "../../../styles/styles";
-import { TitleSectionDiv, ButtonContainer } from "./Title.styles";
+import { MainHeading, TerminalBox, ButtonTextLarge, SubHeading } from "../../../styles/styles";
+import { TitleContainer, ButtonContainer, TitleButton } from "./Title.styles";
 import { Link } from "react-router-dom";
 
 //!!!!!! NOT AANY
 const TitleSection: FunctionComponent<any> = ({ theme }) => {
   return (
-    <TitleSectionDiv theme={theme}>
+    <TitleContainer theme={theme}>
       <TerminalBox theme={theme}>
         <MainHeading>Tasky</MainHeading>
       </TerminalBox>
+
       <TerminalBox theme={theme}>
         <SubHeading>The simple task and time recorder.</SubHeading>
       </TerminalBox>
@@ -17,26 +18,26 @@ const TitleSection: FunctionComponent<any> = ({ theme }) => {
       {/* Go to the docs */}
       <ButtonContainer>
         <Link to="/help" style={{ textDecoration: "none" }}>
-          <TerminalButton theme={theme}>
+          <TitleButton theme={theme}>
             <ButtonTextLarge>docs</ButtonTextLarge>
-          </TerminalButton>
+          </TitleButton>
         </Link>
 
         {/* Go to the console */}
         <Link to="/console" style={{ textDecoration: "none" }}>
-          <TerminalButton theme={theme}>
+          <TitleButton theme={theme}>
             <ButtonTextLarge>console</ButtonTextLarge>
-          </TerminalButton>
+          </TitleButton>
         </Link>
 
         {/* Go to the account page */}
         <Link to="/contact" style={{ textDecoration: "none" }}>
-          <TerminalButton theme={theme}>
+          <TitleButton theme={theme}>
             <ButtonTextLarge>contact</ButtonTextLarge>
-          </TerminalButton>
+          </TitleButton>
         </Link>
       </ButtonContainer>
-    </TitleSectionDiv>
+    </TitleContainer>
   );
 };
 
