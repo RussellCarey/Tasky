@@ -10,7 +10,6 @@ const NavBar: FunctionComponent<INavBarProps> = ({ title }) => {
 
   return (
     <NavBarContainer theme={theme}>
-      <NavBar title={"Tasky"} />
       <SubHeading>{title}</SubHeading>
       <LinksContainer>
         <Links>console</Links>

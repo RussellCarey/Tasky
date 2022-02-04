@@ -14,12 +14,12 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/console" element={<ConsolePage />} />
-          <Route path="/auth/" element={<AuthPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/payment" element={<PaymentPage />} />
-          <Route path="/docs" element={<DocsPage />} />
-          <Route path="/help" element={<DocsPage />} />
+          <Route path="console" element={<ConsolePage />} />
+          <Route path="auth/" element={<AuthPage />} />
+          <Route path="contact" element={<ContactPage />} />
+          <Route path="payment" element={<PaymentPage />} />
+          <Route path="docs" element={<DocsPage />} />
+          <Route path="help" element={<DocsPage />} />
         </Routes>
       </Router>
     </ThemeState>
