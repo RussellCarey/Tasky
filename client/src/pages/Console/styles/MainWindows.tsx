@@ -9,14 +9,19 @@ export const MainWindow = styled.div`
 
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
 
   background-color: ${(props) => props.theme.backgroundColor};
+
+  @media (max-width: 600px) {
+    padding: ${theme.spacing.medium};
+  }
 `;
 
 export const TerminalWindow = styled.div`
   width: 100%;
-  height: 100%;
+  height: 90%;
   position: relative;
   ${mixinDefaultTheme};
 

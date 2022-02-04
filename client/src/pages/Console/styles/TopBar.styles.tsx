@@ -3,7 +3,7 @@ import { theme } from "../../../theme/theme";
 
 export const TopBarContainer = styled.div`
   width: 100%;
-  height: 80px;
+  height: 70px;
   padding: ${theme.spacing.medium};
 
   border-bottom: 5px solid ${(props) => props.theme.borderColor};

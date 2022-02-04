@@ -4,6 +4,7 @@ import { theme } from "../../../theme/theme";
 export const InputContainer = styled.input`
   width: 100%;
   height: 70px;
+  max-height: 70px;
   padding: ${theme.spacing.medium};
 
   border: none;

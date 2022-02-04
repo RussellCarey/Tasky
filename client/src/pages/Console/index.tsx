@@ -28,6 +28,7 @@ const ConsolePage: FunctionComponent = () => {
           <CheckoutForm theme={theme} closeWindow={setShowCheckout} />{" "}
         </Elements>
       ) : null}
+
       <MainWindow theme={theme}>
         <TerminalWindow theme={theme}>
           <TopBar />
