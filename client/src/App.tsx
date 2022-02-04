@@ -19,6 +19,7 @@ function App() {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/payment" element={<PaymentPage />} />
           <Route path="/docs" element={<DocsPage />} />
+          <Route path="/help" element={<DocsPage />} />
         </Routes>
       </Router>
     </ThemeState>
