@@ -6,7 +6,6 @@ import DocsPage from "./pages/Help";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ThemeState from "./context/theme/themeState";
-import ContactPage from "./pages/Contact";
 
 function App() {
   return (
@@ -16,7 +15,6 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="console" element={<ConsolePage />} />
           <Route path="auth/" element={<AuthPage />} />
-          <Route path="contact" element={<ContactPage />} />
           <Route path="payment" element={<PaymentPage />} />
           <Route path="docs" element={<DocsPage />} />
           <Route path="help" element={<DocsPage />} />

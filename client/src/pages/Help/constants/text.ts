@@ -83,5 +83,7 @@ export const commandHelpText = [
 export const documentExplanation = `To use this app you first need to sign up for an account using the signup command. \n
 Once you have signed up you will need to confirm your account from the email we will send to you.\n
 The first order of business when logged in is to create some task names. Task names are just tasks that you can select from when recording your activities duuring the day.\n 
+For example, if you want to record your times for studying maths, or playing games you need to add the task name first\n 
 Once you have some saved you can then record a task and how many hours you have spent doing it. This is done by using 'add new task TASKID HOURS'.\n 
-From there you can check your records on one date or a range of days. Please check the commands below for the full list of commands and their descriptions..`;
+From there you can check your records on one date or a range of days amongst other things.\n 
+ Please check the commands below for the full list of commands and their descriptions..`;

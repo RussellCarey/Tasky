@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { TerminalBox, Text } from "../../../styles/styles";
-import { mixinDefaultTheme } from "../../../../theme/mixins";
+import { Link } from "react-router-dom";
 import { theme } from "../../../../theme/theme";
 
 export const NavBarContainer = styled(TerminalBox)`
@@ -15,6 +15,11 @@ export const NavBarContainer = styled(TerminalBox)`
   &:hover {
     transform: none;
   }
+
+  /* // Dont show the nav bar on smaller devices. Its not needed.
+  @media (max-width: 600px) {
+    display: none;
+  } */
 `;
 
 export const LinksContainer = styled.div`
@@ -24,4 +29,10 @@ export const LinksContainer = styled.div`
 
 export const Links = styled(Text)`
   margin-left: ${theme.spacing.xxxlage};
+`;
+
+export const LinkRoute = styled(Link)`
+  &:hover {
+    transform: scale(105%);
+  }
 `;

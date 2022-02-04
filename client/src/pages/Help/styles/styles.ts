@@ -26,4 +26,8 @@ export const HelpWindow = styled(TerminalBox)`
 
 export const InfoText = styled(Text)`
   margin-bottom: ${theme.spacing.large};
+
+  @media (max-width: 600px) {
+    line-height: ${theme.font.sizes.large};
+  }
 `;
