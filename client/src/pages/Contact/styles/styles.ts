@@ -10,7 +10,7 @@ export const ContactMain = styled(Container)`
   align-items: center;
   justify-content: center;
 
-  padding: ${theme.spacing.large};
+  padding: ${theme.spacing.xxxlage};
 `;
 
 export const ContactContainer = styled(ButtonContainer)`

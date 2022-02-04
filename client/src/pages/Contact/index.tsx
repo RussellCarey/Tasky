@@ -12,6 +12,7 @@ const ContactPage: FunctionComponent = () => {
   return (
     <ContactMain theme={theme}>
       <NavBar title={"Contact"} />
+
       <ContactHeading theme={theme}>
         <MainHeading>Contact</MainHeading>
       </ContactHeading>
