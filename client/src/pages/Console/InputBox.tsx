@@ -41,6 +41,7 @@ const InputArea: FunctionComponent<IPropsInputArea> = ({
     setConsoleText([...consoleText, ...textArray]);
   };
 
+  // On pressing enter after writing a command..
   const onEnterPress = async (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && canPress) {
       try {

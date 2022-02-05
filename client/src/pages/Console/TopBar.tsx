@@ -12,7 +12,7 @@ const TopBar: FunctionComponent = () => {
 
   return (
     <TopBarContainer theme={theme}>
-      <Title>Tasky </Title>
+      <Title>Tasky</Title>
       <CloseButton onClick={() => navigate("/")}>X</CloseButton>
     </TopBarContainer>
   );

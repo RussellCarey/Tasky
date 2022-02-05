@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import App from "../../../App";
 
-test("Check heading renders", () => {
+test.skip("Check heading renders", () => {
   window.HTMLElement.prototype.scrollTo = function () {};
   render(<App />);
 
@@ -9,7 +9,7 @@ test("Check heading renders", () => {
   expect(titleElement).toBeInTheDocument();
 });
 
-test("Check text area renders", () => {
+test.skip("Check text area renders", () => {
   window.HTMLElement.prototype.scrollTo = function () {};
   render(<App />);
 
@@ -17,7 +17,7 @@ test("Check text area renders", () => {
   expect(partialText).toBeInTheDocument();
 });
 
-test("Check input area renders", () => {
+test.skip("Check input area renders", () => {
   window.HTMLElement.prototype.scrollTo = function () {};
   render(<App />);
 

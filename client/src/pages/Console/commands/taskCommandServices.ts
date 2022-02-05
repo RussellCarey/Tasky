@@ -21,6 +21,7 @@ export const addNewTaskName = async (commandObject: ICommandInitalObject) => {
 
     // Add the new task name..
     const newTaskNameRequest = await addNewTaskNameAttempt(nameString);
+    if (newTaskNameRequest.data.status !== "success") return ["Error. Please try again."];
 
     return ["Task name was added!"];
   } catch (error: any) {
@@ -32,6 +33,7 @@ export const getAllTaskNames = async () => {
   try {
     // Get all users saves task names
     const taskNamesList = await getTaskNames();
+    if (taskNamesList.data.status !== "success") return ["Error. Please try again."];
 
     // Return the task name along with its ID which the user needs to input.
     const tasksSentences = taskNamesList.data.data.rows.map((task: any, ind: any) => {
@@ -54,6 +56,7 @@ export const deleteTaskNames = async (commandObject: ICommandInitalObject) => {
     const id = Number(commandObject.args[0]);
 
     const deletedTaskName = await deleteTaskName(id);
+    if (deletedTaskName.data.status !== "success") return ["Error. Please try again."];
 
     return ["Your task name was deleted. "];
   } catch (error: any) {
@@ -69,6 +72,7 @@ export const addNewTask = async (commandObject: ICommandInitalObject) => {
 
     // Save users task and the hours spent doing it.
     const newTask = await addNewTaskHours(taskID, taskHours);
+    if (newTask.data.status !== "success") return ["Error. Please try again."];
 
     return ["Task was added!"];
   } catch (error: any) {
@@ -81,6 +85,7 @@ export const deleteTask = async (commandObject: ICommandInitalObject) => {
     const taskID = Number(commandObject.args[0]);
 
     const deleteTaskAndData = await deleteTaskWithHours(taskID);
+    if (deleteTaskAndData.data.status !== "success") return ["Error. Please try again."];
 
     return ["Task was deleted!"];
   } catch (error: any) {

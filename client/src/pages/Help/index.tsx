@@ -12,15 +12,16 @@ const DocsPage: FunctionComponent = () => {
   return (
     <HelpMain theme={theme}>
       <NavBar title={"Docs"} />
+
       <HelpWindow theme={theme}>
-        {documentExplanation.split("\n").map((i) => (
-          <InfoText>{i}</InfoText>
+        {documentExplanation.split("\n").map((i, ind) => (
+          <InfoText key={ind}>{i}</InfoText>
         ))}
       </HelpWindow>
 
       <HelpWindow theme={theme}>
         {commandHelpText.map((commands) => {
-          return <CommandInfo theme={theme} command={commands.name} text={commands.info} />;
+          return <CommandInfo key={commands.name} theme={theme} command={commands.name} text={commands.info} />;
         })}
       </HelpWindow>
     </HelpMain>

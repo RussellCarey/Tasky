@@ -28,6 +28,7 @@ exports.deleteUserAccount = catchAsync(async (req: Request, res: Response, next:
   const { password, passwordConfirm } = req.body;
 
   if (!id) throw new AppError("Could not authenticate user. Please try again", 500);
+  if (!password || !passwordConfirm) throw new AppError("Please provide both passwords Please try again", 500);
   if (password !== passwordConfirm) throw new AppError("Incorrect password. Please try again", 500);
 
   // Check database and get user information (Maybe keep this client side?);

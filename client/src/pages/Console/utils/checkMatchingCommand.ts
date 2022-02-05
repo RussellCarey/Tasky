@@ -15,7 +15,7 @@ export const checkStarting = (text: string, commandMap: Record<string, ICommandR
 
   // Loop through command hashmap.
   for (const command in commandMap) {
-    const commandInText = command.replaceAll("_", " ");
+    const commandInText = command.replaceAll("_", " "); 
     const commandWordArray = command.split("_");
     const commandWordCount = commandWordArray.length;
 

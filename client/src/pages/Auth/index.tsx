@@ -20,7 +20,6 @@ const AuthPage: FunctionComponent = () => {
       await authenticateUser(param);
       setMessage("Account activiated, enjoy Tasky!");
     } catch (error: any) {
-      console.log(error.response);
       setMessage(`Error ${error.response.data.message}`);
     }
   };

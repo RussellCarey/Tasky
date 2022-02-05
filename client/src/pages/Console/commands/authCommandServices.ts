@@ -56,6 +56,7 @@ export const signup = async (commandObject: ICommandInitalObject) => {
       return ["Check passwords match and ensure password is greater than 8 charactrers long."];
 
     const signupRequest = await signupAttempt(commandObject.args);
+    if (signupRequest.data.status !== "success") return ["Error signing up. Please try again."];
 
     return ["Welcome, you are all signed up. Please check your email for an activation link!"];
   } catch (error: any) {

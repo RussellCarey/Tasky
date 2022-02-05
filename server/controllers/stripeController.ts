@@ -57,6 +57,8 @@ exports.webhook = catchAsync(async (req: IReqBodyRaw, res: Response, next: NextF
 
   if (event.type === "charge.succeeded") {
     const eventMetaData = event.data.object.metadata;
+
+    // Update user to new payed account
     const upgradedUser = await updateSubcriptionActive(eventMetaData.userID);
 
     // Send email to the user --- Check for error and send email.

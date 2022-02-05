@@ -75,15 +75,15 @@ export const commandHelpText = [
     info: "Change the app text color by using set text color followed by a hex value, eg #00000",
   },
   {
-    name: "set background color HEX",
-    info: "Change the app background color by using set background color followed by a hex value, eg #00000",
+    name: "set border color HEX",
+    info: "Change the app border color by using set border color followed by a hex value, eg #00000",
   },
 ];
 
-export const documentExplanation = `To use this app you first need to sign up for an account using the signup command. \n
+export const documentExplanation = `To use this app you first need to sign up for an account using the signup command.\n
 Once you have signed up you will need to confirm your account from the email we will send to you.\n
 The first order of business when logged in is to create some task names. Task names are just tasks that you can select from when recording your activities duuring the day.\n 
 For example, if you want to record your times for studying maths, or playing games you need to add the task name first.\n 
 Once you have some saved you can then record a task and how many hours you have spent doing it. This is done by using 'add new task TASKID HOURS'.\n 
 From there you can check your records on one date or a range of days amongst other things.\n 
- Please check the commands below for the full list of commands and their descriptions.`;
+Please check the commands below for the full list of commands and their descriptions.`;

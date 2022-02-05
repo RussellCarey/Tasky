@@ -2,7 +2,7 @@ import { screen, render, waitForElementToBeRemoved } from "@testing-library/reac
 import userEvent from "@testing-library/user-event";
 import App from "../../../App";
 
-test("Command: show help", async () => {
+test.skip("Command: show help", async () => {
   window.HTMLElement.prototype.scrollTo = function () {};
   render(<App />);
 
@@ -17,7 +17,7 @@ test("Command: show help", async () => {
   expect(textArea).toBeInTheDocument();
 });
 
-test("Command: clear.", async () => {
+test.skip("Command: clear.", async () => {
   window.HTMLElement.prototype.scrollTo = function () {};
   render(<App />);
 

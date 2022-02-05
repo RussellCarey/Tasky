@@ -1,5 +1,3 @@
-import React from "react";
-
 export const hideLoginPassword = (inpuText: string, passwordRef: React.MutableRefObject<string>) => {
   // Save typed password but hide it in the input field..
   const sentenceArray = inpuText.split(" ");
