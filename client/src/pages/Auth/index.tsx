@@ -1,9 +1,11 @@
-import React, { useState, useEffect, FunctionComponent, useContext } from "react";
+import { useState, useEffect, FunctionComponent, useContext } from "react";
 import ThemeContext from "../../context/theme/themeContext";
 import { useSearchParams } from "react-router-dom";
 import { authenticateUser } from "./services/dbServices";
 import { Container, MessageWindow, Title } from "./styles/styles";
 import { Text } from "../styles/styles";
+
+import isDev from "../../utils/isDev";
 
 const AuthPage: FunctionComponent = () => {
   const themeContext = useContext(ThemeContext);
@@ -17,7 +19,7 @@ const AuthPage: FunctionComponent = () => {
   //!
   const attemptAuthUsingParam = async (param: string) => {
     try {
-      await authenticateUser(param);
+      const authAttempt = await authenticateUser(param);
       setMessage("Account activiated, enjoy Tasky!");
     } catch (error: any) {
       setMessage(`Error ${error.response.data.message}`);

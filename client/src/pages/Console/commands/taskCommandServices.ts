@@ -13,10 +13,8 @@ import {
 import { errorMessage, calculatePercentages } from "./utilCommandServices";
 import { ICommandInitalObject } from "../../../types/types";
 
-// TASK NAMES (NOT ACTUAL SAVED TASK WITH HOURS)
 export const addNewTaskName = async (commandObject: ICommandInitalObject) => {
   try {
-    // signup username email password passwordconfirm
     const nameString: string = commandObject.args.join(" ");
 
     // Add the new task name..
@@ -41,7 +39,7 @@ export const getAllTaskNames = async () => {
     });
 
     // If the user has no presaved tasks.
-    if (tasksSentences.length === 0)
+    if (!tasksSentences || tasksSentences.length === 0)
       return ["You have no saved task names. Add some using `add new task name (name)`."];
 
     // Return found tasks

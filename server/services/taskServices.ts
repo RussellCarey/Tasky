@@ -33,18 +33,18 @@ export const addNewTaskWithHours = async (userID: number, taskID: number, hours:
 };
 
 export const deleteTaskName = async (id: number) => {
-  const deleteTask = await pool.query("DELETE from categories WHERE id = $1", [id]);
+  const deleteTask = await pool.query("DELETE from categories WHERE id = $1 RETURNING id", [id]);
   return deleteTask;
 };
 
 export const deleteTaskWithHours = async (id: number) => {
-  const deletedTask = await pool.query("DELETE FROM tasks WHERE id = $1", [id]);
+  const deletedTask = await pool.query("DELETE FROM tasks WHERE id = $1 RETURNING id", [id]);
   return deletedTask;
 };
 
 export const findTasksByDate = async (date: string, userID: number) => {
   const foundTasks = await pool.query(
-    "SELECT * FROM tasks WHERE TO_TIMESTAMP(unix / 1000)::DATE = $1 AND userid = $2",
+    "SELECT * FROM tasks WHERE TO_TIMESTAMP(unix / 1000)::DATE = $1 AND userid = $2 RETURNING id",
     [date, userID]
   );
   return foundTasks;
@@ -60,16 +60,16 @@ export const getTasksFromDates = async (dateFrom: string, dateTo: string, userID
 };
 
 export const deleteTasksFromDate = async (date: string, userID: number) => {
-  const foundTasks = await pool.query("DELETE FROM tasks WHERE TO_TIMESTAMP(unix / 1000)::DATE = $1 AND userid = $2", [
-    date,
-    userID,
-  ]);
+  const foundTasks = await pool.query(
+    "DELETE FROM tasks WHERE TO_TIMESTAMP(unix / 1000)::DATE = $1 AND userid = $2 RETURNING id",
+    [date, userID]
+  );
   return foundTasks;
 };
 
 export const deleteTaskFromDateRange = async (dateFrom: string, dateTo: string, userID: string) => {
   const foundTasks = await pool.query(
-    "DELETE FROM tasks WHERE TO_TIMESTAMP(unix / 1000)::DATE >= $1::date AND TO_TIMESTAMP(unix / 1000)::DATE <= $2::date AND userid = $3",
+    "DELETE FROM tasks WHERE TO_TIMESTAMP(unix / 1000)::DATE >= $1::date AND TO_TIMESTAMP(unix / 1000)::DATE <= $2::date AND userid = $3 RETURNING id",
     [dateFrom, dateTo, userID]
   );
 

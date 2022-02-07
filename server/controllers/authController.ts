@@ -102,7 +102,7 @@ exports.authorize = catchAsync(async (req: Request, res: Response, next: NextFun
   const authorize = await authorizeUser(uuid);
 
   res.json({
-    status: "Success",
+    status: "success",
     date: authorize,
   });
 });

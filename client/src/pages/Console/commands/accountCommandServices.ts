@@ -9,7 +9,8 @@ import { errorMessage } from "./utilCommandServices";
 
 export const showUserInformation = async (commandObject: ICommandInitalObject) => {
   try {
-    if (commandObject.args.length > 1) return ["Too many arguments for this command."];
+    const args = commandObject.args;
+    if (args.length > 1) return ["Too many arguments for this command."];
 
     const userInformation = await getUserInformation();
     if (userInformation.data.status !== "success") return ["Error getting your information. Please try again."];

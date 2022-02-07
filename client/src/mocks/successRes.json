@@ -1,0 +1,35 @@
+{
+  "data": {
+    "status": "success",
+    "data": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJ1c3NlbGwiLCJwYXNzd29yZCI6IiIsImlhdCI6MTY0NDE5MjkwMH0.KHpcaaC0kpIwdYaCNzu45fADlSvpDF6MAjmDzfA7PNM"
+  },
+  "status": 200,
+  "statusText": "OK",
+  "headers": {
+    "content-length": "182",
+    "content-type": "application/json; charset=utf-8"
+  },
+  "config": {
+    "transitional": {
+      "silentJSONParsing": true,
+      "forcedJSONParsing": true,
+      "clarifyTimeoutError": false
+    },
+    "transformRequest": [null],
+    "transformResponse": [null],
+    "timeout": 0,
+    "xsrfCookieName": "XSRF-TOKEN",
+    "xsrfHeaderName": "X-XSRF-TOKEN",
+    "maxContentLength": -1,
+    "maxBodyLength": -1,
+    "headers": {
+      "Accept": "application/json, text/plain, */*",
+      "Content-Type": "application/json"
+    },
+    "withCredentials": true,
+    "method": "post",
+    "url": "http://127.0.0.1:9564/api/auth/login",
+    "data": "{\"username\":\"russell\",\"password\":\"\"}"
+  },
+  "request": {}
+}

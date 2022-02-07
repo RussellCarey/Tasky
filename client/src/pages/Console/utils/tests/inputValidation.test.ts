@@ -1,30 +1,43 @@
 import { checkValidEmail, checkValidUsername, checkValidPassword } from "../inputValidation";
 
-test("Check for valid email passes", () => {});
-test("Check for valid email fails", () => {});
-test("Check for valid username passes", () => {});
-test("Check for valid username fails", () => {});
-test("Check for valid password passes", () => {});
-test("Check for valid password fails", () => {});
+test("Check for valid email passes", () => {
+  const text = "testEmail@test.com";
+  const checkEmail = checkValidEmail(text);
+  expect(checkEmail).toBeTruthy();
+});
 
-// export const checkValidEmail = (email: string) => {
-//   // Check invalid characters, enough characters, spaces etc.
-//   if (!email.includes("@" || ".")) return false;
-//   return true;
-// };
+test("Check for valid email fails", () => {
+  const text = "testEmailtest.com";
+  const checkEmail = checkValidEmail(text);
+  expect(checkEmail).toBeFalsy();
+});
 
-// export const checkValidUsername = (username: string) => {
-//   // Username must be longer that 6 letters and only contain letters
-//   if (username.length < 6) return false;
+test("Check for valid password passes", () => {
+  const matching = "moblydoobly";
+  const matchingTwo = "moblydoobly";
+  const checkPassword = checkValidPassword(matching, matchingTwo);
+  expect(checkPassword).toBeTruthy();
+});
 
-//   const letters = /^[A-Za-z]+$/;
-//   if (!username.match(letters)) return false;
+test("Check for valid password fails", () => {
+  const length = "russ";
+  const checkLengthFail = checkValidPassword(length, length);
+  expect(checkLengthFail).toBeFalsy();
 
-//   return true;
-// };
+  const notMatchingOne = "12345678";
+  const notMatchingTwo = "12345356";
+  const checkMatchingFail = checkValidPassword(notMatchingOne, notMatchingTwo);
+  expect(checkLengthFail).toBeFalsy();
+});
 
-// export const checkValidPassword = (password: string, passwordTwo: string) => {
-//   if (password !== passwordTwo) return false;
-//   if (password.length < 8) return false;
-//   return true;
-// };
+test("Check for valid username passes", () => {
+  const username = "welcometothejungle";
+  const checkUsername = checkValidUsername(username);
+  expect(checkUsername).toBeTruthy();
+});
+
+test("Check for valid username fails", () => {
+  const username = "hel";
+  const checkUsernameFaile = checkValidUsername(username);
+  expect(checkUsernameFaile).toBeFalsy();
+});

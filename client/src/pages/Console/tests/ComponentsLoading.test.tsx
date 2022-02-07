@@ -1,26 +1,17 @@
-import { render, screen } from "@testing-library/react";
-import App from "../../../App";
+import { render, screen } from "../../../mocks/customRender";
+import { MemoryRouter } from "react-router-dom";
+import ConsolePage from "../index";
 
-test.skip("Check heading renders", () => {
+test("Check heading renders", () => {
   window.HTMLElement.prototype.scrollTo = function () {};
-  render(<App />);
+
+  render(
+    <MemoryRouter initialEntries={["/console"]}>
+      <ConsolePage />
+    </MemoryRouter>,
+    null
+  );
 
   const titleElement = screen.getByRole("heading", { name: /tasky/i });
   expect(titleElement).toBeInTheDocument();
-});
-
-test.skip("Check text area renders", () => {
-  window.HTMLElement.prototype.scrollTo = function () {};
-  render(<App />);
-
-  const partialText = screen.getByText(/Welcome to Tasky the task recorder./i);
-  expect(partialText).toBeInTheDocument();
-});
-
-test.skip("Check input area renders", () => {
-  window.HTMLElement.prototype.scrollTo = function () {};
-  render(<App />);
-
-  const inputBox = screen.getByPlaceholderText(/Enter command../i);
-  expect(inputBox).toBeInTheDocument();
 });
