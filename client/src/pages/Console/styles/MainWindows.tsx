@@ -13,6 +13,7 @@ export const MainWindow = styled.div`
   align-items: center;
 
   background-color: ${(props) => props.theme.backgroundColor};
+  border-color: ${(props) => props.theme.borderColor};
 
   @media (max-width: 600px) {
     padding: ${theme.spacing.medium};

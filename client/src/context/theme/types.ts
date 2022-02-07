@@ -17,3 +17,11 @@ export interface IThemeState {
   shadowColor: string;
   textColor: string;
 }
+
+export interface ICommandObject {
+  args: Array<string>;
+  commandFunc: Function;
+  commandName: string;
+  fullSentence: string;
+  passwordRef: string;
+}

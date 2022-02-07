@@ -1,6 +1,7 @@
 import { useReducer, useEffect } from "react";
 import ThemeReducer from "./themeReducer";
 import ThemeContext from "./themeContext";
+import { ICommandObject } from "./types";
 import {
   SET_BACKGROUND_COLOR,
   SET_BORDER_COLOR,
@@ -34,42 +35,50 @@ const ThemeState = (props: IPropsState) => {
 
   const [theme, dispatch] = useReducer(ThemeReducer, defaultState);
 
-  const setBackgroundColor = (hex: string) => {
-    console.log(hex);
-    dispatch({ type: SET_BACKGROUND_COLOR, payload: hex });
-    localStorage.setItem("theme", JSON.stringify({ ...theme, backgroundColor: hex }));
+  const setBackgroundColor = (commandObj: ICommandObject) => {
+    const color = commandObj.args[0];
+    dispatch({ type: SET_BACKGROUND_COLOR, payload: color });
+    localStorage.setItem("theme", JSON.stringify({ ...theme, backgroundColor: color }));
     return ["Changed background color."];
   };
-  const setBorderColor = (hex: string) => {
-    dispatch({ type: SET_BORDER_COLOR, payload: hex });
-    localStorage.setItem("theme", JSON.stringify(theme));
+
+  const setBorderColor = (commandObj: ICommandObject) => {
+    const color = commandObj.args[0];
+    dispatch({ type: SET_BORDER_COLOR, payload: color });
+    localStorage.setItem("theme", JSON.stringify({ ...theme, borderColor: color }));
     return ["Changed border color."];
   };
-  const setTerminalColor = (hex: string) => {
-    dispatch({ type: SET_TERMINAL_COLOR, payload: hex });
-    localStorage.setItem("theme", JSON.stringify(theme));
+
+  const setTerminalColor = (commandObj: ICommandObject) => {
+    const color = commandObj.args[0];
+    dispatch({ type: SET_TERMINAL_COLOR, payload: color });
+    localStorage.setItem("theme", JSON.stringify({ ...theme, terminalColor: color }));
     return ["Changed terminal color."];
   };
-  const setShadowColor = (hex: string) => {
-    dispatch({ type: SET_SHADOW_COLOR, payload: hex });
-    localStorage.setItem("theme", JSON.stringify(theme));
+
+  const setShadowColor = (commandObj: ICommandObject) => {
+    const color = commandObj.args[0];
+    dispatch({ type: SET_SHADOW_COLOR, payload: color });
+    localStorage.setItem("theme", JSON.stringify({ ...theme, shadowColor: color }));
     return ["Changed shadow color."];
   };
-  const setTextColor = (hex: string) => {
-    dispatch({ type: SET_TEXT_COLOR, payload: hex });
-    localStorage.setItem("theme", JSON.stringify(theme));
+
+  const setTextColor = (commandObj: ICommandObject) => {
+    const color = commandObj.args[0];
+    dispatch({ type: SET_TEXT_COLOR, payload: color });
+    localStorage.setItem("theme", JSON.stringify({ ...theme, textColor: color }));
     return ["Changed text color."];
   };
 
   const setLightTheme = () => {
     dispatch({ type: SET_LIGHT_THEME, payload: lightThemeDefault });
-    localStorage.setItem("theme", JSON.stringify(lightThemeDefault));
+    localStorage.setItem("theme", JSON.stringify({ ...theme, ...lightThemeDefault }));
     return ["Changed theme to light."];
   };
 
   const setDarkTheme = () => {
     dispatch({ type: SET_DARK_THEME, payload: darkThemeDefault });
-    localStorage.setItem("theme", JSON.stringify(darkThemeDefault));
+    localStorage.setItem("theme", JSON.stringify({ ...theme, ...darkThemeDefault }));
     return ["Changed theme to dark."];
   };
 

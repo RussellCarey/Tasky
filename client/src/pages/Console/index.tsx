@@ -29,8 +29,8 @@ const ConsolePage: FunctionComponent = () => {
         </Elements>
       ) : null}
 
-      <MainWindow theme={theme}>
-        <TerminalWindow theme={theme}>
+      <MainWindow theme={theme} data-testid="background">
+        <TerminalWindow data-testid="mainWindow" theme={theme}>
           <TopBar />
           <TextArea consoleText={consoleText} />
           <InputArea
