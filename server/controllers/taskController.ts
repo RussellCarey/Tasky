@@ -11,6 +11,7 @@ import {
   deleteTasksFromDate,
   deleteTaskFromDateRange,
   findOneTaskName,
+  findOneTaskNameById,
 } from "../services/taskServices";
 import AppError from "../utils/AppError";
 import catchAsync from "../utils/catchAsync";
@@ -81,7 +82,11 @@ exports.addNewTaskHours = catchAsync(async (req: Request, res: Response, next: N
       500
     );
 
-  const addTask = await addNewTaskWithHours(userID, req.body.taskID, req.body.taskHours);
+  const getTaskName = await findOneTaskNameById(req.body.taskID);
+  if (!getTaskName.rows[0].taskname) throw new AppError("Could not find task ID. Please try again.", 500);
+  const taskName = getTaskName.rows[0].taskname;
+
+  const addTask = await addNewTaskWithHours(userID, taskName, req.body.taskHours);
   if (!addTask) throw new AppError("Could not add task. Please try again", 500);
 
   res.json({
