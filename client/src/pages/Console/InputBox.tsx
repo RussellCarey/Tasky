@@ -23,7 +23,8 @@ const InputArea: FunctionComponent<IPropsInputArea> = ({
 
   const textOnChange = (e: React.ChangeEvent) => {
     const target = e.target as HTMLInputElement;
-    const targetText = target.value.toLowerCase();
+    const capitalize = target.value.slice(0, 1).toLowerCase();
+    const targetText = capitalize + target.value.slice(1);
 
     // WHen using the login command, this will hide the password with ***s
     const stringText = hideLoginPassword(targetText, passwordRef);
