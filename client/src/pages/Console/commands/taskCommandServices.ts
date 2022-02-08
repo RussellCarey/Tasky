@@ -98,6 +98,7 @@ export const showTasksOnDate = async (commandObject: ICommandInitalObject) => {
 
     // Get single days tasks..
     const daysTasks = await getTasksOnDate(date);
+    if (daysTasks.data.status !== "success") return ["Error. Please try again."];
     if (daysTasks.data.data.rows.length === 0) return ["Sorry, you have no tasks saved for this date."];
 
     // Convert the data into an object where each task is collected. Data is task name, hours, percetage.
@@ -127,6 +128,7 @@ export const showTasksDateRange = async (commandObject: ICommandInitalObject) =>
     const dateEnd = commandObject.args[1];
 
     const daysTasks = await getTasksFromDateRange(dateStart, dateEnd);
+    if (daysTasks.data.status !== "success") return ["Error. Please try again."];
     if (daysTasks.data.data.rows.length === 0) return ["Sorry, you have no tasks saved for this date range."];
 
     // Convert the data into an object where each task is collected. Data is task name, hours, percetage.
@@ -155,8 +157,9 @@ export const deleteTasksFromRange = async (commandObject: ICommandInitalObject) 
     const dateStart = commandObject.args[0];
     const dateEnd = commandObject.args[1];
 
-    const daysTasks = await deleteTasksFromDateRange(dateStart, dateEnd);
-    if (daysTasks.data.data.rows.length === 0) return ["Deleted Tasks"];
+    const datesTasks = await deleteTasksFromDateRange(dateStart, dateEnd);
+    if (datesTasks.data.status !== "success") return ["Error. Please try again."];
+    if (datesTasks.data.data.rows.length === 0) return ["Deleted Tasks"];
 
     return ["Error deleteing tasks, please try again."];
   } catch (error: any) {
@@ -169,8 +172,9 @@ export const deleteTasksOnDate = async (commandObject: ICommandInitalObject) => 
     if (commandObject.args.length > 1) return ["Too many arguments for this command."];
     const date = commandObject.args[0];
 
-    const daysTasks = await deleteTasksDate(date);
-    if (daysTasks.data.data.rows.length === 0) return ["Deleted tasks."];
+    const datesTasks = await deleteTasksDate(date);
+    if (datesTasks.data.status !== "success") return ["Error. Please try again."];
+    if (datesTasks.data.data.rows.length === 0) return ["Deleted tasks."];
 
     return ["Error deleteing tasks, please try again."];
   } catch (error: any) {

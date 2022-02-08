@@ -1,7 +1,6 @@
 import axios from "axios";
 import { projectURLS } from "../../../constants/urls";
 import isDev from "../../../utils/isDev";
-import Cookie from "js-cookie";
 
 export const getPaymentIntent = async (userDetails: Object) => {
   const paymentIntent = await axios.request({
