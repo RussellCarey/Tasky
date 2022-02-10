@@ -19,7 +19,7 @@ const devPool = new Pool({
   host: "x",
   user: "x",
   database: "x",
-  password: "x",
+  password: process.env.DEV_DATABASE_PW,
   port: 6543,
   max: 20,
   idleTimeoutMillis: 30000,
