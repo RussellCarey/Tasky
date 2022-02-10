@@ -76,8 +76,10 @@ const InputArea: FunctionComponent<IPropsInputArea> = ({
         const runCommand = await checkForCommand.commandFunc(checkForCommand);
         addConsoleText([...runCommand]);
 
+        passwordRef.current = "";
         resetPress();
       } catch (error) {
+        passwordRef.current = "";
         resetPress();
       }
     }

@@ -24,12 +24,9 @@ exports.addNewTaskName = catchAsync(async (req: Request, res: Response, next: Ne
   if (userID === "" || null) throw new AppError("User is not logged in.", 500);
   if (taskName === "" || null) throw new AppError("Task name was invalid or missing", 500);
 
-  // Get user
-  const user = await checkUserExistsID(userID);
-
-  // Check if user is a member and if the task number has reached its max.
+  //! Check if user is a member and if the task number has reached its max.
   const usersTaskNames = await findAllTaskNames(userID);
-  if (usersTaskNames.rows.length > maxNumberAllowed && !user.rows[0].ismember)
+  if (usersTaskNames.rows.length > maxNumberAllowed)
     throw new AppError(
       "Max number of tasks added. If you would like to add more task names, please upgrade to a premium account!",
       500
