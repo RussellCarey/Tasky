@@ -14,7 +14,7 @@ import {
 import { sendWelcomeEmail, sendAdminSignUpNotification } from "./emailController";
 import { deleteUser, changeEmail, changePassword } from "../services/acountServices";
 
-// Set expiry to now and remove JWT from cookie to log out user....
+// Set expiry to now and remove JWT from cookie to log out user......
 const resetCookieOptions: CookieOptions = {
   expires: new Date(Date.now()),
   secure: true,

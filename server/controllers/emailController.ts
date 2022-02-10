@@ -17,7 +17,7 @@ const sendMail = async (message: Object) => {
 export const sendWelcomeEmail = async (username: string, email: string, activateString: string) => {
   const msg = {
     to: `${email}`, // Change to your recipient
-    from: process.env.ADMIN_EMAIL, // Change to your verified sender
+    from: process.env.ADMIN_EMAIL, // Change to your verified sender....
     subject: `Welcome to Tasky, ${username}!`,
     text: EmailHelper.prepareSignupSuccessText(username, email, activateString),
     html: EmailHelper.prepareSignupSuccessText(username, email, activateString),
