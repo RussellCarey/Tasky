@@ -4,7 +4,7 @@ import { checkValidEmail, checkValidPassword, checkValidUsername } from "../util
 import { ICommandInitalObject } from "../../../types/types";
 import { errorMessage } from "./utilCommandServices";
 
-// LOGIN LOGOUT SIGNUP.
+// LOGIN LOGOUT SIGNUP....
 export const login = async (commandObject: ICommandInitalObject) => {
   const password = commandObject.passwordRef;
 
