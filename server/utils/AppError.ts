@@ -14,7 +14,7 @@ class AppError extends Error {
     // Signifies that he error is creatred by us to catch something not  random programming error etc.
     this.isOperational = true;
 
-    // Not add to the stack trace and pollute it.
+    // Not add to the stack trace and pollute it.....
     Error.captureStackTrace(this, this.constructor);
   }
 }
