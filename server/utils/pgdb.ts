@@ -9,10 +9,6 @@ const prodPool = new Pool({
   host: process.env.PROD_DB_HOST,
   port: process.env.PROD_DB_PORT,
   database: process.env.PROD_DB_NAME,
-  ssl: {
-    rejectUnauthorized: false,
-    ca: process.env.PROD_DB_CA,
-  },
 });
 
 ////
