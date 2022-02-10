@@ -16,11 +16,11 @@ const prodPool = new Pool({
 });
 
 const devPool = new Pool({
-  host: "139.59.195.97",
-  user: "postgres",
-  database: "tasky",
-  password: "Fromthedepths1122!!",
-  port: 5432,
+  host: "x",
+  user: "x",
+  database: "x",
+  password: "x",
+  port: 6543,
   max: 20,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 2000,
