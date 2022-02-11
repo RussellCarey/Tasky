@@ -21,7 +21,7 @@ export const MainWindow = styled.div`
 `;
 
 export const TerminalWindow = styled.div`
-  width: 100%;
+  width: 95%;
   height: 90%;
   position: relative;
   ${mixinDefaultTheme};
