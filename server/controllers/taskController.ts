@@ -34,7 +34,8 @@ exports.addNewTaskName = catchAsync(async (req: Request, res: Response, next: Ne
 
   // Check if the user has already saved this name (stop dupicates).
   const checkExisting = await findOneTaskName(taskName);
-  if (checkExisting.rows[0]) throw new AppError("You already have a task name with this name.", 500);
+  if (checkExisting.rows[0] && checkExisting.rows[0].userid === userID)
+    throw new AppError("You already have a task name with this name.", 500);
 
   const createdTask = await createNewTaskName(userID, taskName);
 
