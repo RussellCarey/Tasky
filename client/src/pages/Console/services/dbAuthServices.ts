@@ -19,7 +19,6 @@ export const logoutAttempt = async (args: Array<string>) => {
 };
 
 export const loginAttempt = async (username: string, password: string) => {
-  console.log(username, password);
   const login = await axios.request({
     withCredentials: true,
     method: "POST",

@@ -21,8 +21,8 @@ export const TextArea: FunctionComponent<IPropsTextArea> = ({ consoleText }) => 
   return (
     <TextAreaContainer ref={textDivElement} theme={theme}>
       {consoleText.length && consoleText.length > 0
-        ? consoleText.map((line) => {
-            return <Text key={line}>{line}</Text>;
+        ? consoleText.map((line, index) => {
+            return <Text key={index}>{line}</Text>;
           })
         : null}
     </TextAreaContainer>
