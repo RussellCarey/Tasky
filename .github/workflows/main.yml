@@ -55,9 +55,7 @@ jobs:
           cat .env
 
       - run: |
-          pm2 stop tasky_client
           pm2 start tasky_client
-          pm2 stop tasky_server
           pm2 start tasky_server
           pm2 save
           pm2 resurrect
