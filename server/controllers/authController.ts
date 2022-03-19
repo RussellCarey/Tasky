@@ -89,7 +89,7 @@ exports.logout = (req: Request, res: Response, next: NextFunction) => {
   });
 };
 
-/// Authorize user to accss the about from link in their email. They cannot login until they do this..
+// Authorize user to accss the about from link in their email. They cannot login until they do this..
 exports.authorize = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   // www.website.com/?user=df82f-23f23f-f23f23f-23f23f
   const uuid = req.body.uuid;
