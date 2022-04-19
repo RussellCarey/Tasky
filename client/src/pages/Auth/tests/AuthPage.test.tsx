@@ -1,6 +1,5 @@
 import { screen, render } from "../../../mocks/customRender";
 import { MemoryRouter } from "react-router-dom";
-import ThemeContext from "../../../context/theme/themeContext";
 import AuthPage from "../../Auth/index";
 
 test("Auth Page loads with failure", async () => {
