@@ -1,6 +1,8 @@
 # Tasky - https://tasky.russell-carey.com
 
-A full stack, simple task recorder themed around that of a console window.
+A full stack, simple task recorder themed around that of a console window.  
+
+Please check my design here: https://xd.adobe.com/view/2f51d810-5050-4399-af1a-5bf1c0f67a19-7a02/  
 
 ![alt text](https://github.com/RussellCarey/Tasky/raw/master/Design/gif1.gif)
 
